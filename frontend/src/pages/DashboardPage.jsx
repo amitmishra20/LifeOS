@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
-import heroImage from '../assets/hero_sunset_valley.jpg';
+import heroDayImage from '../assets/hero_mountain_day.png';
+import heroNightImage from '../assets/hero_atmosphere.jpg';
 import './DashboardPage.css';
 
 const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
@@ -18,7 +19,7 @@ export const DashboardPage = () => {
 
   return <main className="lifeos-dashboard-env" aria-label="LifeOS workspace">
     {notificationMessage && <div className="lifeos-feedback-toast" role="status">{notificationMessage}</div>}
-    <section className="lifeos-opening" style={{ '--hero-image': `url(${heroImage})` }}>
+    <section className="lifeos-opening" style={{ '--hero-day-image': `url(${heroDayImage})`, '--hero-night-image': `url(${heroNightImage})` }}>
       <div className="lifeos-opening__wash" /><div className="lifeos-opening__content">
         <span className="lifeos-kicker">{lifeState.dateString}</span><p className="lifeos-opening__greeting">Welcome to LifeOS.</p>
         <h1>{lifeState.headlineStatement === 'YOUR LIFE STARTS HERE' ? <>Your life,<br /><em>on your terms.</em></> : <>Make something<br /><em>worth arriving at.</em></>}</h1>
@@ -27,7 +28,7 @@ export const DashboardPage = () => {
     </section>
 
     <section className="lifeos-focus" aria-labelledby="focus-heading"><div className="lifeos-section-index"><span>01</span><span className="lifeos-rule" /><span>FOCUS</span></div>
-      {!focus.primaryFocus ? <div className="lifeos-empty-panel"><div><span className="lifeos-kicker">Today&apos;s focus</span><h2 id="focus-heading">Nothing needs your attention<br /><em>yet.</em></h2><p>Choose one meaningful thing to move forward. Your focus will appear here.</p></div><div className="lifeos-empty-actions"><EmptyAction onClick={() => openCreate('Task')}>Create a task</EmptyAction><button className="lifeos-text-button" type="button" onClick={() => openCreate('Goal')}>Set a goal</button></div></div> : <div className="lifeos-focus__body"><div className="lifeos-focus__intro"><span className="lifeos-kicker">The next meaningful move</span><h2 id="focus-heading">{focus.primaryFocus.task.title}</h2><p>{focus.primaryFocus.whyReason}</p><EmptyAction onClick={() => { toggleTask(focus.primaryFocus.task.id); notify('Focus updated.'); }}>{focus.primaryFocus.task.completed ? 'Reopen focus' : 'Complete focus'}</EmptyAction></div><div className="lifeos-focus__landscape" style={{ '--hero-image': `url(${heroImage})` }}><span className="lifeos-focus__duration">{focus.primaryFocus.task.duration || 'Today'}</span><div className="lifeos-focus__caption"><span>{focus.primaryFocus.goal?.title || 'Personal focus'}</span><strong>{focus.primaryFocus.milestone?.title || 'Independent action'}</strong></div></div></div>}
+      {!focus.primaryFocus ? <div className="lifeos-empty-panel"><div><span className="lifeos-kicker">Today&apos;s focus</span><h2 id="focus-heading">Nothing needs your attention<br /><em>yet.</em></h2><p>Choose one meaningful thing to move forward. Your focus will appear here.</p></div><div className="lifeos-empty-actions"><EmptyAction onClick={() => openCreate('Task')}>Create a task</EmptyAction><button className="lifeos-text-button" type="button" onClick={() => openCreate('Goal')}>Set a goal</button></div></div> : <div className="lifeos-focus__body"><div className="lifeos-focus__intro"><span className="lifeos-kicker">The next meaningful move</span><h2 id="focus-heading">{focus.primaryFocus.task.title}</h2><p>{focus.primaryFocus.whyReason}</p><EmptyAction onClick={() => { toggleTask(focus.primaryFocus.task.id); notify('Focus updated.'); }}>{focus.primaryFocus.task.completed ? 'Reopen focus' : 'Complete focus'}</EmptyAction></div><div className="lifeos-focus__landscape" style={{ '--hero-day-image': `url(${heroDayImage})`, '--hero-night-image': `url(${heroNightImage})` }}><span className="lifeos-focus__duration">{focus.primaryFocus.task.duration || 'Today'}</span><div className="lifeos-focus__caption"><span>{focus.primaryFocus.goal?.title || 'Personal focus'}</span><strong>{focus.primaryFocus.milestone?.title || 'Independent action'}</strong></div></div></div>}
     </section>
 
     <section className="lifeos-journey" aria-labelledby="journey-heading"><div className="lifeos-section-index"><span>02</span><span className="lifeos-rule" /><span>DIRECTION</span></div>

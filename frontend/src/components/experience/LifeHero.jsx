@@ -1,5 +1,6 @@
 import React from 'react';
-import heroSunsetValleyImg from '../../assets/hero_sunset_valley.jpg';
+import heroDayImg from '../../assets/hero_mountain_day.png';
+import heroNightImg from '../../assets/hero_mountain_night.png';
 import './LifeHero.css';
 
 /**
@@ -18,13 +19,12 @@ export const LifeHero = ({ identity, lifeState }) => {
     timeOfDayGreeting,
     momentumScore,
     dateString,
-    stateMode,
   } = lifeState;
 
   return (
     <section 
       className="lifeos-life-hero"
-      style={{ backgroundImage: `url(${heroSunsetValleyImg})` }}
+      style={{ '--hero-day-image': `url(${heroDayImg})`, '--hero-night-image': `url(${heroNightImg})` }}
       aria-label="Current Life State"
     >
       <div className="lifeos-life-hero__gradient-mask" />

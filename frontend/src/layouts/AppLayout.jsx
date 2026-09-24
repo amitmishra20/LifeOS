@@ -105,15 +105,6 @@ export const AppLayout = () => {
             </div>
           ))}
 
-          <div className="lifeos-mobile-drawer__dev">
-            <NavLink
-              to="/dev/foundation"
-              onClick={() => setMobileDrawerOpen(false)}
-              className="lifeos-mobile-drawer__dev-link"
-            >
-              Engine Foundation (Phase 1/2 Diagnostics)
-            </NavLink>
-          </div>
         </div>
       </Drawer>
 

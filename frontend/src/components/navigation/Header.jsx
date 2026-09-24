@@ -17,7 +17,6 @@ const ROUTE_TITLES = {
   '/goal-health': 'Goal Health Engine',
   '/recommendations': 'Focus Recommendations',
   '/notes': 'Capture & Notes',
-  '/dev/foundation': 'Engine Foundation (Dev)',
 };
 
 export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
@@ -83,7 +82,7 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
         </button>
 
         {/* Honest Static Local Identity Element (Phase 1-3 Local Preview) */}
-        <div className="lifeos-header__user-pill lifeos-header__user-pill--static" title="Local session (Development preview)">
+        <div className="lifeos-header__user-pill lifeos-header__user-pill--static" title="Local preview session">
           <div className="lifeos-header__avatar" aria-hidden="true">L</div>
           <span className="lifeos-header__username">Welcome</span>
           <span className="lifeos-header__session-tag">Local</span>
