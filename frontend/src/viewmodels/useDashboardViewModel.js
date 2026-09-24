@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
-import { getInitialDataset } from '../mocks/datasets/index';
 import { buildDashboardViewModel } from './buildDashboardViewModel';
+
+const getInitialDataset = () => ({ user: null, goals: [], milestones: [], tasks: [], habits: [], guidance: null });
 
 /**
  * useDashboardViewModel

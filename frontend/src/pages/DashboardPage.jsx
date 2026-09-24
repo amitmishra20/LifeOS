@@ -3,97 +3,42 @@ import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
 import heroImage from '../assets/hero_sunset_valley.jpg';
 import './DashboardPage.css';
 
-const journeySteps = [
-  { label: 'Software internship', detail: 'Destination', tone: 'destination' },
-  { label: 'Portfolio projects', detail: 'Milestone 02', tone: 'progress' },
-  { label: 'ShopSync UI', detail: 'Milestone 01', tone: 'active' },
-  { label: 'Today\'s action', detail: 'Right now', tone: 'current' },
-];
-
-const habitLabels = ['DSA practice', 'Coding practice', 'Exercise', 'Reading'];
+const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
 
 export const DashboardPage = () => {
   const { viewModel, toggleTask, toggleHabit, isLoading, error, retry } = useDashboardViewModel();
   const [notificationMessage, setNotificationMessage] = useState(null);
-  const { focus, rhythm } = viewModel;
-  const primaryTask = focus?.primaryFocus?.task;
-  const supportingTasks = focus?.supportingTasks || [];
+  const { focus, rhythm, journey, goals, lifeState } = viewModel;
+  const hasData = goals.hasGoals || focus.hasTasks || rhythm.hasHabits;
+  const notify = (message) => { setNotificationMessage(message); window.setTimeout(() => setNotificationMessage(null), 2400); };
+  const openCreate = (type) => notify(`${type} creation is ready to connect.`);
 
-  const notify = (message) => {
-    setNotificationMessage(message);
-    window.setTimeout(() => setNotificationMessage(null), 2800);
-  };
+  if (isLoading) return <main className="lifeos-dashboard-env lifeos-dashboard-loading" aria-busy="true"><div className="lifeos-loading-line" /><div className="lifeos-loading-field" /></main>;
+  if (error) return <main className="lifeos-dashboard-env"><div className="lifeos-dashboard-error-surface" role="alert"><span className="lifeos-kicker">Workspace unavailable</span><h1>We couldn&apos;t load your workspace.</h1><p>{error}</p><button className="lifeos-text-button" type="button" onClick={retry}>Try again</button></div></main>;
 
-  if (isLoading) {
-    return <main className="lifeos-dashboard-env lifeos-dashboard-loading" aria-busy="true"><div className="lifeos-loading-line" /><div className="lifeos-loading-field" /></main>;
-  }
+  return <main className="lifeos-dashboard-env" aria-label="LifeOS workspace">
+    {notificationMessage && <div className="lifeos-feedback-toast" role="status">{notificationMessage}</div>}
+    <section className="lifeos-opening" style={{ '--hero-image': `url(${heroImage})` }}>
+      <div className="lifeos-opening__wash" /><div className="lifeos-opening__content">
+        <span className="lifeos-kicker">{lifeState.dateString}</span><p className="lifeos-opening__greeting">Welcome to LifeOS.</p>
+        <h1>{lifeState.headlineStatement === 'YOUR LIFE STARTS HERE' ? <>Your life,<br /><em>on your terms.</em></> : <>Make something<br /><em>worth arriving at.</em></>}</h1>
+        <p className="lifeos-opening__subline">{lifeState.contextStatement}</p>
+      </div><div className="lifeos-opening__signal"><span>{hasData ? 'Today&apos;s direction' : 'A calm place to begin'}</span><strong>{hasData ? 'Keep moving.' : 'Start with one thing.'}</strong></div>
+    </section>
 
-  if (error) {
-    return <main className="lifeos-dashboard-env"><div className="lifeos-dashboard-error-surface" role="alert"><span className="lifeos-kicker">The day is out of reach</span><h1>We couldn&apos;t load your workspace.</h1><p>{error}</p><button className="lifeos-text-button" type="button" onClick={retry}>Try again</button></div></main>;
-  }
+    <section className="lifeos-focus" aria-labelledby="focus-heading"><div className="lifeos-section-index"><span>01</span><span className="lifeos-rule" /><span>FOCUS</span></div>
+      {!focus.primaryFocus ? <div className="lifeos-empty-panel"><div><span className="lifeos-kicker">Today&apos;s focus</span><h2 id="focus-heading">Nothing needs your attention<br /><em>yet.</em></h2><p>Choose one meaningful thing to move forward. Your focus will appear here.</p></div><div className="lifeos-empty-actions"><EmptyAction onClick={() => openCreate('Task')}>Create a task</EmptyAction><button className="lifeos-text-button" type="button" onClick={() => openCreate('Goal')}>Set a goal</button></div></div> : <div className="lifeos-focus__body"><div className="lifeos-focus__intro"><span className="lifeos-kicker">The next meaningful move</span><h2 id="focus-heading">{focus.primaryFocus.task.title}</h2><p>{focus.primaryFocus.whyReason}</p><EmptyAction onClick={() => { toggleTask(focus.primaryFocus.task.id); notify('Focus updated.'); }}>{focus.primaryFocus.task.completed ? 'Reopen focus' : 'Complete focus'}</EmptyAction></div><div className="lifeos-focus__landscape" style={{ '--hero-image': `url(${heroImage})` }}><span className="lifeos-focus__duration">{focus.primaryFocus.task.duration || 'Today'}</span><div className="lifeos-focus__caption"><span>{focus.primaryFocus.goal?.title || 'Personal focus'}</span><strong>{focus.primaryFocus.milestone?.title || 'Independent action'}</strong></div></div></div>}
+    </section>
 
-  return (
-    <main className="lifeos-dashboard-env" aria-label="Amit's LifeOS workspace">
-      {notificationMessage && <div className="lifeos-feedback-toast" role="status">{notificationMessage}</div>}
+    <section className="lifeos-journey" aria-labelledby="journey-heading"><div className="lifeos-section-index"><span>02</span><span className="lifeos-rule" /><span>DIRECTION</span></div>
+      {!journey.hasJourney ? <div className="lifeos-empty-panel lifeos-empty-panel--compact"><div><span className="lifeos-kicker">Your life map</span><h2 id="journey-heading">Your direction will take shape<br /><em>as you choose it.</em></h2><p>Create a goal to give this space a horizon.</p></div><EmptyAction onClick={() => openCreate('Goal')}>Create your first goal</EmptyAction></div> : <div className="lifeos-journey__header"><div><span className="lifeos-kicker">Keep the horizon in view</span><h2 id="journey-heading">The road ahead</h2></div><span className="lifeos-journey__goal">{journey.destinationGoal.title} <span>↗</span></span></div>}
+    </section>
 
-      <section className="lifeos-opening" style={{ '--hero-image': `url(${heroImage})` }}>
-        <div className="lifeos-opening__wash" />
-        <div className="lifeos-opening__content">
-          <span className="lifeos-kicker">Tuesday · 23 September 2026 · New York</span>
-          <p className="lifeos-opening__greeting">Good morning, Amit.</p>
-          <h1>Make something<br /><em>worth arriving at.</em></h1>
-          <p className="lifeos-opening__subline">One deliberate step toward a software engineering internship.</p>
-        </div>
-        <div className="lifeos-opening__signal"><span>Today&apos;s direction</span><strong>Build, then ship.</strong></div>
-      </section>
-
-      <section className="lifeos-focus" aria-labelledby="focus-heading">
-        <div className="lifeos-section-index"><span>01</span><span className="lifeos-rule" /><span>FOCUS</span></div>
-        <div className="lifeos-focus__body">
-          <div className="lifeos-focus__intro">
-            <span className="lifeos-kicker">The next meaningful move</span>
-            <h2 id="focus-heading">Build ShopSync<br /><em>UI components.</em></h2>
-            <p>Reusable pieces for the portfolio project that moves you closer to the internship.</p>
-            <button className="lifeos-primary-action" type="button" onClick={() => { if (primaryTask) toggleTask(primaryTask.id); notify(primaryTask?.completed ? 'Focus reopened.' : 'Focus marked complete.'); }}>
-              <span>{primaryTask?.completed ? 'Reopen focus' : 'Start focus'}</span><span aria-hidden="true">↗</span>
-            </button>
-          </div>
-          <div className="lifeos-focus__landscape" style={{ '--hero-image': `url(${heroImage})` }}>
-            <span className="lifeos-focus__duration">45 min</span>
-            <div className="lifeos-focus__caption"><span>Milestone 02</span><strong>Build portfolio projects</strong></div>
-            <div className="lifeos-progress-orbit"><span>in motion</span><b /></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="lifeos-journey" aria-labelledby="journey-heading">
-        <div className="lifeos-section-index"><span>02</span><span className="lifeos-rule" /><span>DIRECTION</span></div>
-        <div className="lifeos-journey__header"><div><span className="lifeos-kicker">Keep the horizon in view</span><h2 id="journey-heading">The road ahead</h2></div><span className="lifeos-journey__goal">Land a Software Engineering Internship <span>↗</span></span></div>
-        <div className="lifeos-path" aria-label="Journey from today's action to software internship">
-          <div className="lifeos-path__line" />
-          {journeySteps.map((step, index) => <div className={`lifeos-path__step lifeos-path__step--${step.tone}`} key={step.label}><div className="lifeos-path__marker">{index === 3 ? '→' : index === 0 ? '✦' : String(index).padStart(2, '0')}</div><span>{step.detail}</span><strong>{step.label}</strong></div>)}
-        </div>
-      </section>
-
-      <section className="lifeos-lower" aria-label="Progress and rhythm">
-        <div className="lifeos-progress">
-          <div className="lifeos-section-index"><span>03</span><span className="lifeos-rule" /><span>PROGRESS</span></div>
-          <div className="lifeos-progress__heading"><h2>Small proof,<br /><em>every day.</em></h2><span>Portfolio project<br />01 / 04 milestones</span></div>
-          <div className="lifeos-milestone-list">
-            {['Strengthen React fundamentals', 'Build portfolio projects', 'Prepare for interviews', 'Apply consistently'].map((label, index) => <div className={`lifeos-milestone ${index === 1 ? 'is-active' : ''}`} key={label}><span className="lifeos-milestone__dot">{index < 1 ? '✓' : index + 1}</span><div><strong>{label}</strong><span>{index < 1 ? 'In progress' : index === 1 ? "Today's territory" : 'Up next'}</span></div><span className="lifeos-milestone__line" /></div>)}
-          </div>
-        </div>
-        <div className="lifeos-rhythm">
-          <div className="lifeos-section-index"><span>04</span><span className="lifeos-rule" /><span>RHYTHM</span></div>
-          <h2>Keep showing up.</h2>
-          <div className="lifeos-week"><span>THIS WEEK</span><div>{(rhythm?.weekDays || []).map((day, index) => <i className={day.isToday ? 'is-today' : ''} key={day.key}>{day.label}</i>)}</div></div>
-          <div className="lifeos-habit-list">{habitLabels.map((label, index) => { const habit = rhythm?.habits?.[index]; return <button className="lifeos-habit" type="button" key={label} onClick={() => habit && toggleHabit(habit.id, 0)}><span className="lifeos-habit__mark">{habit?.history?.[0] ? '✓' : '○'}</span><span>{label}</span><b>{habit?.consistencyRate || 0}%</b></button>; })}</div>
-        </div>
-      </section>
-
-      <section className="lifeos-next" aria-label="Supporting actions"><span className="lifeos-kicker">When focus softens</span><div className="lifeos-next__items">{supportingTasks.slice(0, 3).map((task) => <button type="button" className={`lifeos-next__item ${task.completed ? 'is-complete' : ''}`} key={task.id} onClick={() => toggleTask(task.id)}><span>{task.completed ? '✓' : '○'}</span><strong>{task.title}</strong><small>{task.time} · {task.category}</small></button>)}</div></section>
-    </main>
-  );
+    <section className="lifeos-lower" aria-label="Progress and rhythm"><div className="lifeos-progress"><div className="lifeos-section-index"><span>03</span><span className="lifeos-rule" /><span>PROGRESS</span></div><div className="lifeos-empty-panel lifeos-empty-panel--bare"><div><h2>Your progress will take shape<br /><em>as you begin moving.</em></h2><p>No milestones or completion data yet.</p></div><EmptyAction onClick={() => openCreate('Goal')}>Create your first goal</EmptyAction></div></div>
+      <div className="lifeos-rhythm"><div className="lifeos-section-index"><span>04</span><span className="lifeos-rule" /><span>RHYTHM</span></div><h2>{rhythm.hasHabits ? 'Keep showing up.' : <>Build a rhythm<br /><em>that feels like yours.</em></>}</h2>{!rhythm.hasHabits ? <div className="lifeos-empty-rhythm"><p>Small practices become support for the life you&apos;re creating.</p><EmptyAction onClick={() => openCreate('Habit')}>Create a habit</EmptyAction></div> : <div className="lifeos-habit-list">{rhythm.habits.map((habit) => <button className="lifeos-habit" type="button" key={habit.id} onClick={() => toggleHabit(habit.id, 0)}><span className="lifeos-habit__mark">{habit.history[0] ? '✓' : '○'}</span><span>{habit.title}</span><b>{habit.consistencyRate}%</b></button>)}</div>}</div>
+    </section>
+    {focus.supportingTasks.length > 0 && <section className="lifeos-next" aria-label="Supporting actions"><span className="lifeos-kicker">More from your day</span><div className="lifeos-next__items">{focus.supportingTasks.slice(0, 3).map((task) => <button type="button" className={`lifeos-next__item ${task.completed ? 'is-complete' : ''}`} key={task.id} onClick={() => toggleTask(task.id)}><span>{task.completed ? '✓' : '○'}</span><strong>{task.title}</strong><small>{task.time || 'Today'} · {task.category || 'Task'}</small></button>)}</div></section>}
+  </main>;
 };
 
 export default DashboardPage;
