@@ -297,6 +297,14 @@
 /* =========================================================================
    Mobile: Sidebar completely hidden — bottom nav takes over
    ========================================================================= */
+/* Editorial shell: quiet framing around the workspace */
+.lifeos-sidebar { width: 220px; background: #080d0f; border-right-color: rgba(161,198,186,.12); }
+.lifeos-sidebar__brand { height: 58px; border-bottom-color: rgba(161,198,186,.12); }
+.lifeos-sidebar__logo-mark { background: transparent; border-color: rgba(211,166,109,.55); box-shadow: none; }
+.lifeos-sidebar__nav { padding-top: 24px; }
+.lifeos-sidebar__link { border-radius: 0; padding-left: 14px; }
+.lifeos-sidebar__link--active { background: rgba(195,152,101,.12); border-left: 2px solid #c39865; color: #e8dfcf; }
+
 @media (max-width: 768px) {
   .lifeos-sidebar {
     display: none;
