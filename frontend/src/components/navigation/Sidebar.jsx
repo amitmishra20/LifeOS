@@ -2,18 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Tooltip from '../ui/Tooltip';
 import {
-  IconDashboard,
-  IconTodayFocus,
-  IconTasks,
-  IconHabits,
-  IconGoals,
-  IconCalendar,
-  IconLearning,
-  IconProgress,
-  IconAnalytics,
-  IconGoalHealth,
-  IconRecommendations,
-  IconNotes,
   IconCollapse,
   IconExpand,
 } from '../ui/Icons';
@@ -97,16 +85,10 @@ export const Sidebar = ({
 
       {/* Footer Controls & System Status */}
       <div className="lifeos-sidebar__footer">
-        <NavLink
-          to="/dev/foundation"
-          className="lifeos-sidebar__status-link"
-          title="Phase 1 Engine & Diagnostics"
-        >
+        <div className="lifeos-sidebar__status-link" title="Local preview">
           <span className="lifeos-sidebar__status-dot" />
-          {!isCollapsed && (
-            <span className="lifeos-sidebar__status-text">Engine Foundation</span>
-          )}
-        </NavLink>
+          {!isCollapsed && <span className="lifeos-sidebar__status-text">Local Preview</span>}
+        </div>
 
         {/* Desktop Collapse Toggle */}
         <button

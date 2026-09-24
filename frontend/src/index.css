@@ -7,6 +7,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color var(--duration-panel) var(--ease-smooth), color var(--duration-panel) var(--ease-smooth), border-color var(--duration-panel) var(--ease-smooth), box-shadow var(--duration-panel) var(--ease-smooth);
 }
 
 html {
