@@ -1,0 +1,55 @@
+.lifeos-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background-color var(--duration-micro) var(--ease-spring),
+    border-color var(--duration-micro) var(--ease-spring),
+    color var(--duration-micro) var(--ease-spring),
+    transform var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-theme-toggle:hover {
+  background-color: var(--color-bg-surface-elevated);
+  border-color: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+.lifeos-theme-toggle:active {
+  transform: scale(0.97);
+}
+
+.lifeos-theme-toggle__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-primary);
+}
+
+.lifeos-theme-toggle__label {
+  letter-spacing: var(--tracking-wide);
+}
+
+@media (max-width: 768px) {
+  .lifeos-theme-toggle__label {
+    display: none;
+  }
+
+  .lifeos-theme-toggle {
+    padding: 6px;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+  }
+}

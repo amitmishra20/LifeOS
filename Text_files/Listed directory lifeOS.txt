@@ -1,0 +1,332 @@
+Viewed prd.md:345-375
+Viewed prd.md:530-555
+Viewed prd.md:760-845
+Viewed prd.md:865-920
+Viewed prd.md:1020-1120
+Viewed prd.md:1145-1190
+Viewed architecture.md:465-485
+Viewed architecture.md:548-592
+Viewed architecture.md:610-650
+Viewed architecture.md:695-725
+Viewed architecture.md:1415-1430
+Viewed rules.md:305-330
+Viewed rules.md:420-485
+Viewed rules.md:760-825
+Viewed design.md:170-225
+Viewed design.md:285-335
+Viewed design.md:530-565
+Edited prd.md
+Viewed prd.md:530-555
+Edited prd.md
+Viewed prd.md:770-855
+Edited prd.md
+Viewed prd.md:880-940
+Viewed prd.md:940-965
+Edited prd.md
+Viewed prd.md:1030-1145
+Viewed prd.md:1145-1195
+Edited prd.md
+Viewed prd.md:1220-1260
+Viewed prd.md:1280-1320
+Edited prd.md
+Viewed prd.md:1680-1725
+Viewed prd.md:1650-1680
+Edited prd.md
+Viewed architecture.md:465-488
+Edited architecture.md
+Viewed architecture.md:540-595
+Edited architecture.md
+Viewed architecture.md:630-685
+Viewed architecture.md:620-655
+Edited architecture.md
+Viewed architecture.md:695-735
+Viewed architecture.md:730-750
+Edited architecture.md
+Viewed architecture.md:960-985
+Viewed architecture.md:983-1000
+Edited architecture.md
+Viewed architecture.md:1420-1490
+Viewed architecture.md:1490-1515
+Edited architecture.md
+Viewed rules.md:305-335
+Edited rules.md
+Viewed rules.md:420-485
+Viewed rules.md:415-430
+Edited rules.md
+Viewed rules.md:500-525
+Edited rules.md
+Viewed rules.md:770-825
+Viewed rules.md:820-850
+Edited rules.md
+Viewed design.md:174-205
+Edited design.md
+Viewed design.md:285-310
+Edited design.md
+Viewed design.md:530-570
+Edited design.md
+
+# Final Phase 0 Implementation-Readiness Report: LifeOS
+
+**Source-of-Truth Documents Updated and Harmonized:**
+* [prd.md](file:///d:/lifeOS/prd.md) (`WHAT` — Requirements & Functional Scope)
+* [architecture.md](file:///d:/lifeOS/architecture.md) (`HOW` — System Design & Technical Specification)
+* [rules.md](file:///d:/lifeOS/rules.md) (`CONSTRAINTS` — Non-Negotiable Engineering Guardrails)
+* [design.md](file:///d:/lifeOS/design.md) (`LOOK + FEEL + BEHAVIOR` — Design System & Experience)
+
+---
+
+## Executive Summary: Phase 0 Verification
+
+All 10 architectural decisions have been integrated directly into the four source documents without introducing extraneous features or altering the core product vision. All previous discrepancies and ambiguities between documents have been resolved. **No application code has been written.**
+
+---
+
+## 1. Confirmed Product Understanding
+
+LifeOS is a unified Personal Operating System connecting long-term aspirations with daily actions in a continuous feedback loop:
+
+$$\text{Set Goals} \longrightarrow \text{Break Down (Milestones/Tasks)} \longrightarrow \text{Execute} \longrightarrow \text{Track Habits/Learning} \longrightarrow \text{Analyze} \longrightarrow \text{Recommend (Daily Focus)} \longrightarrow \text{Improve}$$
+
+### Core Invariants:
+1. **Meaningful Outcome Linking:** Every task, habit check-in, and learning session directly informs progress toward high-level goals.
+2. **Deterministic & Explainable:** Recommendations, Daily Focus ranking, and Goal Health evaluations use transparent, rule-based algorithms with human-readable rationale—never opaque black-box models.
+3. **Calm Productivity & Anti-Slop:** Eliminates guilt-inducing mechanics, notification spam, and artificial AI decoration in favor of clear hierarchy, high readability, and purposeful whitespace.
+4. **Zero-Trust Multi-Tenancy:** Multi-tenant privacy and resource ownership are enforced strictly by the backend server; client-supplied IDs are never trusted blindly.
+
+---
+
+## 2. Confirmed Architecture
+
+* **Architectural Pattern:** Modular Monolith in Spring Boot, backed by MySQL as the persistent system of record.
+* **Stateless Application Tier:** Spring Boot application instances remain stateless, allowing horizontal scaling behind standard reverse proxies or load balancers.
+* **DTO Boundary Layer:** Entity graphs are decoupled from API representations using request/response DTOs, preventing internal schema leaks and over-fetching.
+* **Decoupled Frontend:** React (Vite) single-page application communicating exclusively with Spring Boot over HTTPS REST APIs with JSON payloads. Direct database access from React is strictly prohibited.
+
+---
+
+## 3. Confirmed Module Boundaries
+
+```
+Backend Modules (com.lifeos.*)
+├── security/         # HttpOnly cookie auth, CSRF, security filters, UserDetailsService
+├── user/             # User profiles, preferences, controlled account deletion
+├── goal/             # Goals & Milestones, progress calculations, Life Map queries
+├── task/             # Tasks (standalone, goal-linked, milestone-linked), status transitions
+├── habit/            # Habits & HabitLogs, streak logic, weekly consistency
+├── learning/         # LearningItems & LearningSessions, study hour tracking
+├── calendar/         # Events & unified schedule aggregation (deadlines + custom events)
+├── note/             # Notes capture, categorization, text search
+├── analytics/        # Progress rollups, Productivity Score formula
+├── recommendation/   # Dynamic scoring engine, Daily Focus ranking, explainability generator
+├── audit/            # Security and compliance event logging
+└── common/           # Global exception handling, RFC-7807 ErrorResponse, BaseEntity
+```
+
+---
+
+## 4. Confirmed Database Model
+
+MySQL is the persistent system of record. **For MVP, recommendations are dynamic and stateless; no `recommendations` table is created.**
+
+### Core Relational Schema:
+1. **`users`**: `id` (PK, BigInt), `name`, `email` (Unique, Indexed), `password_hash`, `created_at`, `updated_at`.
+2. **`goals`**: `id` (PK), `user_id` (FK $\rightarrow$ `users.id`, Indexed), `title`, `description`, `category`, `priority` (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), `start_date`, `target_date`, `status` (`ACTIVE`, `PAUSED`, `COMPLETED`, `ARCHIVED`), `progress` (0–100), `created_at`, `updated_at`.
+3. **`milestones`**: `id` (PK), `goal_id` (FK $\rightarrow$ `goals.id`, Indexed), `title`, `description`, `target_date`, `status`, `progress` (0–100), `order_index`.
+4. **`tasks`**:
+   * `id` (PK), `user_id` (FK $\rightarrow$ `users.id`, Indexed, **REQUIRED**)
+   * `goal_id` (FK $\rightarrow$ `goals.id`, Indexed, **OPTIONAL**)
+   * `milestone_id` (FK $\rightarrow$ `milestones.id`, Indexed, **OPTIONAL**)
+   * `title`, `description`, `priority` (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), `status` (`TODO`, `IN_PROGRESS`, `COMPLETED`, `OVERDUE`), `due_date` (Indexed), `estimated_minutes`, `completed_at`, `created_at`, `updated_at`.
+   * *Structural Constraint:* Standalone, goal-linked, and milestone-linked tasks are all valid. If `milestone_id` is present, the server validates `milestone.user_id == task.user_id` AND `milestone.goal_id == task.goal_id`.
+5. **`habits`**: `id` (PK), `user_id` (FK, Indexed), `name`, `description`, `frequency` (`DAILY`, `WEEKLY`), `target_per_week`, `status` (`ACTIVE`, `ARCHIVED`), `created_at`.
+6. **`habit_logs`**: `id` (PK), `habit_id` (FK, Indexed), `log_date` (Date, Indexed), `completed` (Boolean), `notes`. Unique constraint on `(habit_id, log_date)`.
+7. **`learning_items`**: `id` (PK), `user_id` (FK, Indexed), `name`, `category`, `target_progress`, `current_progress`, `status`.
+8. **`learning_sessions`**: `id` (PK), `learning_item_id` (FK, Indexed), `session_date`, `duration_minutes`, `topic`, `notes`.
+9. **`events`**: `id` (PK), `user_id` (FK, Indexed), `title`, `description`, `start_time` (Indexed), `end_time`, `type` (`CUSTOM`, `DEADLINE`, `MILESTONE`, `LEARNING`).
+10. **`notes`**: `id` (PK), `user_id` (FK, Indexed), `title`, `content` (Text), `category`, `created_at`, `updated_at`.
+11. **`productivity_logs`**: `id` (PK), `user_id` (FK, Indexed), `log_date` (Date), `score`, `task_rate`, `habit_rate`, `goal_rate`, `learning_score`.
+12. **`audit_logs`**: `id` (PK), `user_id` (Nullable), `event_type`, `ip_address`, `status`, `timestamp`.
+
+---
+
+## 5. Confirmed Authentication & Security Model
+
+* **Cookie Management:** Server-managed session credentials using encrypted, `HttpOnly` cookies (`Secure` in production, `SameSite=Strict` or `Lax`).
+* **Storage Rules:** Authentication tokens must **never** be stored in browser `localStorage` or `sessionStorage`.
+* **CSRF Protection:** Synchronizer token or double-submit cookie pattern protecting all mutating endpoints (`POST`, `PUT`, `PATCH`, `DELETE`).
+* **Password Policy:** Hashed using BCrypt (work factor $\ge 12$) or Argon2. Hashes are excluded from all DTOs and log statements.
+* **Server-Side Authorization:** Identity is extracted strictly from `SecurityContextHolder`. Client-supplied user IDs in URL parameters or bodies are ignored or rejected. Every query verifies ownership:
+  $$\text{WHERE resource.id} = :id \text{ AND resource.user.id} = :authenticatedUserId$$
+* **Account Deletion:** Explicit user account deletion (`DELETE /api/v1/users/me`) performs a controlled, programmatic transactional deletion of all user-owned records (goals, milestones, tasks, habits, logs, learning items, sessions, events, notes, productivity logs). Only essential security audit entries are retained.
+
+---
+
+## 6. Confirmed API Conventions
+
+All endpoints are standardized under `/api/v1/`:
+
+| Module | Endpoints |
+| :--- | :--- |
+| **Auth & Users** | `POST /api/v1/auth/register`<br>`POST /api/v1/auth/login`<br>`POST /api/v1/auth/logout`<br>`GET /api/v1/auth/me`<br>`DELETE /api/v1/users/me` |
+| **Goals** | `GET /api/v1/goals`<br>`POST /api/v1/goals`<br>`GET /api/v1/goals/{id}`<br>`PUT /api/v1/goals/{id}`<br>`DELETE /api/v1/goals/{id}` |
+| **Milestones** | `GET /api/v1/goals/{goalId}/milestones`<br>`POST /api/v1/goals/{goalId}/milestones`<br>`GET /api/v1/milestones/{id}`<br>`PUT /api/v1/milestones/{id}`<br>`DELETE /api/v1/milestones/{id}` |
+| **Tasks** | `GET /api/v1/tasks`<br>`POST /api/v1/tasks`<br>`GET /api/v1/tasks/{id}`<br>`PUT /api/v1/tasks/{id}`<br>`DELETE /api/v1/tasks/{id}`<br>`PATCH /api/v1/tasks/{id}/complete` |
+| **Habits** | `GET /api/v1/habits`<br>`POST /api/v1/habits`<br>`GET /api/v1/habits/{id}`<br>`PUT /api/v1/habits/{id}`<br>`DELETE /api/v1/habits/{id}`<br>`POST /api/v1/habits/{id}/logs` |
+| **Learning** | `GET /api/v1/learning`<br>`POST /api/v1/learning`<br>`GET /api/v1/learning/{id}`<br>`PUT /api/v1/learning/{id}`<br>`DELETE /api/v1/learning/{id}`<br>`POST /api/v1/learning/{id}/sessions` |
+| **Calendar** | `GET /api/v1/events`<br>`POST /api/v1/events`<br>`GET /api/v1/events/{id}`<br>`PUT /api/v1/events/{id}`<br>`DELETE /api/v1/events/{id}` |
+| **Notes** | `GET /api/v1/notes`<br>`POST /api/v1/notes`<br>`GET /api/v1/notes/{id}`<br>`PUT /api/v1/notes/{id}`<br>`DELETE /api/v1/notes/{id}` |
+| **Analytics** | `GET /api/v1/analytics/dashboard`<br>`GET /api/v1/analytics/productivity`<br>`GET /api/v1/analytics/goals`<br>`GET /api/v1/analytics/habits` |
+| **Recommendations** | `GET /api/v1/recommendations`<br>`GET /api/v1/recommendations/daily-focus` |
+
+---
+
+## 7. Confirmed Responsive Strategy
+
+* **Mobile as First-Class:** Full workflow completion on mobile viewports ($< 640\text{px}$) without horizontal scrolling, broken forms, or illegible charts.
+* **Intent-Based Grouped Navigation:**
+  * `HOME`: Dashboard
+  * `FOCUS`: Today's Focus, Tasks, Habits
+  * `PLAN`: Goals, Calendar
+  * `GROW`: Learning, Progress
+  * `REFLECT`: Analytics, Goal Health, Recommendations
+  * `CAPTURE`: Notes
+* **Adaptive Forms & Touch Targets:** Modals become full-screen sliding drawers on mobile; touch targets enforce $\ge 44\text{px} \times 44\text{px}$; desktop multi-column tables convert into stacked card summaries.
+
+---
+
+## 8. Confirmed Design-System Direction
+
+* **Palette Tokens:**
+  * Foundation: **Graphite / Midnight** (neutral, restrained light and dark surfaces).
+  * Primary Accent: **Deep Indigo**.
+  * Semantic Indicators: **Emerald** (healthy/completed), **Amber** (warning/at-risk), **Crimson** (behind/critical/overdue).
+* **Token Primitives:** Centralized CSS variables/tokens for colors, typography scale, spacing ($4, 8, 12, 16, 24, 32, 48, 64, 96$), radiuses (`small`, `medium`, `large`, `pill`), shadows, and motion timings ($120\text{–}600\text{ms}$).
+* **Life Map MVP Scope:** Implemented as an interactive spatial drill-down view inside Goal Details (`Goal -> Milestones -> Tasks -> Actions`). Complex canvas/node-graph editors are avoided for MVP.
+
+---
+
+## 9. Confirmed Recommendation & Intelligence Architecture
+
+* **Stateless Dynamic Evaluation:** Evaluated on demand by `RecommendationService` from live database state; no Redis cache or database table for recommendations in MVP.
+* **Goal Status vs. Health Separation:**
+  * Lifecycle Status: `ACTIVE`, `PAUSED`, `COMPLETED`, `ARCHIVED`
+  * Health State: `ON_TRACK`, `AT_RISK`, `BEHIND`, `COMPLETED`
+* **Goal Health Formula:**
+  $$\text{Expected Progress} = \frac{\text{Current Date} - \text{Start Date}}{\text{Target Date} - \text{Start Date}} \times 100$$
+  * $\text{Progress} \ge 100\% \implies \mathbf{COMPLETED}$
+  * $\text{Progress} \ge \text{Expected Progress} - 5\% \implies \mathbf{ON\_TRACK}$
+  * $\text{Progress} < \text{Expected Progress} - 5\% \text{ and } \ge \text{Expected Progress} - 25\% \implies \mathbf{AT\_RISK}$
+  * $\text{Progress} < \text{Expected Progress} - 25\% \text{ OR } (\text{Target Date} < \text{Today} \text{ and } \text{Progress} < 100\%) \implies \mathbf{BEHIND}$
+* **Today's Focus Scoring:**
+  $$\text{Task Score} = \text{Priority Score} + \text{Deadline Score} + \text{Goal Health Score} + \text{Overdue Score}$$
+  * Priority: $\text{LOW}=10, \text{MEDIUM}=20, \text{HIGH}=30, \text{CRITICAL}=40$
+  * Deadline: Due today $= +40$, Due tomorrow $= +30$, Due in 2 days $= +20$, Due in 3–7 days $= +10$, Due $> 7$ days $= +0$
+  * Overdue: $+50$
+  * Goal Health: Linked goal is $\text{BEHIND} = +30, \text{AT\_RISK} = +15, \text{ON\_TRACK} = +0$, No linked goal $= +0$
+  * **Result:** Returns top 5 eligible incomplete tasks (`status IN ('TODO', 'IN_PROGRESS', 'OVERDUE')`) with human-readable explanations.
+
+---
+
+## 10. Confirmed Testing Strategy
+
+1. **Algorithm & Unit Tests:** Deterministic unit tests for Goal Health thresholds, Today's Focus scoring combinations, Habit streak increments/resets, and the Productivity Score formula ($30/25/25/20$).
+2. **Integration Tests:** `@SpringBootTest` + `MockMvc` verifying full controller $\rightarrow$ service $\rightarrow$ repository flows, database constraint validation, and rollback semantics.
+3. **Multi-Tenant Security Tests:** Explicit validation that User A cannot read, mutate, complete, or delete User B's resources, returning `404 Not Found` or `403 Forbidden` with zero data exposure.
+4. **UX & State Validation:** Verifying all 4 mandatory UI states (`Loading`, `Success`, `Empty`, `Error`) on Mobile, Tablet, and Desktop viewports.
+
+---
+
+## 11. Confirmed Implementation Dependency Order
+
+```
+Phase 1: Foundation & Project Initialization
+  ├── Maven Spring Boot modular structure & MySQL connection
+  ├── Vite + React project structure, design tokens, & global CSS
+  └── Global error model (RFC-7807) & base layout skeletons
+
+Phase 2: Authentication & Security
+  ├── User entity, BCrypt PasswordEncoder, & UserDetailsService
+  ├── HttpOnly cookie authentication filter & CSRF configuration
+  ├── Login, Register, Logout, & Me APIs (/api/v1/auth/*)
+  ├── Controlled account deletion (/api/v1/users/me)
+  └── Frontend AuthContext, login/register views, & PrivateRoute
+
+Phase 3: Goals & Milestones Domain
+  ├── Goal & Milestone entities, repositories, & transactional services
+  ├── Goal Health calculation service & progress aggregation
+  └── Goals list, Goal Details page, & spatial Life Map drill-down
+
+Phase 4: Task Management Domain
+  ├── Task entity with nullable goal_id and milestone_id
+  ├── Milestone-goal validation & ownership integrity checks
+  ├── Status lifecycle (TODO, IN_PROGRESS, COMPLETED, OVERDUE)
+  ├── Task completion endpoint: PATCH /api/v1/tasks/{id}/complete
+  └── Task list, filters, priority tagging, & quick-add dialog
+
+Phase 5: Habits & Learning Trackers
+  ├── Habits & HabitLogs: streak tracking & consistency matrix
+  ├── LearningItems & LearningSessions: hours accumulator
+  └── Habits check-in UI & Learning progress cards
+
+Phase 6: Calendar (Temporal Aggregation) & Notes
+  ├── Events entity & aggregated deadline query service
+  ├── Notes entity with category filtering & text search
+  └── Calendar (month/agenda view) & distraction-free Notes UI
+
+Phase 7: Analytics & Productivity Engine
+  ├── Metric aggregation service (task, habit, goal, learning rates)
+  ├── Configurable weighted Productivity Score calculation
+  └── Analytics visual dashboard (Recharts)
+
+Phase 8: Recommendation Engine & Daily Focus
+  ├── Deterministic scoring algorithm with centralized constants
+  ├── Human-readable rationale builder
+  └── Daily Focus API: GET /api/v1/recommendations/daily-focus
+
+Phase 9: Unified Dashboard Integration
+  ├── Aggregated dashboard endpoint: GET /api/v1/analytics/dashboard
+  ├── Today's Focus, Goal Health summary, & habit check-in widgets
+  └── Global Quick Capture modal
+
+Phase 10: Responsive Hardening, Audit Logging, & End-to-End Verification
+  ├── Security audit logging for sensitive actions
+  ├── Viewport testing (mobile, tablet, desktop)
+  └── End-to-end user journey verification
+```
+
+---
+
+## 12. Remaining Non-Blocking Technical Risks
+
+These items do not block Phase 1 initialization, but must be observed during implementation:
+
+1. **Local Calendar Dates vs. UTC:** Habit logs track user-local calendar dates (`YYYY-MM-DD` / `LocalDate`). Server evaluation must avoid UTC date shifting around midnight.
+2. **JPA Lazy-Loading / N+1 Avoidance:** Loading Dashboard metrics and Goal Details must use dedicated DTO projection queries or `@EntityGraph` to prevent multiple sequential queries.
+3. **CSRF Token Handshake:** The Spring Security CSRF cookie must be readable by the frontend or loaded via a token endpoint on app initialization to supply the `X-XSRF-TOKEN` header on mutations.
+4. **Mobile Dashboard Vertical Scroll Length:** The single-column mobile dashboard must prioritize Today's Focus and Goal Health at the top, grouping secondary widgets into compact sections to prevent user fatigue.
+
+---
+
+## 13. Exact Recommended Phase 1 Starting Point
+
+When approved, Phase 1 will begin with:
+
+1. **Repository Structure Setup:**
+   * Backend directory: `backend/` (Spring Boot 3.x, Java 17+, Maven).
+   * Frontend directory: `frontend/` (Vite, React 18+, Vanilla CSS / Tailwind tokens).
+2. **Backend Foundation:**
+   * Configure `pom.xml` with dependencies: Spring Web, Spring Data JPA, Spring Security, Validation, MySQL Connector, Lombok, JUnit 5.
+   * Configure `application.yml` with environment-driven database credentials and connection pool settings.
+   * Implement base package hierarchy (`com.lifeos.*`), `BaseEntity` (with `created_at` and `updated_at` auditing), and centralized `GlobalExceptionHandler` with `ErrorResponse`.
+3. **Frontend Foundation:**
+   * Initialize Vite React project.
+   * Implement design token definitions (`tokens.css` with Graphite/Midnight surfaces, Deep Indigo accent, semantic colors, spacing, and radiuses).
+   * Establish responsive application shell (`AppLayout`, sidebar navigation, and main content container).
+
+---
+
+> **Phase 0 is complete and all documentation is aligned.**
+> 
+> **No application code has been written.**
+> 
+> **Awaiting your explicit approval before beginning Phase 1.**

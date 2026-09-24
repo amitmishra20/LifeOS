@@ -1,0 +1,111 @@
+.lifeos-journey-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: journeyFadeIn 550ms var(--ease-spring) both;
+}
+
+@keyframes journeyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifeos-journey-hint {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.lifeos-journey-canvas {
+  position: relative;
+  width: 100%;
+  min-height: 160px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-top-color: var(--color-border-light-top);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-8);
+  overflow: visible;
+  z-index: 5;
+}
+
+.lifeos-journey-svg-trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.lifeos-journey-svg {
+  width: 100%;
+  height: 60px;
+}
+
+.lifeos-journey-waypoints-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .lifeos-journey-canvas {
+    padding: var(--space-5) var(--space-4);
+    min-height: auto;
+  }
+
+  .lifeos-journey-waypoints-container {
+    flex-direction: column;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding-left: var(--space-4);
+    position: relative;
+  }
+
+  /* Vertical connecting line for mobile journey */
+  .lifeos-journey-waypoints-container::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--space-4) + 18px);
+    top: 20px;
+    bottom: 20px;
+    width: 1.5px;
+    background: linear-gradient(
+      180deg,
+      var(--color-accent-primary) 0%,
+      var(--color-border-default) 40%,
+      var(--color-border-subtle) 100%
+    );
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .lifeos-journey-svg-trail {
+    display: none;
+  }
+}
+
+.lifeos-journey-empty {
+  padding: var(--space-6);
+  background-color: var(--color-bg-surface-card);
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+}

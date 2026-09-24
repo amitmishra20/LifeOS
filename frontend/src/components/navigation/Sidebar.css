@@ -1,0 +1,304 @@
+.lifeos-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 40;
+  transition: width var(--duration-panel) var(--ease-spring), background-color var(--duration-panel) var(--ease-smooth);
+  overflow: hidden;
+}
+
+/* Collapsed Mode (Rail) */
+.lifeos-sidebar--collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+/* Brand Header */
+.lifeos-sidebar__brand {
+  height: var(--header-height);
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.lifeos-sidebar__logo-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.lifeos-sidebar__logo-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(212, 163, 115, 0.05) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-accent-primary);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+.lifeos-sidebar__leaf-svg {
+  stroke: var(--color-accent-primary);
+}
+
+.lifeos-sidebar__brand-text {
+  display: flex;
+  align-items: center;
+}
+
+.lifeos-sidebar__brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+/* Nav Section */
+.lifeos-sidebar__nav {
+  flex: 1;
+  padding: var(--space-4) var(--space-3);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lifeos-sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lifeos-sidebar__group-title {
+  font-size: 0.6875rem; /* 11px */
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-3) 4px;
+}
+
+.lifeos-sidebar__group-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lifeos-sidebar__item {
+  position: relative;
+}
+
+/* Nav Item Link */
+.lifeos-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px var(--space-3);
+  min-height: 40px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-micro) var(--ease-smooth);
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.lifeos-sidebar__link:hover {
+  color: var(--color-text-primary);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.lifeos-sidebar__link:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+/* Active Link Pill - matches the reference amber active pill */
+.lifeos-sidebar__link--active {
+  color: var(--color-accent-primary);
+  background: linear-gradient(90deg, rgba(212, 163, 115, 0.12) 0%, rgba(212, 163, 115, 0.04) 100%);
+  border: 1px solid rgba(212, 163, 115, 0.25);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.lifeos-sidebar__link--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background-color: var(--color-accent-primary);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(212, 163, 115, 0.4);
+}
+
+.lifeos-sidebar__link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  transition: opacity var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-sidebar__link:hover .lifeos-sidebar__link-icon,
+.lifeos-sidebar__link--active .lifeos-sidebar__link-icon {
+  opacity: 1;
+}
+
+.lifeos-sidebar__link-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+/* Scenic Inspiration Thumbnail Card (matches reference bottom card) */
+.lifeos-sidebar__scenic-card-wrapper {
+  padding: var(--space-2) var(--space-3);
+  margin-top: auto;
+}
+
+.lifeos-sidebar__scenic-card {
+  position: relative;
+  height: 110px;
+  border-radius: var(--radius-lg);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: flex-end;
+  transition: transform var(--duration-micro) var(--ease-smooth), border-color var(--duration-micro) var(--ease-smooth);
+  cursor: pointer;
+}
+
+.lifeos-sidebar__scenic-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.lifeos-sidebar__scenic-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 9, 12, 0.2) 0%, rgba(8, 9, 12, 0.85) 100%);
+  pointer-events: none;
+}
+
+.lifeos-sidebar__scenic-content {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-3);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.lifeos-sidebar__scenic-text {
+  font-family: var(--font-serif);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.25;
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.lifeos-sidebar__scenic-arrow {
+  color: var(--color-accent-primary);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-bold);
+  transition: transform var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-sidebar__scenic-card:hover .lifeos-sidebar__scenic-arrow {
+  transform: translateX(3px);
+}
+
+/* Footer Controls & System Status */
+.lifeos-sidebar__footer {
+  padding: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.lifeos-sidebar__status-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-sidebar__status-link:hover {
+  color: var(--color-text-secondary);
+}
+
+.lifeos-sidebar__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-success-base);
+  box-shadow: 0 0 6px var(--color-success-base);
+}
+
+.lifeos-sidebar__collapse-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color var(--duration-micro) var(--ease-smooth), background-color var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-sidebar__collapse-btn:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface-elevated);
+}
+
+/* =========================================================================
+   Mobile: Sidebar completely hidden — bottom nav takes over
+   ========================================================================= */
+@media (max-width: 768px) {
+  .lifeos-sidebar {
+    display: none;
+  }
+}

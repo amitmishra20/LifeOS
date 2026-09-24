@@ -1,0 +1,91 @@
+.lifeos-mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--mobile-nav-height);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border-subtle);
+  z-index: 50;
+  backdrop-filter: blur(16px);
+  transition: background-color var(--duration-panel) var(--ease-smooth);
+}
+
+@media (max-width: 768px) {
+  .lifeos-mobile-nav {
+    display: block;
+  }
+}
+
+.lifeos-mobile-nav__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 var(--space-2);
+}
+
+.lifeos-mobile-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  min-width: 54px;
+  min-height: 48px;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-micro) var(--ease-spring);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lifeos-mobile-nav__item:hover,
+.lifeos-mobile-nav__item:active {
+  color: var(--color-text-primary);
+}
+
+.lifeos-mobile-nav__item--active {
+  color: var(--color-accent-primary);
+}
+
+.lifeos-mobile-nav__label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem; /* 11px */
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Center Quick Capture Elevated Trigger */
+.lifeos-mobile-nav__capture-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 56px;
+  margin-top: -14px;
+}
+
+.lifeos-mobile-nav__capture-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px var(--color-accent-glow);
+  border: 2px solid var(--color-bg-base);
+  transition: transform var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-mobile-nav__capture-btn:active .lifeos-mobile-nav__capture-circle {
+  transform: scale(0.92);
+}
+

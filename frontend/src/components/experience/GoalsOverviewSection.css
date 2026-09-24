@@ -1,0 +1,47 @@
+.lifeos-goals-overview-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.lifeos-goals-overview-card {
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.lifeos-goals-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.lifeos-goals-empty {
+  padding: var(--space-5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.lifeos-goals-empty-btn {
+  padding: 6px 14px;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-primary);
+  color: var(--color-accent-primary);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-goals-empty-btn:hover {
+  background: var(--color-accent-primary);
+  color: #050507;
+}

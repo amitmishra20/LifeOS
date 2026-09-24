@@ -1,0 +1,91 @@
+.lifeos-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  user-select: none;
+}
+
+/* Pills Variant */
+.lifeos-tabs--pills {
+  background-color: var(--color-bg-surface-subtle);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.lifeos-tabs--pills .lifeos-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-micro) var(--ease-spring),
+    color var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-tabs--pills .lifeos-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.lifeos-tabs--pills .lifeos-tab--active {
+  background-color: var(--color-bg-surface-elevated);
+  color: var(--color-text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Underline Variant */
+.lifeos-tabs--underline {
+  border-bottom: 1px solid var(--color-border-subtle);
+  gap: var(--space-4);
+}
+
+.lifeos-tabs--underline .lifeos-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-1);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  position: relative;
+  transition: color var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-tabs--underline .lifeos-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.lifeos-tabs--underline .lifeos-tab--active {
+  color: var(--color-text-primary);
+}
+
+.lifeos-tabs--underline .lifeos-tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent-primary);
+  border-radius: var(--radius-pill);
+}
+
+.lifeos-tab__badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+.lifeos-tab--active .lifeos-tab__badge {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
+}

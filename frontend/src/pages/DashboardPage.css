@@ -1,0 +1,173 @@
+/**
+ * LifeOS Dashboard Environment Styles
+ * Source of Truth: LIFEOS — PHASE 3 PRODUCT SYSTEM + UI/UX MATURATION
+ */
+
+.lifeos-dashboard-env {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: 100vh;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .lifeos-dashboard-env {
+    padding: 0 var(--space-3) var(--space-8);
+    gap: var(--space-4);
+    max-width: 100%;
+  }
+}
+
+
+
+/* =============================================================================
+   Feedback Notification Toast
+   ============================================================================= */
+.lifeos-feedback-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-accent);
+  color: var(--color-text-primary);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 100;
+  animation: slideToast 0.3s ease;
+}
+
+@keyframes slideToast {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.lifeos-feedback-toast__icon {
+  color: var(--color-success-text);
+  font-weight: bold;
+}
+
+/* =============================================================================
+   Main 2-Column Grid Workspace
+   ============================================================================= */
+.lifeos-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .lifeos-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lifeos-dashboard-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.lifeos-dashboard-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* =============================================================================
+   Loading & Error States
+   ============================================================================= */
+.lifeos-dashboard-loading-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.lifeos-skeleton-hero {
+  height: 220px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(90deg, var(--color-bg-surface-card) 25%, var(--color-bg-surface-elevated) 50%, var(--color-bg-surface-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.lifeos-skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-6);
+}
+
+.lifeos-skeleton-main,
+.lifeos-skeleton-side {
+  height: 380px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, var(--color-bg-surface-card) 25%, var(--color-bg-surface-elevated) 50%, var(--color-bg-surface-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.lifeos-dashboard-error-surface {
+  padding: var(--space-10);
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-8) 0;
+}
+
+.lifeos-error-icon {
+  font-size: 2rem;
+}
+
+.lifeos-error-title {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.lifeos-error-desc {
+  font-size: 0.84rem;
+  color: var(--color-danger-text);
+  max-width: 400px;
+}
+
+.lifeos-error-retry-btn {
+  margin-top: var(--space-2);
+  padding: 8px 18px;
+  background-color: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-error-retry-btn:hover {
+  background-color: var(--color-bg-surface-overlay);
+  border-color: var(--color-accent-primary);
+}

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   LifeOS — Surface Component Styles
+   Supports open editorial layouts, selective surfaces, and tactile elevation
+   ========================================================================== */
+
+.lifeos-surface {
+  position: relative;
+  transition:
+    background-color var(--duration-panel) var(--ease-smooth),
+    border-color var(--duration-panel) var(--ease-smooth),
+    box-shadow var(--duration-panel) var(--ease-smooth);
+}
+
+/* Open: No container, pure editorial breathing room */
+.lifeos-surface--open {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Subtle: Whisper inset or gentle background grouping */
+.lifeos-surface--subtle {
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+/* Card: Selective container with crisp border */
+.lifeos-surface--card {
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-top-color: var(--color-border-light-top);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Raised: Tactile elevated plane with ambient depth */
+.lifeos-surface--raised {
+  background-color: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-default);
+  border-top-color: var(--color-border-light-top);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}

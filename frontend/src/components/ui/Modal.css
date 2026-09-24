@@ -1,0 +1,93 @@
+.lifeos-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(12px) saturate(180%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 100;
+  animation: lifeos-overlay-fade 200ms var(--ease-spring);
+}
+
+.lifeos-modal {
+  width: 100%;
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-top-color: rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  animation: lifeos-modal-pop 250ms var(--ease-spring);
+}
+
+/* Modal Sizes */
+.lifeos-modal--sm { max-width: 420px; }
+.lifeos-modal--md { max-width: 560px; }
+.lifeos-modal--lg { max-width: 740px; }
+.lifeos-modal--xl { max-width: 960px; }
+
+.lifeos-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.lifeos-modal__title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+}
+
+.lifeos-modal__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.lifeos-modal__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  transition:
+    background-color var(--duration-micro) var(--ease-spring),
+    color var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-modal__close-btn:hover {
+  background-color: var(--color-bg-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.lifeos-modal__body {
+  padding: var(--space-6);
+}
+
+@keyframes lifeos-overlay-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lifeos-modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

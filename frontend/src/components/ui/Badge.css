@@ -1,0 +1,77 @@
+.lifeos-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-wide);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Sizes */
+.lifeos-badge--xs {
+  padding: 2px 6px;
+  font-size: 0.6875rem; /* 11px */
+}
+
+.lifeos-badge--sm {
+  padding: 3px 8px;
+  font-size: var(--font-size-xs); /* 12px */
+}
+
+.lifeos-badge--md {
+  padding: 4px 10px;
+  font-size: var(--font-size-sm); /* 13px */
+}
+
+/* Dots */
+.lifeos-badge__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+/* Variants */
+.lifeos-badge--default {
+  background-color: var(--color-bg-surface-elevated);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border-subtle);
+}
+
+/* Warm / Accent variant */
+.lifeos-badge--warm,
+.lifeos-badge--indigo {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
+  border-color: var(--color-border-accent-subtle);
+}
+
+.lifeos-badge--emerald {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success-text);
+  border-color: var(--color-success-border);
+}
+
+.lifeos-badge--amber {
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+  border-color: var(--color-warning-border);
+}
+
+.lifeos-badge--crimson {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger-text);
+  border-color: var(--color-danger-border);
+}
+
+.lifeos-badge--outline {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border-color: var(--color-border-default);
+}

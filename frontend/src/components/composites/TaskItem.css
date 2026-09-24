@@ -1,0 +1,112 @@
+.lifeos-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 9px var(--space-3);
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-micro) var(--ease-smooth);
+  user-select: none;
+}
+
+.lifeos-task-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.lifeos-task-item:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+.lifeos-task-item--receded {
+  opacity: 0.85;
+}
+
+.lifeos-task-item--receded:hover {
+  opacity: 1;
+}
+
+.lifeos-task-item__checkbox-wrap {
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.lifeos-task-item__checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-task-item__checkbox--checked {
+  background-color: var(--color-success-base);
+  border-color: var(--color-success-base);
+  color: #050507;
+}
+
+.lifeos-task-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.lifeos-task-item__title {
+  font-size: 0.84rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  transition: color var(--duration-micro) var(--ease-smooth);
+  overflow-wrap: break-word;
+}
+
+.lifeos-task-item--completed .lifeos-task-item__title {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.lifeos-task-item__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lifeos-task-item__dot {
+  color: var(--color-text-tertiary);
+}
+
+.lifeos-task-item__milestone {
+  color: var(--color-accent-primary);
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================================
+   Mobile: Task items with proper touch targets
+   ========================================================================= */
+@media (max-width: 768px) {
+  .lifeos-task-item {
+    min-height: 44px;
+    padding: 10px var(--space-3);
+  }
+
+  .lifeos-task-item__meta {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+}
+

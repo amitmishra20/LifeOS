@@ -1,0 +1,246 @@
+/**
+ * LifeOS Design System Tokens v2
+ * Source of Truth: design.md & finalized implementation_plan.md
+ * Visual Direction: Cinematic · Calm · Premium · Editorial · Human · Spatial · Fluid
+ * Default Theme: Deep Black (with Light counterpart)
+ */
+
+:root {
+  /* ==========================================================================
+     Colors - Foundation & Surfaces (Deep Black Theme - Default)
+     ========================================================================== */
+  --color-bg-canvas: #050507;           /* Deepest environment plane */
+  --color-bg-base: #090A0D;             /* Base workspace canvas */
+  --color-bg-surface: #0E1015;          /* Persistent navigation shells (Sidebar, Header) */
+  --color-bg-surface-card: #13151C;     /* Selective surface containers */
+  --color-bg-surface-subtle: #171A23;   /* Inset groupings, track backgrounds, table headers */
+  --color-bg-surface-elevated: #1C202B; /* Interactive hover states, elevated layers */
+  --color-bg-surface-overlay: rgba(14, 16, 22, 0.88); /* Translucent overlays with blur */
+
+  /* Borders & Optical Edges */
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-default: rgba(255, 255, 255, 0.09);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-light-top: rgba(255, 255, 255, 0.12); /* Subtle ambient top-down highlight */
+  --color-border-accent: rgba(212, 163, 115, 0.35);
+  --color-border-accent-subtle: rgba(212, 163, 115, 0.15);
+
+  /* Typography Colors */
+  --color-text-primary: #F4F4F6;         /* High-contrast crisp foreground */
+  --color-text-secondary: #9B9FA9;       /* Calm descriptive & secondary body */
+  --color-text-muted: #646875;           /* Metadata, breadcrumbs, micro-labels */
+  --color-text-tertiary: #454854;        /* Subtle dividers, disabled elements */
+  --color-text-inverse: #050507;         /* Contrast text on light/accent elements */
+
+  /* Primary Accent - Warm Cinematic Sand / Ochre */
+  --color-accent-primary: #D4A373;       /* Active focus anchor, conscious energy */
+  --color-accent-hover: #E0B589;         /* Smooth interaction hover */
+  --color-accent-active: #C49262;        /* Press / active state */
+  --color-accent-subtle: rgba(212, 163, 115, 0.10); /* Tinted backdrops for active items */
+  --color-accent-glow: rgba(212, 163, 115, 0.18);   /* Subtle warm atmospheric glow */
+
+  /* Semantic - Sage / Teal (Progress / Momentum / Completed) */
+  --color-success-base: #2DD4BF;
+  --color-success-hover: #14B8A6;
+  --color-success-subtle: rgba(45, 212, 191, 0.10);
+  --color-success-text: #5EEAD4;
+  --color-success-border: rgba(45, 212, 191, 0.25);
+
+  /* Semantic - Amber (Attention / Approaching Deadlines) */
+  --color-warning-base: #F59E0B;
+  --color-warning-hover: #D97706;
+  --color-warning-subtle: rgba(245, 158, 11, 0.10);
+  --color-warning-text: #FBBF24;
+  --color-warning-border: rgba(245, 158, 11, 0.25);
+
+  /* Semantic - Crimson (Overdue / Behind / Destructive) */
+  --color-danger-base: #EF4444;
+  --color-danger-hover: #DC2626;
+  --color-danger-subtle: rgba(239, 68, 68, 0.10);
+  --color-danger-text: #F87171;
+  --color-danger-border: rgba(239, 68, 68, 0.25);
+
+  /* Focus Ring */
+  --color-focus-ring: rgba(212, 163, 115, 0.55);
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 32px -6px rgba(0, 0, 0, 0.7);
+  --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-ambient-glow: 0 0 30px -8px rgba(212, 163, 115, 0.12);
+  --ambient-hero-gradient: radial-gradient(ellipse at 50% -10%, rgba(212, 163, 115, 0.04) 0%, transparent 65%);
+
+  /* ==========================================================================
+     Spacing Scale (4, 8, 12, 16, 24, 32, 48, 64, 96px)
+     ========================================================================== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ==========================================================================
+     Typography
+     ========================================================================== */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', var(--font-sans);
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+
+  /* Type Scale */
+  --font-size-display: 2.5rem;    /* 40px - Hero horizon statement */
+  --font-size-3xl: 1.875rem;     /* 30px */
+  --font-size-2xl: 1.5rem;       /* 24px */
+  --font-size-xl: 1.25rem;       /* 20px */
+  --font-size-lg: 1.125rem;      /* 18px */
+  --font-size-base: 0.9375rem;   /* 15px - High-density editorial base */
+  --font-size-sm: 0.8125rem;     /* 13px */
+  --font-size-xs: 0.75rem;       /* 12px */
+
+  /* Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Letter-spacing / Tracking */
+  --tracking-tightest: -0.035em;
+  --tracking-tighter: -0.025em;
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-widest: 0.08em;
+
+  /* Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* ==========================================================================
+     Radius Scale
+     ========================================================================== */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 9999px;
+
+  /* ==========================================================================
+     Motion & Transitions (Organic Spring Curves)
+     ========================================================================== */
+  --duration-micro: 150ms;
+  --duration-small: 220ms;
+  --duration-panel: 320ms;
+  --duration-major: 420ms;
+
+  --motion-micro: 150ms;
+  --motion-small: 220ms;
+  --motion-drawer: 300ms;
+  --motion-major: 450ms;
+
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);  /* Organic deceleration */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);   /* Balanced ease-in-out */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);        /* Snappy exit */
+
+  /* ==========================================================================
+     Layout Dimensions
+     ========================================================================== */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 68px;
+  --header-height: 56px;
+  --mobile-nav-height: 60px;
+  --content-max-width: 1320px;
+}
+
+/* ==========================================================================
+   Light Theme Counterpart (Structured Semantic Re-Mapping)
+   ========================================================================== */
+[data-theme="light"] {
+  /* Foundations & Surfaces */
+  --color-bg-canvas: #F5F5F3;           /* Warm bone canvas */
+  --color-bg-base: #FAFAFA;             /* Base workspace canvas */
+  --color-bg-surface: #FFFFFF;          /* Pure white persistent shells */
+  --color-bg-surface-card: #FFFFFF;     /* Elevated tactile white surface */
+  --color-bg-surface-subtle: #F0F0EE;   /* Inset groupings, track backgrounds */
+  --color-bg-surface-elevated: #EAEAE7; /* Interactive hover states */
+  --color-bg-surface-overlay: rgba(255, 255, 255, 0.92);
+
+  /* Borders & Rules */
+  --color-border-subtle: rgba(0, 0, 0, 0.05);
+  --color-border-default: rgba(0, 0, 0, 0.09);
+  --color-border-strong: rgba(0, 0, 0, 0.16);
+  --color-border-light-top: rgba(255, 255, 255, 0.8);
+  --color-border-accent: rgba(184, 115, 51, 0.35);
+  --color-border-accent-subtle: rgba(184, 115, 51, 0.15);
+
+  /* Typography */
+  --color-text-primary: #121316;         /* Deep charcoal */
+  --color-text-secondary: #575B66;       /* Balanced body text */
+  --color-text-muted: #8A8F9E;           /* Muted labels & timestamps */
+  --color-text-tertiary: #B2B6C2;        /* Dividers */
+  --color-text-inverse: #FFFFFF;
+
+  /* Primary Accent - Warm Ochre in Light */
+  --color-accent-primary: #B87333;
+  --color-accent-hover: #A06228;
+  --color-accent-active: #8A521E;
+  --color-accent-subtle: rgba(184, 115, 51, 0.08);
+  --color-accent-glow: rgba(184, 115, 51, 0.12);
+
+  /* Semantic - Teal / Sage in Light */
+  --color-success-base: #0D9488;
+  --color-success-hover: #0F766E;
+  --color-success-subtle: rgba(13, 148, 136, 0.08);
+  --color-success-text: #0F766E;
+  --color-success-border: rgba(13, 148, 136, 0.25);
+
+  /* Semantic - Amber in Light */
+  --color-warning-base: #D97706;
+  --color-warning-hover: #B45309;
+  --color-warning-subtle: rgba(217, 119, 6, 0.08);
+  --color-warning-text: #B45309;
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+
+  /* Semantic - Crimson in Light */
+  --color-danger-base: #DC2626;
+  --color-danger-hover: #B91C1C;
+  --color-danger-subtle: rgba(220, 38, 38, 0.08);
+  --color-danger-text: #B91C1C;
+  --color-danger-border: rgba(220, 38, 38, 0.25);
+
+  /* Focus Ring */
+  --color-focus-ring: rgba(184, 115, 51, 0.55);
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px -2px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 28px -6px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  --shadow-ambient-glow: 0 0 30px -8px rgba(184, 115, 51, 0.10);
+  --ambient-hero-gradient: radial-gradient(ellipse at 50% -10%, rgba(184, 115, 51, 0.04) 0%, transparent 65%);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-micro: 0ms;
+    --duration-small: 0ms;
+    --duration-panel: 0ms;
+    --duration-major: 0ms;
+    --motion-micro: 0ms;
+    --motion-small: 0ms;
+    --motion-drawer: 0ms;
+    --motion-major: 0ms;
+  }
+}

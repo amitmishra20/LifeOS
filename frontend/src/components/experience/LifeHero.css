@@ -1,0 +1,258 @@
+.lifeos-life-hero {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  border-radius: var(--radius-xl);
+  background-size: cover;
+  background-position: center 38%;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  animation: heroFadeIn 600ms var(--ease-spring) both;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifeos-life-hero__gradient-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 7, 0.95) 0%,
+    rgba(5, 5, 7, 0.85) 50%,
+    rgba(5, 5, 7, 0.35) 80%,
+    rgba(5, 5, 7, 0.15) 100%
+  );
+  pointer-events: none;
+}
+
+[data-theme="light"] .lifeos-life-hero__gradient-mask {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 243, 0.96) 0%,
+    rgba(245, 245, 243, 0.88) 50%,
+    rgba(245, 245, 243, 0.35) 80%,
+    rgba(245, 245, 243, 0.15) 100%
+  );
+}
+
+.lifeos-life-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: var(--space-8) var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .lifeos-life-hero__content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-6);
+  }
+}
+
+.lifeos-life-hero__main {
+  display: flex;
+  flex-direction: column;
+  max-width: 680px;
+}
+
+.lifeos-life-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-2);
+}
+
+.lifeos-life-hero__sprout {
+  color: var(--color-accent-primary);
+  font-size: 0.9rem;
+}
+
+.lifeos-life-hero__greeting {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.lifeos-life-hero__separator {
+  color: var(--color-text-muted);
+}
+
+.lifeos-life-hero__date {
+  color: var(--color-text-secondary);
+}
+
+.lifeos-life-hero__headline {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  line-height: 1.15;
+  margin-bottom: var(--space-2);
+}
+
+.lifeos-life-hero__statement {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  max-width: 580px;
+}
+
+/* Aside Momentum Dial */
+.lifeos-life-hero__aside {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.lifeos-momentum-surface {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: rgba(14, 16, 21, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-micro) var(--ease-spring), border-color var(--duration-micro) ease;
+}
+
+.lifeos-momentum-surface:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-border-accent-subtle);
+}
+
+[data-theme="light"] .lifeos-momentum-surface {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.lifeos-momentum-ring-wrap {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lifeos-momentum-svg {
+  transform: rotate(-90deg);
+}
+
+.lifeos-momentum-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 4.5;
+}
+
+[data-theme="light"] .lifeos-momentum-track {
+  stroke: rgba(0, 0, 0, 0.08);
+}
+
+.lifeos-momentum-fill {
+  fill: none;
+  stroke: var(--color-accent-primary);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s var(--ease-spring);
+}
+
+.lifeos-momentum-value {
+  position: absolute;
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+.lifeos-momentum-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.lifeos-momentum-title {
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.lifeos-momentum-subtitle {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   Mobile Hero Adaptations — preserves cinematic feel, adapts to narrow viewport
+   ========================================================================= */
+@media (max-width: 768px) {
+  .lifeos-life-hero {
+    min-height: 180px;
+    border-radius: var(--radius-lg);
+  }
+
+  .lifeos-life-hero__gradient-mask {
+    background: linear-gradient(
+      180deg,
+      rgba(5, 5, 7, 0.45) 0%,
+      rgba(5, 5, 7, 0.85) 60%,
+      rgba(5, 5, 7, 0.95) 100%
+    );
+  }
+
+  [data-theme="light"] .lifeos-life-hero__gradient-mask {
+    background: linear-gradient(
+      180deg,
+      rgba(245, 245, 243, 0.4) 0%,
+      rgba(245, 245, 243, 0.88) 60%,
+      rgba(245, 245, 243, 0.96) 100%
+    );
+  }
+
+  .lifeos-life-hero__content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-5) var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .lifeos-life-hero__headline {
+    font-size: clamp(1.4rem, 6vw, 1.85rem);
+  }
+
+  .lifeos-life-hero__statement {
+    font-size: 0.84rem;
+  }
+
+  .lifeos-life-hero__aside {
+    width: 100%;
+  }
+
+  .lifeos-momentum-surface {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

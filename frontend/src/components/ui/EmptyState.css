@@ -1,0 +1,47 @@
+.lifeos-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-border-default);
+  background-color: rgba(18, 25, 43, 0.4);
+}
+
+.lifeos-empty-state__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.lifeos-empty-state__title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.lifeos-empty-state__desc {
+  max-width: 420px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--space-6);
+}
+
+.lifeos-empty-state__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

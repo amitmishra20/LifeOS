@@ -1,0 +1,104 @@
+.lifeos-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.lifeos-progress__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+}
+
+.lifeos-progress__label {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.lifeos-progress__value {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.lifeos-progress__track {
+  width: 100%;
+  background-color: var(--color-bg-surface-subtle);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  position: relative;
+}
+
+.lifeos-progress__track--sm { height: 3px; }
+.lifeos-progress__track--md { height: 6px; }
+.lifeos-progress__track--lg { height: 10px; }
+
+.lifeos-progress__bar {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-panel) var(--ease-spring);
+  position: relative;
+}
+
+/* Warm / Accent bar */
+.lifeos-progress__bar--warm,
+.lifeos-progress__bar--indigo {
+  background-color: var(--color-accent-primary);
+}
+
+.lifeos-progress__bar--emerald {
+  background-color: var(--color-success-base);
+}
+
+.lifeos-progress__bar--amber {
+  background-color: var(--color-warning-base);
+}
+
+.lifeos-progress__bar--crimson {
+  background-color: var(--color-danger-base);
+}
+
+/* ==========================================================================
+   Progress Ring
+   ========================================================================== */
+.lifeos-ring-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lifeos-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.lifeos-ring-bg {
+  fill: none;
+  stroke: var(--color-bg-surface-subtle);
+}
+
+.lifeos-ring-progress {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--duration-major) var(--ease-spring);
+}
+
+.lifeos-ring-progress--warm,
+.lifeos-ring-progress--indigo { stroke: var(--color-accent-primary); }
+.lifeos-ring-progress--emerald { stroke: var(--color-success-base); }
+.lifeos-ring-progress--amber { stroke: var(--color-warning-base); }
+.lifeos-ring-progress--crimson { stroke: var(--color-danger-base); }
+
+.lifeos-ring-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}

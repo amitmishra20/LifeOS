@@ -1,0 +1,264 @@
+.lifeos-journey-waypoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-journey-waypoint:focus-visible .lifeos-journey-waypoint__marker {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+}
+
+.lifeos-journey-waypoint__marker {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--color-bg-surface-elevated);
+  border: 1.5px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--duration-micro) var(--ease-spring);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin-bottom: var(--space-2);
+}
+
+.lifeos-journey-waypoint:hover .lifeos-journey-waypoint__marker {
+  transform: translateY(-2px);
+  border-color: var(--color-accent-primary);
+}
+
+.lifeos-waypoint-current-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-accent-primary);
+  opacity: 0.6;
+  animation: waypointPulse 3s infinite ease-out;
+}
+
+@keyframes waypointPulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  60% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.lifeos-journey-waypoint--completed .lifeos-journey-waypoint__marker {
+  background-color: var(--color-success-base);
+  border-color: var(--color-success-base);
+  color: #050507;
+}
+
+.lifeos-journey-waypoint--destination .lifeos-journey-waypoint__marker {
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
+}
+
+.lifeos-waypoint-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-text-muted);
+}
+
+.lifeos-journey-waypoint--active .lifeos-waypoint-dot {
+  background-color: var(--color-accent-primary);
+}
+
+.lifeos-journey-waypoint__label-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 160px;
+}
+
+.lifeos-journey-waypoint__header-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+.lifeos-journey-waypoint__title {
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.lifeos-journey-waypoint__expand-hint {
+  font-size: 0.6875rem;
+  color: var(--color-accent-primary);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-mono);
+}
+
+.lifeos-journey-waypoint__subtitle {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* Branch Unfolding Panel */
+.lifeos-waypoint-branch {
+  position: absolute;
+  top: calc(100% + 12px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  max-width: 280px;
+  animation: branchSlide 280ms var(--ease-spring) both;
+}
+
+@keyframes branchSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifeos-waypoint-branch__stem {
+  width: 1px;
+  height: 12px;
+  background: var(--color-accent-primary);
+  opacity: 0.4;
+}
+
+.lifeos-waypoint-branch__tasks {
+  width: 100%;
+  background-color: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.lifeos-branch-task-node {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 8px;
+  border-radius: var(--radius-xs);
+  background-color: rgba(255, 255, 255, 0.02);
+  transition: background-color var(--duration-micro) ease;
+}
+
+.lifeos-branch-task-node:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.lifeos-branch-task-node--completed .lifeos-branch-task-title {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.lifeos-branch-task-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-inverse);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: all var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-branch-task-check--checked {
+  background-color: var(--color-success-base);
+  border-color: var(--color-success-base);
+}
+
+.lifeos-branch-task-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.lifeos-branch-task-title {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lifeos-branch-task-meta {
+  font-size: 0.625rem;
+  color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   Mobile: Waypoints in horizontal row for vertical journey timeline
+   ========================================================================= */
+@media (max-width: 768px) {
+  .lifeos-journey-waypoint {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: var(--space-3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .lifeos-journey-waypoint__marker {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .lifeos-journey-waypoint__label-block {
+    align-items: flex-start;
+    max-width: none;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .lifeos-journey-waypoint__header-row {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .lifeos-journey-waypoint__title {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .lifeos-waypoint-branch {
+    position: relative;
+    top: auto;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    margin-top: var(--space-2);
+    margin-left: calc(38px + var(--space-3));
+  }
+
+  .lifeos-waypoint-branch__stem {
+    display: none;
+  }
+}
+

@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: lifeos-backend-test
+
+  datasource:
+    url: jdbc:h2:mem:lifeos_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+
+app:
+  version: 1.0.0
+  cors:
+    allowed-origins: http://localhost:5173
+  security:
+    jwt:
+      secret: test-secret-key-that-is-at-least-256-bits-long-for-hmac-sha256-signing!
+      expiration-ms: 3600000

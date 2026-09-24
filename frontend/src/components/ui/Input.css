@@ -1,0 +1,115 @@
+.lifeos-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.lifeos-input-label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.lifeos-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lifeos-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-3);
+  height: 40px;
+  outline: none;
+  transition:
+    border-color var(--duration-micro) var(--ease-spring),
+    box-shadow var(--duration-micro) var(--ease-spring),
+    background-color var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.lifeos-input:focus {
+  border-color: var(--color-accent-primary);
+  background-color: var(--color-bg-surface);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.lifeos-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.lifeos-input-field--sm .lifeos-input {
+  height: 32px;
+  font-size: var(--font-size-sm);
+  padding: 0 var(--space-2);
+}
+
+.lifeos-input-field--lg .lifeos-input {
+  height: 48px;
+  font-size: var(--font-size-base);
+  padding: 0 var(--space-4);
+}
+
+/* Icon Padding */
+.lifeos-input--has-left {
+  padding-left: calc(var(--space-3) + 22px);
+}
+
+.lifeos-input--has-right {
+  padding-right: calc(var(--space-3) + 22px);
+}
+
+.lifeos-input-icon {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lifeos-input-icon--left {
+  left: var(--space-3);
+}
+
+.lifeos-input-icon--right {
+  right: var(--space-3);
+}
+
+/* Error State */
+.lifeos-input-field--error .lifeos-input {
+  border-color: var(--color-danger-base);
+}
+
+.lifeos-input-field--error .lifeos-input:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+
+.lifeos-input-error-msg {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger-text);
+  margin-top: 2px;
+}
+
+.lifeos-input-hint-msg {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
