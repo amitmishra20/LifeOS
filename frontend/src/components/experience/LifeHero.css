@@ -3,11 +3,10 @@
   width: 100%;
   min-height: 220px;
   border-radius: var(--radius-xl);
-  background-size: cover;
-  background-position: center 38%;
+  background: var(--color-bg-surface);
   overflow: hidden;
   border: 1px solid var(--color-border-default);
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   animation: heroFadeIn 600ms var(--ease-spring) both;
@@ -24,15 +23,29 @@
   }
 }
 
+.lifeos-life-hero::before,
+.lifeos-life-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 42%;
+  transition: opacity 420ms var(--ease-smooth);
+}
+.lifeos-life-hero::before { background-image: var(--hero-night-image); opacity: 1; }
+.lifeos-life-hero::after { background-image: var(--hero-day-image); opacity: 0; }
+[data-theme="light"] .lifeos-life-hero::before { opacity: 0; }
+[data-theme="light"] .lifeos-life-hero::after { opacity: 1; }
+
 .lifeos-life-hero__gradient-mask {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(5, 5, 7, 0.95) 0%,
-    rgba(5, 5, 7, 0.85) 50%,
-    rgba(5, 5, 7, 0.35) 80%,
-    rgba(5, 5, 7, 0.15) 100%
+    var(--color-bg) 0%,
+    color-mix(in srgb, var(--color-bg) 88%, transparent) 50%,
+    color-mix(in srgb, var(--color-bg) 35%, transparent) 80%,
+    color-mix(in srgb, var(--color-bg) 15%, transparent) 100%
   );
   pointer-events: none;
 }

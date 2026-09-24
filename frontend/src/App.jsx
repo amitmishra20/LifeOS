@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
 import DashboardPage from './pages/DashboardPage';
-import FoundationPage from './pages/FoundationPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -12,9 +11,6 @@ export function App() {
         <Route element={<AppLayout />}>
           {/* LifeOS Core Product Surface */}
           <Route path="/" element={<DashboardPage />} />
-
-          {/* Technical Diagnostics Surface preserved from Phase 1 */}
-          <Route path="/dev/foundation" element={<FoundationPage />} />
 
           {/* Upcoming Phase Modules */}
           <Route path="/focus/*" element={<ModulePlaceholderPage />} />

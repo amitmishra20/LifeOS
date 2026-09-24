@@ -8,7 +8,7 @@
   justify-content: center;
   padding: var(--space-4);
   z-index: 100;
-  animation: lifeos-overlay-fade 200ms var(--ease-spring);
+  animation: lifeos-overlay-fade var(--motion-panel) var(--motion-enter);
 }
 
 .lifeos-modal {
@@ -22,7 +22,7 @@
   flex-direction: column;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
-  animation: lifeos-modal-pop 250ms var(--ease-spring);
+  animation: lifeos-modal-pop var(--motion-panel) var(--motion-enter);
 }
 
 /* Modal Sizes */

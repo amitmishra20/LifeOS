@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/navigation/Sidebar';
 import { NAV_GROUPS } from '../components/navigation/navConfig';
 import Header from '../components/navigation/Header';
@@ -12,6 +12,7 @@ export const AppLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [quickCaptureOpen, setQuickCaptureOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Global Keyboard Shortcuts
   useEffect(() => {
@@ -23,25 +24,17 @@ export const AppLayout = () => {
         return;
       }
 
-      // 'c' opens Quick Capture when not focused on an input element
+      // Single-key shortcuts stay disabled while the user is typing.
       const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-      if (
-        e.key.toLowerCase() === 'c' &&
-        !e.metaKey &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        activeTag !== 'input' &&
-        activeTag !== 'textarea' &&
-        activeTag !== 'select'
-      ) {
-        e.preventDefault();
-        setQuickCaptureOpen(true);
-      }
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || e.metaKey || e.ctrlKey || e.altKey) return;
+      const shortcuts = { n: () => setQuickCaptureOpen(true), c: () => setQuickCaptureOpen(true), g: () => navigate('/goals'), t: () => navigate('/focus'), h: () => navigate('/habits') };
+      const action = shortcuts[e.key.toLowerCase()];
+      if (action) { e.preventDefault(); action(); }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [navigate]);
 
   const handleCapture = (item) => {
     // Phase 3 signature prototype interaction: emits event or logs capture
@@ -105,15 +98,6 @@ export const AppLayout = () => {
             </div>
           ))}
 
-          <div className="lifeos-mobile-drawer__dev">
-            <NavLink
-              to="/dev/foundation"
-              onClick={() => setMobileDrawerOpen(false)}
-              className="lifeos-mobile-drawer__dev-link"
-            >
-              Engine Foundation (Phase 1/2 Diagnostics)
-            </NavLink>
-          </div>
         </div>
       </Drawer>
 

@@ -22,8 +22,14 @@
 }
 
 .lifeos-btn:active:not(:disabled) {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px) scale(0.975);
+  box-shadow: none;
 }
+
+.lifeos-btn:focus-visible { box-shadow: 0 0 0 3px var(--color-accent-subtle); }
+.lifeos-btn--primary:hover:not(:disabled) { transform: translateY(-1px); }
+.lifeos-btn--primary:active:not(:disabled) { transform: translateY(1px) scale(.98); }
+.lifeos-btn--secondary:active:not(:disabled), .lifeos-btn--outline:active:not(:disabled), .lifeos-btn--ghost:active:not(:disabled) { transform: scale(.985); }
 
 .lifeos-btn:disabled {
   opacity: 0.45;

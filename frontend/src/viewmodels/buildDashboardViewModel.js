@@ -25,7 +25,6 @@ export const buildDashboardViewModel = ({
   // 2. Metrics & Task Calculations
   const totalTasksCount = tasks.length;
   const completedTasks = tasks.filter((t) => t.completed);
-  const uncompletedTasks = tasks.filter((t) => !t.completed);
   const completedTasksCount = completedTasks.length;
 
   const activeGoals = goals.filter((g) => g.status === 'ACTIVE');
@@ -43,8 +42,7 @@ export const buildDashboardViewModel = ({
       ? Math.round((totalHabitCompletions / totalHabitOpportunities) * 100)
       : 0;
 
-  // Calculate composite momentum score (0-100)
-  // Weighted: 50% task execution, 30% habit consistency, 20% active goal presence
+  // Momentum is only meaningful after the user has created activity.
   const taskExecutionRate =
     totalTasksCount > 0 ? (completedTasksCount / totalTasksCount) * 100 : 0;
   const goalPresenceFactor = activeGoalsCount > 0 ? 100 : 0;
@@ -68,12 +66,14 @@ export const buildDashboardViewModel = ({
   }
 
   // 4. Life State Headline & Contextual Statement (Derived from State Mode)
-  let headlineStatement = 'BUILD WITH INTENTION';
-  let contextStatement = 'Your direction is clear. Small, consistent actions build freedom.';
+  let headlineStatement = goals.length || tasks.length || habits.length ? 'BUILD WITH INTENTION' : 'YOUR LIFE STARTS HERE';
+  let contextStatement = goals.length || tasks.length || habits.length
+    ? 'Small, consistent actions build a life that feels like yours.'
+    : 'Create one meaningful thing and let LifeOS grow around it.';
 
   if (stateMode === 'ALL_COMPLETED') {
     headlineStatement = 'TODAY IS COMPLETE';
-    contextStatement = 'All scheduled milestone actions finished. Rest, reflect, and prepare tomorrow.';
+    contextStatement = 'Everything planned for today is complete.';
   }
 
   // 5. FocusViewModel
@@ -246,9 +246,9 @@ export const buildDashboardViewModel = ({
 
   return {
     identity: {
-      id: user?.id || 'anonymous',
-      name: user?.name || 'Explorer',
-      timeZone: user?.timeZone || 'UTC',
+      id: user?.id || null,
+      name: user?.name || null,
+      timeZone: user?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
     lifeState: {
       stateMode,
@@ -281,14 +281,8 @@ export const buildDashboardViewModel = ({
       habits: habitsList,
       hasHabits: habitsList.length > 0,
     },
-    guidance: guidance || {
-      observation: 'Morning focus blocks show your highest task completion.',
-      whyItMatters: 'You completed 80% of your programming milestones during morning blocks.',
-      suggestion: 'Protect tomorrow morning for React Fundamentals and ShopSync architecture.',
-      actionType: 'DEFAULT',
-      targetId: null,
-      actionLabel: 'Protect Focus Time',
-    },
+    guidance,
+
     goals: {
       goalsList: goalsSummary,
       hasGoals: goalsSummary.length > 0,

@@ -42,14 +42,14 @@
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(212, 163, 115, 0.05) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-border-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   color: var(--color-accent-primary);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+  box-shadow: var(--shadow-ambient-glow);
 }
 
 .lifeos-sidebar__leaf-svg {
@@ -127,7 +127,7 @@
 
 .lifeos-sidebar__link:hover {
   color: var(--color-text-primary);
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--color-bg-surface-elevated);
 }
 
 .lifeos-sidebar__link:focus-visible {
@@ -138,8 +138,8 @@
 /* Active Link Pill - matches the reference amber active pill */
 .lifeos-sidebar__link--active {
   color: var(--color-accent-primary);
-  background: linear-gradient(90deg, rgba(212, 163, 115, 0.12) 0%, rgba(212, 163, 115, 0.04) 100%);
-  border: 1px solid rgba(212, 163, 115, 0.25);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-border-accent);
   font-weight: var(--font-weight-semibold);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -297,6 +297,14 @@
 /* =========================================================================
    Mobile: Sidebar completely hidden — bottom nav takes over
    ========================================================================= */
+/* Editorial shell: quiet framing around the workspace */
+.lifeos-sidebar { width: 220px; background: var(--color-bg-surface); border-right-color: var(--color-border-subtle); }
+.lifeos-sidebar__brand { height: 58px; border-bottom-color: var(--color-border-subtle); }
+.lifeos-sidebar__logo-mark { background: var(--color-accent-subtle); border-color: var(--color-border-accent); box-shadow: none; }
+.lifeos-sidebar__nav { padding-top: 24px; }
+.lifeos-sidebar__link { border-radius: 0; padding-left: 14px; }
+.lifeos-sidebar__link--active { background: var(--color-accent-subtle); border-left: 2px solid var(--color-accent-primary); color: var(--color-text-primary); }
+
 @media (max-width: 768px) {
   .lifeos-sidebar {
     display: none;

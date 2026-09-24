@@ -17,11 +17,14 @@
 
 .lifeos-content {
   flex: 1;
+  animation: lifeos-page-enter var(--motion-major) var(--motion-enter) both;
   width: 100%;
-  max-width: var(--content-max-width);
+  max-width: 1440px;
   margin: 0 auto;
-  padding: var(--space-8);
+  padding: 0 32px;
 }
+
+@keyframes lifeos-page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 1024px) {
   .lifeos-content {

@@ -1,154 +1,45 @@
 import React, { useState } from 'react';
 import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
-import LifeHero from '../components/experience/LifeHero';
-import TodayFocusSection from '../components/experience/TodayFocusSection';
-import LifeJourneySection from '../components/experience/LifeJourneySection';
-import RhythmSection from '../components/experience/RhythmSection';
-import GoalsOverviewSection from '../components/experience/GoalsOverviewSection';
-import GuidanceCard from '../components/composites/GuidanceCard';
+import heroDayImage from '../assets/hero_mountain_day.png';
+import heroNightImage from '../assets/hero_atmosphere.jpg';
 import './DashboardPage.css';
 
-/**
- * DashboardPage (Thin Orchestrator)
- * LifeOS Core Workspace Surface
- * 
- * Orchestrates:
- * 1. Data/Derived State via useDashboardViewModel
- * 2. Visual Information Architecture (Hero -> Today's Focus -> Journey -> Goals -> Rhythm -> Guidance)
- * 3. Lifecycle States (Active, Completed, Loading, Error)
- */
+const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
+
 export const DashboardPage = () => {
-  const {
-    viewModel,
-    toggleTask,
-    toggleHabit,
-    expandedWaypointId,
-    toggleWaypoint,
-    expandedGoalId,
-    toggleGoal,
-    isLoading,
-    error,
-    retry,
-  } = useDashboardViewModel();
-
+  const { viewModel, toggleTask, toggleHabit, isLoading, error, retry } = useDashboardViewModel();
   const [notificationMessage, setNotificationMessage] = useState(null);
+  const { focus, rhythm, journey, goals, lifeState } = viewModel;
+  const hasData = goals.hasGoals || focus.hasTasks || rhythm.hasHabits;
+  const notify = (message) => { setNotificationMessage(message); window.setTimeout(() => setNotificationMessage(null), 2400); };
+  const openCreate = (type) => notify(`${type} creation is ready to connect.`);
 
-  // Handle action triggers from Guidance or Focus
-  const handleTriggerAction = (actionType) => {
-    let msg = 'Action triggered';
-    if (actionType === 'PROTECT_BLOCK' || actionType === 'DEFAULT') {
-      msg = 'Morning focus block protected on your calendar.';
-    } else if (actionType === 'REST_AND_REFLECT') {
-      msg = 'Entering quiet reflection mode. Focus alarms silenced.';
-    } else if (actionType === 'CREATE_GOAL') {
-      msg = 'Opening Goal Creation dialog...';
-    }
-    setNotificationMessage(msg);
-    setTimeout(() => setNotificationMessage(null), 3200);
-  };
+  if (isLoading) return <main className="lifeos-dashboard-env lifeos-dashboard-loading" aria-busy="true"><div className="lifeos-loading-line" /><div className="lifeos-loading-field" /></main>;
+  if (error) return <main className="lifeos-dashboard-env"><div className="lifeos-dashboard-error-surface" role="alert"><span className="lifeos-kicker">Workspace unavailable</span><h1>We couldn&apos;t load your workspace.</h1><p>{error}</p><button className="lifeos-text-button" type="button" onClick={retry}>Try again</button></div></main>;
 
-  const handleStartAction = (taskId) => {
-    setNotificationMessage(`Starting focused learning session for deliverable #${taskId}...`);
-    setTimeout(() => setNotificationMessage(null), 3000);
-  };
+  return <main className="lifeos-dashboard-env" aria-label="LifeOS workspace">
+    {notificationMessage && <div className="lifeos-feedback-toast" role="status">{notificationMessage}</div>}
+    <section className="lifeos-opening" style={{ '--hero-day-image': `url(${heroDayImage})`, '--hero-night-image': `url(${heroNightImage})` }}>
+      <div className="lifeos-opening__wash" /><div className="lifeos-opening__content">
+        <span className="lifeos-kicker">{lifeState.dateString}</span><p className="lifeos-opening__greeting">Welcome to LifeOS.</p>
+        <h1>{lifeState.headlineStatement === 'YOUR LIFE STARTS HERE' ? <>Your life,<br /><em>on your terms.</em></> : <>Make something<br /><em>worth arriving at.</em></>}</h1>
+        <p className="lifeos-opening__subline">{lifeState.contextStatement}</p>
+      </div><div className="lifeos-opening__signal"><span>{hasData ? 'Today&apos;s direction' : 'A calm place to begin'}</span><strong>{hasData ? 'Keep moving.' : 'Start with one thing.'}</strong></div>
+    </section>
 
-  // State: Loading
-  if (isLoading) {
-    return (
-      <main className="lifeos-dashboard-env" aria-busy="true" aria-label="Loading Dashboard">
-        <div className="lifeos-dashboard-loading-skeleton">
-          <div className="lifeos-skeleton-hero" />
-          <div className="lifeos-skeleton-grid">
-            <div className="lifeos-skeleton-main" />
-            <div className="lifeos-skeleton-side" />
-          </div>
-        </div>
-      </main>
-    );
-  }
+    <section className="lifeos-focus" aria-labelledby="focus-heading"><div className="lifeos-section-index"><span>01</span><span className="lifeos-rule" /><span>FOCUS</span></div>
+      {!focus.primaryFocus ? <div className="lifeos-empty-panel"><div><span className="lifeos-kicker">Today&apos;s focus</span><h2 id="focus-heading">Nothing needs your attention<br /><em>yet.</em></h2><p>Choose one meaningful thing to move forward. Your focus will appear here.</p></div><div className="lifeos-empty-actions"><EmptyAction onClick={() => openCreate('Task')}>Create a task</EmptyAction><button className="lifeos-text-button" type="button" onClick={() => openCreate('Goal')}>Set a goal</button></div></div> : <div className="lifeos-focus__body"><div className="lifeos-focus__intro"><span className="lifeos-kicker">The next meaningful move</span><h2 id="focus-heading">{focus.primaryFocus.task.title}</h2><p>{focus.primaryFocus.whyReason}</p><EmptyAction onClick={() => { toggleTask(focus.primaryFocus.task.id); notify('Focus updated.'); }}>{focus.primaryFocus.task.completed ? 'Reopen focus' : 'Complete focus'}</EmptyAction></div><div className="lifeos-focus__landscape" style={{ '--hero-day-image': `url(${heroDayImage})`, '--hero-night-image': `url(${heroNightImage})` }}><span className="lifeos-focus__duration">{focus.primaryFocus.task.duration || 'Today'}</span><div className="lifeos-focus__caption"><span>{focus.primaryFocus.goal?.title || 'Personal focus'}</span><strong>{focus.primaryFocus.milestone?.title || 'Independent action'}</strong></div></div></div>}
+    </section>
 
-  // State: Error
-  if (error) {
-    return (
-      <main className="lifeos-dashboard-env" role="alert" aria-label="Dashboard Error">
-        <div className="lifeos-dashboard-error-surface">
-          <div className="lifeos-error-icon">⚠️</div>
-          <h2 className="lifeos-error-title">We couldn't load your day.</h2>
-          <p className="lifeos-error-desc">{error}</p>
-          <button type="button" className="lifeos-error-retry-btn" onClick={retry}>
-            Try again
-          </button>
-        </div>
-      </main>
-    );
-  }
+    <section className="lifeos-journey" aria-labelledby="journey-heading"><div className="lifeos-section-index"><span>02</span><span className="lifeos-rule" /><span>DIRECTION</span></div>
+      {!journey.hasJourney ? <div className="lifeos-empty-panel lifeos-empty-panel--compact"><div><span className="lifeos-kicker">Your life map</span><h2 id="journey-heading">Your direction will take shape<br /><em>as you choose it.</em></h2><p>Create a goal to give this space a horizon.</p></div><EmptyAction onClick={() => openCreate('Goal')}>Create your first goal</EmptyAction></div> : <div className="lifeos-journey__header"><div><span className="lifeos-kicker">Keep the horizon in view</span><h2 id="journey-heading">The road ahead</h2></div><span className="lifeos-journey__goal">{journey.destinationGoal.title} <span>↗</span></span></div>}
+    </section>
 
-  const { identity, lifeState, focus, journey, rhythm, guidance, goals } = viewModel;
-
-  return (
-    <main className="lifeos-dashboard-env" aria-label="Personal Operating System Dashboard">
-      {/* Floating Action Feedback Notification */}
-      {notificationMessage && (
-        <div className="lifeos-feedback-toast" role="status" aria-live="polite">
-          <span className="lifeos-feedback-toast__icon">✓</span>
-          <span>{notificationMessage}</span>
-        </div>
-      )}
-
-      {/* =====================================================================
-          1. LIFE STATE / HERO (Where am I?)
-          ===================================================================== */}
-      <LifeHero identity={identity} lifeState={lifeState} />
-
-      {/* =====================================================================
-          2. TWO-COLUMN EDITORIAL WORKSPACE
-          ===================================================================== */}
-      <div className="lifeos-dashboard-grid">
-        {/* MAIN COLUMN (Focus & Direction) */}
-        <div className="lifeos-dashboard-main-col">
-          {/* TODAY'S FOCUS (What matters? What should I do now?) */}
-          <TodayFocusSection
-            focusData={focus}
-            lifeState={lifeState}
-            onToggleTask={toggleTask}
-            onStartAction={handleStartAction}
-            onCreateGoal={() => handleTriggerAction('CREATE_GOAL')}
-          />
-
-          {/* LIFE JOURNEY (Am I moving?) */}
-          <LifeJourneySection
-            journeyData={journey}
-            expandedWaypointId={expandedWaypointId}
-            onToggleWaypoint={toggleWaypoint}
-            onToggleTask={toggleTask}
-          />
-
-          {/* STRATEGIC GOALS OVERVIEW */}
-          <GoalsOverviewSection
-            goalsData={goals}
-            expandedGoalId={expandedGoalId}
-            onSelectGoal={(g) => toggleGoal(g.id)}
-            onCreateGoal={() => handleTriggerAction('CREATE_GOAL')}
-          />
-        </div>
-
-        {/* SIDE COLUMN (Supporting Context & Guidance) */}
-        <aside className="lifeos-dashboard-side-col" aria-label="Context & Guidance">
-          {/* CONTEXTUAL GUIDANCE (What should I understand?) */}
-          <GuidanceCard
-            guidance={guidance}
-            onTriggerAction={handleTriggerAction}
-          />
-
-          {/* HABIT RHYTHM (Am I consistent?) */}
-          <RhythmSection
-            rhythmData={rhythm}
-            onToggleHabit={toggleHabit}
-          />
-        </aside>
-      </div>
-    </main>
-  );
+    <section className="lifeos-lower" aria-label="Progress and rhythm"><div className="lifeos-progress"><div className="lifeos-section-index"><span>03</span><span className="lifeos-rule" /><span>PROGRESS</span></div><div className="lifeos-empty-panel lifeos-empty-panel--bare"><div><h2>Your progress will take shape<br /><em>as you begin moving.</em></h2><p>No milestones or completion data yet.</p></div><EmptyAction onClick={() => openCreate('Goal')}>Create your first goal</EmptyAction></div></div>
+      <div className="lifeos-rhythm"><div className="lifeos-section-index"><span>04</span><span className="lifeos-rule" /><span>RHYTHM</span></div><h2>{rhythm.hasHabits ? 'Keep showing up.' : <>Build a rhythm<br /><em>that feels like yours.</em></>}</h2>{!rhythm.hasHabits ? <div className="lifeos-empty-rhythm"><p>Small practices become support for the life you&apos;re creating.</p><EmptyAction onClick={() => openCreate('Habit')}>Create a habit</EmptyAction></div> : <div className="lifeos-habit-list">{rhythm.habits.map((habit) => <button className="lifeos-habit" type="button" key={habit.id} onClick={() => toggleHabit(habit.id, 0)}><span className="lifeos-habit__mark">{habit.history[0] ? '✓' : '○'}</span><span>{habit.title}</span><b>{habit.consistencyRate}%</b></button>)}</div>}</div>
+    </section>
+    {focus.supportingTasks.length > 0 && <section className="lifeos-next" aria-label="Supporting actions"><span className="lifeos-kicker">More from your day</span><div className="lifeos-next__items">{focus.supportingTasks.slice(0, 3).map((task) => <button type="button" className={`lifeos-next__item ${task.completed ? 'is-complete' : ''}`} key={task.id} onClick={() => toggleTask(task.id)}><span>{task.completed ? '✓' : '○'}</span><strong>{task.title}</strong><small>{task.time || 'Today'} · {task.category || 'Task'}</small></button>)}</div></section>}
+  </main>;
 };
 
 export default DashboardPage;

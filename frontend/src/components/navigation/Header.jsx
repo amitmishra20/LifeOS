@@ -17,7 +17,6 @@ const ROUTE_TITLES = {
   '/goal-health': 'Goal Health Engine',
   '/recommendations': 'Focus Recommendations',
   '/notes': 'Capture & Notes',
-  '/dev/foundation': 'Engine Foundation (Dev)',
 };
 
 export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
@@ -54,10 +53,10 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
           type="button"
           className="lifeos-header__search-trigger"
           onClick={onQuickCaptureClick}
-          aria-label="Open quick capture or search"
+          aria-label="Open LifeOS search and quick capture"
         >
           <IconSearch width="14" height="14" />
-          <span className="lifeos-header__search-text">Quick Capture / Search...</span>
+          <span className="lifeos-header__search-text">Search your life...</span>
           <kbd className="lifeos-header__search-kbd">
             {isMac ? <IconCommand width="10" height="10" /> : 'Ctrl'} K
           </kbd>
@@ -83,9 +82,9 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
         </button>
 
         {/* Honest Static Local Identity Element (Phase 1-3 Local Preview) */}
-        <div className="lifeos-header__user-pill lifeos-header__user-pill--static" title="Local session (Development preview)">
-          <div className="lifeos-header__avatar" aria-hidden="true">A</div>
-          <span className="lifeos-header__username">Amit</span>
+        <div className="lifeos-header__user-pill lifeos-header__user-pill--static" title="Local preview session">
+          <div className="lifeos-header__avatar" aria-hidden="true">L</div>
+          <span className="lifeos-header__username">Welcome</span>
           <span className="lifeos-header__session-tag">Local</span>
         </div>
       </div>

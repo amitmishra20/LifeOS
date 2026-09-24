@@ -58,9 +58,7 @@ export const ModulePlaceholderPage = () => {
           <Button variant="primary" size="md" onClick={() => navigate('/')}>
             Return to Dashboard
           </Button>
-          <Button variant="outline" size="md" onClick={() => navigate('/dev/foundation')}>
-            Foundation Diagnostics
-          </Button>
+
         </div>
       </Surface>
     </div>
