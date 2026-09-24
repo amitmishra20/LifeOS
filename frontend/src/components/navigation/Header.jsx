@@ -53,10 +53,10 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
           type="button"
           className="lifeos-header__search-trigger"
           onClick={onQuickCaptureClick}
-          aria-label="Open quick capture or search"
+          aria-label="Open LifeOS search and quick capture"
         >
           <IconSearch width="14" height="14" />
-          <span className="lifeos-header__search-text">Quick Capture / Search...</span>
+          <span className="lifeos-header__search-text">Search your life...</span>
           <kbd className="lifeos-header__search-kbd">
             {isMac ? <IconCommand width="10" height="10" /> : 'Ctrl'} K
           </kbd>

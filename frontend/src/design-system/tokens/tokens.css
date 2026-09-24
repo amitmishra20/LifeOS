@@ -56,6 +56,8 @@
   --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px; --radius-xl: 18px; --radius-pill: 9999px;
   --duration-micro: 180ms; --duration-small: 220ms; --duration-panel: 240ms; --duration-major: 420ms; --motion-micro: 180ms; --motion-small: 220ms; --motion-drawer: 300ms; --motion-major: 450ms;
   --ease-spring: cubic-bezier(.16,1,.3,1); --ease-smooth: cubic-bezier(.4,0,.2,1); --ease-out: cubic-bezier(0,.0,.2,1);
+  --motion-micro: 140ms; --motion-fast: 190ms; --motion-standard: 280ms; --motion-panel: 360ms; --motion-major: 520ms;
+  --motion-enter: cubic-bezier(.22,1,.36,1); --motion-exit: cubic-bezier(.4,0,1,1);
   --sidebar-width: 260px; --sidebar-collapsed-width: 68px; --header-height: 56px; --mobile-nav-height: 60px; --content-max-width: 1320px;
 }
 
@@ -71,5 +73,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --duration-micro: 0ms; --duration-small: 0ms; --duration-panel: 0ms; --duration-major: 0ms; --motion-micro: 0ms; --motion-small: 0ms; --motion-drawer: 0ms; --motion-major: 0ms; }
+  :root { --duration-micro: 0ms; --duration-small: 0ms; --duration-panel: 0ms; --duration-major: 0ms; --motion-micro: 0ms; --motion-fast: 0ms; --motion-standard: 0ms; --motion-panel: 0ms; --motion-major: 0ms; --motion-small: 0ms; --motion-drawer: 0ms; }
 }
