@@ -10,7 +10,7 @@ const getInitialDataset = () => ({ user: null, goals: [], milestones: [], tasks:
  * interactive state mutations (tasks, habits, waypoints, goals),
  * and computes the pure derived ViewModel.
  */
-export const useDashboardViewModel = () => {
+export const useDashboardViewModel = (currentUser = null) => {
   const [dataset, setDataset] = useState(() => getInitialDataset());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -91,8 +91,11 @@ export const useDashboardViewModel = () => {
 
   // Build the complete, derived DashboardViewModel
   const viewModel = useMemo(() => {
-    return buildDashboardViewModel(dataset);
-  }, [dataset]);
+    return buildDashboardViewModel({
+      ...dataset,
+      user: currentUser || dataset.user,
+    });
+  }, [dataset, currentUser]);
 
   return {
     viewModel,

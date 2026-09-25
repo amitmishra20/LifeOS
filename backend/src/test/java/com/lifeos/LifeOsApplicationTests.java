@@ -34,10 +34,10 @@ class LifeOsApplicationTests {
     }
 
     @Test
-    void unauthenticatedPrivateEndpointReturnsForbidden() throws Exception {
+    void unauthenticatedPrivateEndpointReturnsUnauthorized() throws Exception {
         mockMvc.perform(get("/api/v1/private-endpoint")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

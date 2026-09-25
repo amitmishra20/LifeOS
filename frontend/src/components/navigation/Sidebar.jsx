@@ -85,9 +85,9 @@ export const Sidebar = ({
 
       {/* Footer Controls & System Status */}
       <div className="lifeos-sidebar__footer">
-        <div className="lifeos-sidebar__status-link" title="Local preview">
+        <div className="lifeos-sidebar__status-link" title="Active session">
           <span className="lifeos-sidebar__status-dot" />
-          {!isCollapsed && <span className="lifeos-sidebar__status-text">Local Preview</span>}
+          {!isCollapsed && <span className="lifeos-sidebar__status-text">Connected</span>}
         </div>
 
         {/* Desktop Collapse Toggle */}

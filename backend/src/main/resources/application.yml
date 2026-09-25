@@ -42,6 +42,10 @@ app:
     jwt:
       secret: ${JWT_SECRET:dGhpc19pc19hX3Zlcnlfc2VjdXJlX3NlY3JldF9mb3JfbGlmZW9zX2FwcGxpY2F0aW9uXzI1NmJpdF9rZXk=}
       expiration-ms: ${JWT_EXPIRATION_MS:604800000}
+    cookie:
+      name: ${AUTH_COOKIE_NAME:lifeos_token}
+      secure: ${COOKIE_SECURE:false}
+      same-site: ${COOKIE_SAME_SITE:Lax}
 
 logging:
   level:

@@ -37,15 +37,17 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // If backend returns RFC-7807 ErrorResponse, normalize it
+    // If backend returns ErrorResponse, normalize it
     if (error.response && error.response.data) {
-      const { status, error: errName, message, path, timestamp, errors } = error.response.data;
-      const normalizedError = new Error(message || 'An unexpected error occurred');
-      normalizedError.status = status || error.response.status;
-      normalizedError.error = errName;
-      normalizedError.path = path;
-      normalizedError.timestamp = timestamp;
-      normalizedError.validationErrors = errors || [];
+      const data = error.response.data;
+      const message = data.message || (typeof data === 'string' ? data : 'An unexpected error occurred');
+      const normalizedError = new Error(message);
+      normalizedError.status = data.status || error.response.status;
+      normalizedError.code = data.code || data.error;
+      normalizedError.path = data.path;
+      normalizedError.timestamp = data.timestamp;
+      normalizedError.fieldErrors = data.fieldErrors || {};
+      normalizedError.validationErrors = data.errors || [];
       return Promise.reject(normalizedError);
     }
     return Promise.reject(error);

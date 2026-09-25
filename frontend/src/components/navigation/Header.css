@@ -232,3 +232,105 @@
     padding: 2px;
   }
 }
+
+/* User Account Menu Dropdown */
+.lifeos-header__user-container {
+  position: relative;
+}
+
+.lifeos-header__user-pill--interactive {
+  cursor: pointer;
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-default);
+  outline: none;
+}
+
+.lifeos-header__user-pill--interactive:hover,
+.lifeos-header__user-pill--interactive:focus-visible {
+  background-color: var(--color-bg-surface-elevated);
+  border-color: var(--color-border-strong);
+}
+
+.lifeos-header__dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 220px;
+  background-color: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  z-index: 50;
+  animation: lifeos-dropdown-enter var(--motion-micro) var(--ease-spring);
+}
+
+@keyframes lifeos-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lifeos-header__dropdown-userinfo {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--space-1);
+}
+
+.lifeos-header__dropdown-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lifeos-header__dropdown-email {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lifeos-header__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--duration-micro) var(--ease-smooth), color var(--duration-micro) var(--ease-smooth);
+}
+
+.lifeos-header__dropdown-item:hover,
+.lifeos-header__dropdown-item:focus-visible {
+  background-color: var(--color-bg-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.lifeos-header__dropdown-item--danger {
+  color: var(--color-danger-text);
+}
+
+.lifeos-header__dropdown-item--danger:hover,
+.lifeos-header__dropdown-item--danger:focus-visible {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger-hover);
+}
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/useAuth';
 import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
 import heroDayImage from '../assets/hero_mountain_day.png';
 import heroNightImage from '../assets/hero_atmosphere.jpg';
@@ -7,7 +8,8 @@ import './DashboardPage.css';
 const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
 
 export const DashboardPage = () => {
-  const { viewModel, toggleTask, toggleHabit, isLoading, error, retry } = useDashboardViewModel();
+  const { user } = useAuth();
+  const { viewModel, toggleTask, toggleHabit, isLoading, error, retry } = useDashboardViewModel(user);
   const [notificationMessage, setNotificationMessage] = useState(null);
   const { focus, rhythm, journey, goals, lifeState } = viewModel;
   const hasData = goals.hasGoals || focus.hasTasks || rhythm.hasHabits;
@@ -21,7 +23,7 @@ export const DashboardPage = () => {
     {notificationMessage && <div className="lifeos-feedback-toast" role="status">{notificationMessage}</div>}
     <section className="lifeos-opening" style={{ '--hero-day-image': `url(${heroDayImage})`, '--hero-night-image': `url(${heroNightImage})` }}>
       <div className="lifeos-opening__wash" /><div className="lifeos-opening__content">
-        <span className="lifeos-kicker">{lifeState.dateString}</span><p className="lifeos-opening__greeting">Welcome to LifeOS.</p>
+        <span className="lifeos-kicker">{lifeState.dateString}</span><p className="lifeos-opening__greeting">Welcome to LifeOS{user?.name ? `, ${user.name}` : ''}.</p>
         <h1>{lifeState.headlineStatement === 'YOUR LIFE STARTS HERE' ? <>Your life,<br /><em>on your terms.</em></> : <>Make something<br /><em>worth arriving at.</em></>}</h1>
         <p className="lifeos-opening__subline">{lifeState.contextStatement}</p>
       </div><div className="lifeos-opening__signal"><span>{hasData ? 'Today&apos;s direction' : 'A calm place to begin'}</span><strong>{hasData ? 'Keep moving.' : 'Start with one thing.'}</strong></div>
