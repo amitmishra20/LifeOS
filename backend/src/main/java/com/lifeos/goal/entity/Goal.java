@@ -1,7 +1,9 @@
 package com.lifeos.goal.entity;
 
 import com.lifeos.common.entity.BaseEntity;
+import com.lifeos.milestone.entity.Milestone;
 import com.lifeos.user.entity.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,9 +11,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "goals")
@@ -47,6 +52,9 @@ public class Goal extends BaseEntity {
 
     @Column(name = "target_date")
     private LocalDate targetDate;
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Milestone> milestones = new ArrayList<>();
 
     public Goal() {
     }
@@ -127,5 +135,13 @@ public class Goal extends BaseEntity {
 
     public void setTargetDate(LocalDate targetDate) {
         this.targetDate = targetDate;
+    }
+
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
     }
 }

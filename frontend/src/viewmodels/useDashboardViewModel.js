@@ -1,5 +1,6 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { buildDashboardViewModel } from './buildDashboardViewModel';
+import goalService from '../services/goalService';
 
 const getInitialDataset = () => ({ user: null, goals: [], milestones: [], tasks: [], habits: [], guidance: null });
 
@@ -14,6 +15,40 @@ export const useDashboardViewModel = (currentUser = null) => {
   const [dataset, setDataset] = useState(() => getInitialDataset());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Load real goals into dashboard dataset
+  useEffect(() => {
+    let isMounted = true;
+    const loadGoals = async () => {
+      if (!currentUser) return;
+      try {
+        const goalsList = await goalService.getGoals();
+        if (!isMounted) return;
+
+        let fullGoals = goalsList;
+        if (goalsList.length > 0) {
+          try {
+            const firstGoalDetail = await goalService.getGoalById(goalsList[0].id);
+            fullGoals = [firstGoalDetail, ...goalsList.slice(1)];
+          } catch {
+            // fallback
+          }
+        }
+
+        setDataset((prev) => ({
+          ...prev,
+          goals: fullGoals,
+        }));
+      } catch (err) {
+        // Keep initial dataset
+      }
+    };
+
+    loadGoals();
+    return () => {
+      isMounted = false;
+    };
+  }, [currentUser]);
 
   // Signature Interaction States
   const [expandedWaypointId, setExpandedWaypointId] = useState(null);

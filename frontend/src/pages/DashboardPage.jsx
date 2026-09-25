@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
 import heroDayImage from '../assets/hero_mountain_day.png';
@@ -8,13 +9,20 @@ import './DashboardPage.css';
 const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
 
 export const DashboardPage = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { viewModel, toggleTask, toggleHabit, isLoading, error, retry } = useDashboardViewModel(user);
   const [notificationMessage, setNotificationMessage] = useState(null);
   const { focus, rhythm, journey, goals, lifeState } = viewModel;
   const hasData = goals.hasGoals || focus.hasTasks || rhythm.hasHabits;
   const notify = (message) => { setNotificationMessage(message); window.setTimeout(() => setNotificationMessage(null), 2400); };
-  const openCreate = (type) => notify(`${type} creation is ready to connect.`);
+  const openCreate = (type) => {
+    if (type === 'Goal') {
+      navigate('/goals');
+      return;
+    }
+    notify(`${type} creation is ready to connect.`);
+  };
 
   if (isLoading) return <main className="lifeos-dashboard-env lifeos-dashboard-loading" aria-busy="true"><div className="lifeos-loading-line" /><div className="lifeos-loading-field" /></main>;
   if (error) return <main className="lifeos-dashboard-env"><div className="lifeos-dashboard-error-surface" role="alert"><span className="lifeos-kicker">Workspace unavailable</span><h1>We couldn&apos;t load your workspace.</h1><p>{error}</p><button className="lifeos-text-button" type="button" onClick={retry}>Try again</button></div></main>;

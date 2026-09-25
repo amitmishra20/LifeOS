@@ -12,6 +12,7 @@ export const Modal = ({
   description,
   size = 'md', // 'sm' | 'md' | 'lg' | 'xl'
   children,
+  footer,
   className = '',
 }) => {
   const modalRef = useRef(null);
@@ -76,6 +77,7 @@ export const Modal = ({
         </div>
 
         <div className="lifeos-modal__body">{children}</div>
+        {footer && <div className="lifeos-modal__footer">{footer}</div>}
       </div>
     </div>
   );

@@ -1,0 +1,17 @@
+.lifeos-goal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lifeos-goal-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .lifeos-goal-form__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AppLayout from './layouts/AppLayout';
 import DashboardPage from './pages/DashboardPage';
+import GoalsPage from './pages/GoalsPage';
+import GoalDetailPage from './pages/GoalDetailPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -25,6 +27,11 @@ export function App() {
             <Route element={<AppLayout />}>
               {/* LifeOS Core Product Surface */}
               <Route path="/" element={<DashboardPage />} />
+
+              {/* Strategic Goals & Life Map Domain */}
+              <Route path="/goals" element={<GoalsPage />} />
+              <Route path="/goals/:id" element={<GoalDetailPage />} />
+              <Route path="/plan/goals" element={<Navigate to="/goals" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/focus/*" element={<ModulePlaceholderPage />} />

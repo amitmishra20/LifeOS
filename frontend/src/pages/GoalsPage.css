@@ -1,0 +1,144 @@
+.lifeos-goals-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4) 0 var(--space-12) 0;
+}
+
+.lifeos-goals-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lifeos-goals-page__eyebrow {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-accent);
+  margin-bottom: var(--space-1);
+}
+
+.lifeos-goals-page__title {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.lifeos-goals-page__subline {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.lifeos-goals-page__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.lifeos-goals-page__status-tabs {
+  display: flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 2px;
+  overflow-x: auto;
+}
+
+.lifeos-status-tab {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.lifeos-status-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.lifeos-status-tab--active {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+.lifeos-goals-page__category-select {
+  width: 180px;
+}
+
+.lifeos-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+
+.lifeos-goals-page__empty {
+  padding: var(--space-12) 0;
+}
+
+.lifeos-goals-page__empty-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.lifeos-goals-page__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.lifeos-goals-page__error-msg {
+  margin: 0;
+  color: var(--color-crimson);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 640px) {
+  .lifeos-goals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lifeos-goals-page__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lifeos-goals-page__category-select {
+    width: 100%;
+  }
+}
