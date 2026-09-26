@@ -22,8 +22,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
 
@@ -34,6 +36,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -118,6 +121,46 @@ class GoalControllerTest {
                 .andExpect(jsonPath("$.milestoneCount").value(0));
 
         assertThat(goalRepository.findByUserIdOrderByCreatedAtDesc(testUser1.getId())).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Should reject authenticated POST /api/v1/goals when CSRF token is missing with 403 Forbidden")
+    void createGoal_MissingCsrf_Returns403() throws Exception {
+        CreateGoalRequest request = new CreateGoalRequest();
+        request.setTitle("Master System Design No CSRF");
+        request.setCategory(GoalCategory.CAREER);
+
+        mockMvc.perform(post("/api/v1/goals")
+                .cookie(authCookieUser1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("Should succeed authenticated POST /api/v1/goals with real CSRF cookie and X-XSRF-TOKEN header")
+    void createGoal_WithRealCsrfCookieAndHeader_Success() throws Exception {
+        MvcResult csrfResult = mockMvc.perform(get("/api/v1/auth/csrf"))
+                .andExpect(status().isOk())
+                .andExpect(header().exists(HttpHeaders.SET_COOKIE))
+                .andReturn();
+
+        Cookie xsrfCookie = csrfResult.getResponse().getCookie("XSRF-TOKEN");
+        assertThat(xsrfCookie).isNotNull();
+        String csrfToken = xsrfCookie.getValue();
+
+        CreateGoalRequest request = new CreateGoalRequest();
+        request.setTitle("Master System Design With Real CSRF");
+        request.setCategory(GoalCategory.CAREER);
+
+        mockMvc.perform(post("/api/v1/goals")
+                .cookie(authCookieUser1, xsrfCookie)
+                .header("X-XSRF-TOKEN", csrfToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("Master System Design With Real CSRF"));
     }
 
     @Test

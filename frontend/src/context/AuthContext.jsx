@@ -12,6 +12,11 @@ export const AuthProvider = ({ children }) => {
   const checkSession = useCallback(async () => {
     try {
       const currentUser = await authService.getCurrentUser();
+      try {
+        await authService.getCsrfToken();
+      } catch {
+        // Fallback: CSRF token will be populated on first request
+      }
       setUser(currentUser);
       setStatus(AUTH_STATUS.AUTHENTICATED);
       setError(null);
@@ -27,8 +32,13 @@ export const AuthProvider = ({ children }) => {
     let isMounted = true;
 
     authService.getCurrentUser()
-      .then((currentUser) => {
+      .then(async (currentUser) => {
         if (isMounted) {
+          try {
+            await authService.getCsrfToken();
+          } catch {
+            // Fallback
+          }
           setUser(currentUser);
           setStatus(AUTH_STATUS.AUTHENTICATED);
           setError(null);
@@ -50,6 +60,11 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const loggedInUser = await authService.login(credentials);
+      try {
+        await authService.getCsrfToken();
+      } catch {
+        // Fallback
+      }
       setUser(loggedInUser);
       setStatus(AUTH_STATUS.AUTHENTICATED);
       return loggedInUser;
@@ -63,6 +78,11 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const registeredUser = await authService.register(data);
+      try {
+        await authService.getCsrfToken();
+      } catch {
+        // Fallback
+      }
       setUser(registeredUser);
       setStatus(AUTH_STATUS.AUTHENTICATED);
       return registeredUser;

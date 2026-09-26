@@ -26,9 +26,15 @@ export const getCurrentUser = async () => {
   return response.data;
 };
 
+export const getCsrfToken = async () => {
+  const response = await api.get('/auth/csrf');
+  return response.data;
+};
+
 export default {
   register,
   login,
   logout,
   getCurrentUser,
+  getCsrfToken,
 };

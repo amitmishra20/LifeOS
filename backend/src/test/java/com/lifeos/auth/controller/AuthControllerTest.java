@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -76,8 +77,8 @@ class AuthControllerTest {
                     .andExpect(jsonPath("$.password").doesNotExist())
                     .andExpect(jsonPath("$.passwordHash").doesNotExist())
                     .andExpect(header().exists(HttpHeaders.SET_COOKIE))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("lifeos_token=")))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("HttpOnly")))
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("lifeos_token="))))
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("HttpOnly"))))
                     .andReturn();
 
             // Verify user was persisted and password was securely hashed
@@ -143,8 +144,8 @@ class AuthControllerTest {
                     .andExpect(jsonPath("$.password").doesNotExist())
                     .andExpect(jsonPath("$.passwordHash").doesNotExist())
                     .andExpect(header().exists(HttpHeaders.SET_COOKIE))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("lifeos_token=")))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("HttpOnly")));
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("lifeos_token="))))
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("HttpOnly"))));
         }
 
         @Test
@@ -222,8 +223,8 @@ class AuthControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.message").value("Logged out successfully"))
                     .andExpect(header().exists(HttpHeaders.SET_COOKIE))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("lifeos_token=")))
-                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("Max-Age=0")));
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("lifeos_token="))))
+                    .andExpect(header().stringValues(HttpHeaders.SET_COOKIE, hasItem(containsString("Max-Age=0"))));
         }
     }
 
@@ -266,6 +267,24 @@ class AuthControllerTest {
             String loginContent = loginResult.getResponse().getContentAsString();
             assertThat(loginContent).doesNotContain("passwordHash");
             assertThat(loginContent).doesNotContain("TopSecret123!");
+        }
+    }
+
+    @Nested
+    @DisplayName("CSRF Endpoint Tests")
+    class CsrfEndpointTests {
+
+        @Test
+        @DisplayName("11. GET /api/v1/auth/csrf returns CSRF token and sets XSRF-TOKEN cookie")
+        void shouldReturnCsrfTokenAndSetCookie() throws Exception {
+            mockMvc.perform(get("/api/v1/auth/csrf")
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.token").isString())
+                    .andExpect(jsonPath("$.token").isNotEmpty())
+                    .andExpect(jsonPath("$.headerName").value("X-XSRF-TOKEN"))
+                    .andExpect(header().exists(HttpHeaders.SET_COOKIE))
+                    .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("XSRF-TOKEN=")));
         }
     }
 }

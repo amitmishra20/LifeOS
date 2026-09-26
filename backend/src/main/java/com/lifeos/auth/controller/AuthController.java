@@ -6,16 +6,20 @@ import com.lifeos.auth.dto.RegisterRequest;
 import com.lifeos.auth.dto.UserResponse;
 import com.lifeos.auth.service.AuthService;
 import com.lifeos.security.UserPrincipal;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -57,5 +61,21 @@ public class AuthController {
     ) {
         UserResponse userResponse = authService.getCurrentUser(principal);
         return ResponseEntity.ok(userResponse);
+    }
+
+    @GetMapping("/csrf")
+    public ResponseEntity<Map<String, String>> getCsrfToken(HttpServletRequest request) {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (csrfToken == null) {
+            csrfToken = (CsrfToken) request.getAttribute("_csrf");
+        }
+        String token = csrfToken != null ? csrfToken.getToken() : "";
+        String headerName = csrfToken != null ? csrfToken.getHeaderName() : "X-XSRF-TOKEN";
+        String parameterName = csrfToken != null ? csrfToken.getParameterName() : "_csrf";
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "headerName", headerName,
+                "parameterName", parameterName
+        ));
     }
 }

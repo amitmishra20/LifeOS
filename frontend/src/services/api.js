@@ -23,7 +23,25 @@ function getCookie(name) {
 
 // Request interceptor: attach CSRF token if cookie is present
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    const method = config.method ? config.method.toLowerCase() : 'get';
+    const isMutation = ['post', 'put', 'patch', 'delete'].includes(method);
+    const isAuthExempt = config.url && (
+      config.url.endsWith('/auth/login') ||
+      config.url.endsWith('/auth/register') ||
+      config.url.endsWith('/auth/csrf')
+    );
+
+    // If making a state-changing request without an XSRF-TOKEN cookie,
+    // prime the CSRF token cookie first.
+    if (isMutation && !isAuthExempt && !getCookie('XSRF-TOKEN')) {
+      try {
+        await axios.get('/api/v1/auth/csrf', { withCredentials: true });
+      } catch {
+        // If unable to fetch, proceed and let backend handle
+      }
+    }
+
     const xsrfToken = getCookie('XSRF-TOKEN');
     if (xsrfToken) {
       config.headers['X-XSRF-TOKEN'] = xsrfToken;
