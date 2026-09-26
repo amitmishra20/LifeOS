@@ -21,6 +21,10 @@ export const DashboardPage = () => {
       navigate('/goals');
       return;
     }
+    if (type === 'Task') {
+      navigate('/tasks');
+      return;
+    }
     notify(`${type} creation is ready to connect.`);
   };
 
