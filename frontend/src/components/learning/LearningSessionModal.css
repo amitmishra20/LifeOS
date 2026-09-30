@@ -1,0 +1,53 @@
+.lifeos-session-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.lifeos-session-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.lifeos-session-modal__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4, 16px);
+}
+
+.lifeos-session-modal__item-context {
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: var(--color-surface-subtle, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
+  border-radius: var(--radius-md, 8px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lifeos-session-modal__item-title {
+  font-size: var(--text-sm, 14px);
+  font-weight: 600;
+  color: var(--color-text-primary, #ffffff);
+}
+
+.lifeos-session-modal__item-stats {
+  font-size: var(--text-xs, 12px);
+  color: var(--color-text-muted, #71717a);
+}
+
+.lifeos-session-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3, 12px);
+  margin-top: var(--space-4, 16px);
+  padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
+}
+
+@media (max-width: 640px) {
+  .lifeos-session-modal__row {
+    grid-template-columns: 1fr;
+  }
+}

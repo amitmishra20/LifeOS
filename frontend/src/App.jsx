@@ -12,6 +12,7 @@ import GoalDetailPage from './pages/GoalDetailPage';
 import TasksPage from './pages/TasksPage';
 import HabitsPage from './pages/HabitsPage';
 import FocusPage from './pages/FocusPage';
+import LearningPage from './pages/LearningPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -40,6 +41,10 @@ export function App() {
               <Route path="/goals" element={<GoalsPage />} />
               <Route path="/goals/:id" element={<GoalDetailPage />} />
               <Route path="/plan/goals" element={<Navigate to="/goals" replace />} />
+
+              {/* Growth & Mastery Domain */}
+              <Route path="/learning" element={<LearningPage />} />
+              <Route path="/grow/learning" element={<Navigate to="/learning" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/plan/*" element={<ModulePlaceholderPage />} />
