@@ -3,6 +3,7 @@ import { buildDashboardViewModel } from './buildDashboardViewModel';
 import goalService from '../services/goalService';
 import recommendationService from '../services/recommendationService';
 import taskService from '../services/taskService';
+import habitService from '../services/habitService';
 
 const getInitialDataset = () => ({ user: null, goals: [], milestones: [], tasks: [], habits: [], guidance: null });
 
@@ -21,9 +22,10 @@ export const useDashboardViewModel = (currentUser = null) => {
   const loadRealData = useCallback(async () => {
     if (!currentUser) return;
     try {
-      const [goalsList, dailyData] = await Promise.all([
+      const [goalsList, dailyData, todayHabits] = await Promise.all([
         goalService.getGoals().catch(() => []),
         recommendationService.getDailyFocus().catch(() => ({ items: [] })),
+        habitService.getTodayHabits().catch(() => []),
       ]);
 
       let fullGoals = goalsList || [];
@@ -55,13 +57,14 @@ export const useDashboardViewModel = (currentUser = null) => {
         ...prev,
         goals: fullGoals,
         tasks: mappedTasks,
+        habits: todayHabits || [],
       }));
     } catch (err) {
       console.error('Failed to load dashboard dataset', err);
     }
   }, [currentUser]);
 
-  // Load real goals & focus into dashboard dataset
+  // Load real goals, focus & habits into dashboard dataset
   useEffect(() => {
     loadRealData();
   }, [loadRealData]);
@@ -85,28 +88,28 @@ export const useDashboardViewModel = (currentUser = null) => {
   }, [loadRealData]);
 
   // Signature Interaction: Habit Cadence Rhythm Toggle
-  const toggleHabit = useCallback((habitId, dayIndex) => {
-    setDataset((prev) => {
-      const updatedHabits = prev.habits.map((habit) => {
-        if (habit.id !== habitId) return habit;
-        const newHistory = [...habit.history];
-        newHistory[dayIndex] = !newHistory[dayIndex];
-        const completedCount = newHistory.filter(Boolean).length;
-        const rate = newHistory.length > 0 ? Math.round((completedCount / newHistory.length) * 100) : 0;
-        return {
-          ...habit,
-          history: newHistory,
-          completedDaysCount: completedCount,
-          consistencyRate: rate,
-        };
-      });
+  const toggleHabit = useCallback(async (habitId, dateOrIdx) => {
+    try {
+      let date = null;
+      if (typeof dateOrIdx === 'string' && dateOrIdx.includes('-')) {
+        date = dateOrIdx;
+      } else if (typeof dateOrIdx === 'number') {
+        const targetHabit = dataset.habits.find((h) => h.id === habitId);
+        if (targetHabit && targetHabit.history && targetHabit.history[dateOrIdx]) {
+          const item = targetHabit.history[dateOrIdx];
+          date = typeof item === 'object' ? item.date : null;
+        }
+      }
 
-      return {
+      const res = await habitService.toggleHabit(habitId, date);
+      setDataset((prev) => ({
         ...prev,
-        habits: updatedHabits,
-      };
-    });
-  }, []);
+        habits: prev.habits.map((h) => (h.id === habitId ? (res.habit || { ...h, completedToday: res.completed }) : h)),
+      }));
+    } catch (err) {
+      console.error('Failed to toggle habit from dashboard', err);
+    }
+  }, [dataset.habits]);
 
   // Signature Interaction: Journey Waypoint Expansion
   const toggleWaypoint = useCallback((waypointId) => {

@@ -1,0 +1,125 @@
+.lifeos-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lifeos-habit-form__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lifeos-habit-form__row--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.lifeos-habit-form__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.lifeos-habit-form__cadence-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 12px;
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.lifeos-habit-form__cadence-badge {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-primary);
+  background-color: rgba(99, 102, 241, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+}
+
+.lifeos-habit-form__cadence-desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.lifeos-habit-form__days-group,
+.lifeos-habit-form__weekly-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 12px;
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.lifeos-habit-form__day-pills,
+.lifeos-habit-form__target-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lifeos-habit-day-pill,
+.lifeos-habit-target-pill {
+  min-width: 42px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-habit-day-pill:hover,
+.lifeos-habit-target-pill:hover {
+  border-color: var(--color-accent-primary);
+  color: var(--color-text-primary);
+}
+
+.lifeos-habit-day-pill--selected,
+.lifeos-habit-target-pill--selected {
+  background-color: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: #ffffff;
+  font-weight: var(--font-weight-semibold);
+}
+
+.lifeos-habit-form__hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.lifeos-habit-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+@media (max-width: 640px) {
+  .lifeos-habit-form__row--split {
+    grid-template-columns: 1fr;
+  }
+
+  .lifeos-habit-day-pill,
+  .lifeos-habit-target-pill {
+    min-width: 36px;
+    height: 34px;
+    font-size: 0.75rem;
+  }
+}

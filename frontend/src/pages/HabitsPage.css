@@ -1,0 +1,284 @@
+.lifeos-habits-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* =========================================================================
+   Header
+   ========================================================================= */
+.lifeos-habits-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.lifeos-habits-header__titles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.lifeos-habits-header__title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+  margin: 0;
+}
+
+.lifeos-habits-header__subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 600px;
+}
+
+/* =========================================================================
+   Summary KPI Strip
+   ========================================================================= */
+.lifeos-habits-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.lifeos-habits-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 16px 20px;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.lifeos-habits-summary-card__label {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lifeos-habits-summary-card__value {
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+}
+
+.lifeos-habits-summary-card__value small {
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   Filter Tabs
+   ========================================================================= */
+.lifeos-habits-nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.lifeos-habits-tabs {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.lifeos-habits-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-habits-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.lifeos-habits-tab--active {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-accent-primary);
+}
+
+.lifeos-habits-tab__badge {
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-bg-surface-subtle);
+  color: var(--color-text-muted);
+}
+
+.lifeos-habits-tab--active .lifeos-habits-tab__badge {
+  background-color: rgba(99, 102, 241, 0.15);
+  color: var(--color-accent-primary);
+}
+
+/* =========================================================================
+   Habits List & Cards
+   ========================================================================= */
+.lifeos-habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lifeos-habit-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  gap: var(--space-3);
+  transition: border-color var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-habit-card:hover {
+  border-color: var(--color-border-default);
+}
+
+.lifeos-habit-card__main {
+  width: 100%;
+}
+
+.lifeos-habit-card__desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.lifeos-habit-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border-subtle);
+  flex-wrap: wrap;
+}
+
+.lifeos-habit-card__meta-tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.lifeos-habit-card__cadence-tag,
+.lifeos-habit-card__goal-tag,
+.lifeos-habit-card__status-tag {
+  font-size: 0.6875rem;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-bg-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+}
+
+.lifeos-habit-card__status-tag--paused {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+.lifeos-habit-card__status-tag--archived {
+  color: var(--color-text-muted);
+  border-color: var(--color-border-subtle);
+}
+
+.lifeos-habit-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lifeos-habit-card__action-btn {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-spring);
+}
+
+.lifeos-habit-card__action-btn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+  background-color: var(--color-bg-surface-subtle);
+}
+
+.lifeos-habit-card__action-btn--resume {
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.lifeos-habit-card__action-btn--resume:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+
+.lifeos-habit-card__action-btn--reactivate {
+  color: var(--color-accent-primary);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.lifeos-habit-card__action-btn--delete:hover {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.lifeos-habits-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  color: var(--color-text-secondary);
+}
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+@media (max-width: 768px) {
+  .lifeos-habits-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lifeos-habits-summary-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .lifeos-habit-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lifeos-habit-card__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

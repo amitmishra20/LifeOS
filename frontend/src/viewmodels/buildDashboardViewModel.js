@@ -31,16 +31,11 @@ export const buildDashboardViewModel = ({
   const activeGoalsCount = activeGoals.length;
 
   // Calculate habit consistency across all habits
-  let totalHabitOpportunities = 0;
-  let totalHabitCompletions = 0;
-  habits.forEach((h) => {
-    totalHabitOpportunities += h.history.length;
-    totalHabitCompletions += h.history.filter(Boolean).length;
-  });
-  const habitsConsistencyRate =
-    totalHabitOpportunities > 0
-      ? Math.round((totalHabitCompletions / totalHabitOpportunities) * 100)
-      : 0;
+  let habitsConsistencyRate = 0;
+  if (habits.length > 0) {
+    const validRates = habits.map((h) => (h.consistencyRate !== undefined ? h.consistencyRate : 0));
+    habitsConsistencyRate = Math.round(validRates.reduce((a, b) => a + b, 0) / validRates.length);
+  }
 
   // Momentum is only meaningful after the user has created activity.
   const taskExecutionRate =
@@ -208,16 +203,36 @@ export const buildDashboardViewModel = ({
     isToday: idx === currentDayIndex,
   }));
 
-  const habitsList = habits.map((h) => ({
-    id: h.id,
-    title: h.title,
-    icon: h.icon,
-    history: h.history,
-    completedDaysCount: h.completedDaysCount,
-    totalDays: h.totalDays,
-    consistencyRate: h.consistencyRate,
-    summaryText: `${h.completedDaysCount} of ${h.totalDays} days completed`,
-  }));
+  const habitsList = habits.map((h) => {
+    let summaryText = '';
+    if (h.frequencyType === 'WEEKLY_TARGET') {
+      const progress = h.weeklyTargetProgress !== undefined ? h.weeklyTargetProgress : 0;
+      const target = h.targetPerWeek || 7;
+      summaryText = `${progress} of ${target} this week`;
+    } else {
+      const streak = h.currentStreak !== undefined && h.currentStreak !== null ? `${h.currentStreak}d streak` : null;
+      const rate = h.consistencyRate !== undefined ? `${h.consistencyRate}%` : null;
+      if (streak && rate) summaryText = `${streak} · ${rate}`;
+      else summaryText = rate || streak || `${h.consistencyRate || 0}%`;
+    }
+
+    return {
+      id: h.id,
+      title: h.title,
+      icon: h.icon,
+      status: h.status,
+      goalTitle: h.goalTitle,
+      frequencyType: h.frequencyType,
+      targetPerWeek: h.targetPerWeek,
+      currentStreak: h.currentStreak,
+      consistencyRate: h.consistencyRate,
+      weeklyTargetProgress: h.weeklyTargetProgress,
+      weeklyTargetRemaining: h.weeklyTargetRemaining,
+      completedToday: h.completedToday,
+      history: h.history || [],
+      summaryText,
+    };
+  });
 
   // 8. GoalsViewModel
   const goalsSummary = goals.map((g) => {

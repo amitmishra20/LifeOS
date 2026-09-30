@@ -4,6 +4,7 @@ import { useAuth } from '../context/useAuth';
 import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
 import heroDayImage from '../assets/hero_mountain_day.png';
 import heroNightImage from '../assets/hero_atmosphere.jpg';
+import HabitRhythmRow from '../components/composites/HabitRhythmRow';
 import './DashboardPage.css';
 
 const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
@@ -23,6 +24,10 @@ export const DashboardPage = () => {
     }
     if (type === 'Task') {
       navigate('/tasks');
+      return;
+    }
+    if (type === 'Habit') {
+      navigate('/habits');
       return;
     }
     notify(`${type} creation is ready to connect.`);
@@ -50,7 +55,7 @@ export const DashboardPage = () => {
     </section>
 
     <section className="lifeos-lower" aria-label="Progress and rhythm"><div className="lifeos-progress"><div className="lifeos-section-index"><span>03</span><span className="lifeos-rule" /><span>PROGRESS</span></div><div className="lifeos-empty-panel lifeos-empty-panel--bare"><div><h2>Your progress will take shape<br /><em>as you begin moving.</em></h2><p>No milestones or completion data yet.</p></div><EmptyAction onClick={() => openCreate('Goal')}>Create your first goal</EmptyAction></div></div>
-      <div className="lifeos-rhythm"><div className="lifeos-section-index"><span>04</span><span className="lifeos-rule" /><span>RHYTHM</span></div><h2>{rhythm.hasHabits ? 'Keep showing up.' : <>Build a rhythm<br /><em>that feels like yours.</em></>}</h2>{!rhythm.hasHabits ? <div className="lifeos-empty-rhythm"><p>Small practices become support for the life you&apos;re creating.</p><EmptyAction onClick={() => openCreate('Habit')}>Create a habit</EmptyAction></div> : <div className="lifeos-habit-list">{rhythm.habits.map((habit) => <button className="lifeos-habit" type="button" key={habit.id} onClick={() => toggleHabit(habit.id, 0)}><span className="lifeos-habit__mark">{habit.history[0] ? '✓' : '○'}</span><span>{habit.title}</span><b>{habit.consistencyRate}%</b></button>)}</div>}</div>
+      <div className="lifeos-rhythm"><div className="lifeos-section-index"><span>04</span><span className="lifeos-rule" /><span>RHYTHM</span></div><h2>{rhythm.hasHabits ? 'Keep showing up.' : <>Build a rhythm<br /><em>that feels like yours.</em></>}</h2>{!rhythm.hasHabits ? <div className="lifeos-empty-rhythm"><p>Small practices become support for the life you&apos;re creating.</p><EmptyAction onClick={() => openCreate('Habit')}>Create a habit</EmptyAction></div> : <div className="lifeos-habit-list">{rhythm.habits.map((habit) => <HabitRhythmRow key={habit.id} habit={habit} onToggleHabit={(habitId, dateOrIdx) => { toggleHabit(habitId, dateOrIdx); notify('Rhythm updated.'); }} />)}</div>}</div>
     </section>
     {focus.supportingTasks.length > 0 && <section className="lifeos-next" aria-label="Supporting actions"><span className="lifeos-kicker">More from your day</span><div className="lifeos-next__items">{focus.supportingTasks.slice(0, 3).map((task) => <button type="button" className={`lifeos-next__item ${task.completed ? 'is-complete' : ''}`} key={task.id} onClick={() => toggleTask(task.id)}><span>{task.completed ? '✓' : '○'}</span><strong>{task.title}</strong><small>{task.time || 'Today'} · {task.category || 'Task'}</small></button>)}</div></section>}
   </main>;
