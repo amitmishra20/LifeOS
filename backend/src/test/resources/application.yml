@@ -31,3 +31,9 @@ app:
     jwt:
       secret: test-secret-key-that-is-at-least-256-bits-long-for-hmac-sha256-signing!
       expiration-ms: 3600000
+  analytics:
+    weights:
+      task-completion: 0.30
+      habit-consistency: 0.25
+      goal-progress: 0.25
+      learning-activity: 0.20

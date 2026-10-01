@@ -1,0 +1,124 @@
+.lifeos-metric-card {
+  background: var(--color-surface, #131418);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 16px);
+  padding: var(--spacing-lg, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 16px);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.15));
+  transition: transform var(--transition-fast, 0.15s ease), border-color var(--transition-fast, 0.15s ease);
+}
+
+.lifeos-metric-card:hover {
+  border-color: var(--color-border-hover, rgba(255, 255, 255, 0.15));
+}
+
+.lifeos-metric-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lifeos-metric-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lifeos-metric-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
+  color: var(--color-text-secondary, #9ba1a6);
+}
+
+.lifeos-metric-card__title {
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #f5f5f7);
+  margin: 0;
+}
+
+.lifeos-metric-card__badge {
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
+  color: var(--color-text-tertiary, #6c737f);
+}
+
+.lifeos-metric-card__badge--active {
+  color: var(--color-success, #10b981);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.lifeos-metric-card__main-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.lifeos-metric-card__value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #f5f5f7);
+  font-feature-settings: 'tnum';
+  line-height: 1;
+}
+
+.lifeos-metric-card__unit {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #6c737f);
+}
+
+.lifeos-metric-card__label {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-text-secondary, #9ba1a6);
+  margin-top: 2px;
+}
+
+.lifeos-metric-card__progress-bar {
+  height: 6px;
+  background: var(--color-surface-sunken, rgba(255, 255, 255, 0.08));
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.lifeos-metric-card__progress-fill {
+  height: 100%;
+  background: var(--color-accent, #3b82f6);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.lifeos-metric-card__stats-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm, 12px);
+  padding-top: var(--spacing-sm, 12px);
+  border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.06));
+}
+
+.lifeos-metric-card__stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lifeos-metric-card__stat-num {
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #f5f5f7);
+}
+
+.lifeos-metric-card__stat-desc {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-text-tertiary, #6c737f);
+}

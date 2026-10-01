@@ -46,6 +46,12 @@ app:
       name: ${AUTH_COOKIE_NAME:lifeos_token}
       secure: ${COOKIE_SECURE:false}
       same-site: ${COOKIE_SAME_SITE:Lax}
+  analytics:
+    weights:
+      task-completion: 0.30
+      habit-consistency: 0.25
+      goal-progress: 0.25
+      learning-activity: 0.20
 
 logging:
   level:

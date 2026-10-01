@@ -15,6 +15,7 @@ import FocusPage from './pages/FocusPage';
 import LearningPage from './pages/LearningPage';
 import CalendarPage from './pages/CalendarPage';
 import NotesPage from './pages/NotesPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -51,10 +52,16 @@ export function App() {
               {/* Growth & Mastery Domain */}
               <Route path="/learning" element={<LearningPage />} />
               <Route path="/grow/learning" element={<Navigate to="/learning" replace />} />
+              <Route path="/progress" element={<Navigate to="/analytics" replace />} />
+              <Route path="/grow/progress" element={<Navigate to="/analytics" replace />} />
 
               {/* Knowledge & Capture Domain */}
               <Route path="/notes" element={<NotesPage />} />
               <Route path="/capture/notes" element={<Navigate to="/notes" replace />} />
+
+              {/* Reflection & Analytics Domain */}
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/reflect/analytics" element={<Navigate to="/analytics" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/plan/*" element={<ModulePlaceholderPage />} />
