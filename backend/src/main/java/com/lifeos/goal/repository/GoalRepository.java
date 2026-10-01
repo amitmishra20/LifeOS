@@ -19,5 +19,7 @@ public interface GoalRepository extends JpaRepository<Goal, Long> {
 
     boolean existsByIdAndUserId(Long id, Long userId);
 
+    long countByUserId(Long userId);
+
     List<Goal> findByUserIdAndTargetDateBetweenOrderByTargetDateAsc(Long userId, java.time.LocalDate start, java.time.LocalDate end);
 }

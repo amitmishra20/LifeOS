@@ -19,6 +19,8 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
 
     long countByUserIdAndStatus(Long userId, HabitStatus status);
 
+    long countByUserId(Long userId);
+
     @org.springframework.transaction.annotation.Transactional
     @org.springframework.data.jpa.repository.Modifying
     @org.springframework.data.jpa.repository.Query("UPDATE Habit h SET h.createdAt = :createdAt WHERE h.id = :id")

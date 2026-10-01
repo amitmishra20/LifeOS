@@ -18,4 +18,6 @@ public interface LearningItemRepository extends JpaRepository<LearningItem, Long
     Optional<LearningItem> findByIdAndUserId(Long id, Long userId);
 
     long countByUserIdAndStatus(Long userId, LearningStatus status);
+
+    long countByUserId(Long userId);
 }

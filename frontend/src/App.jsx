@@ -18,6 +18,7 @@ import NotesPage from './pages/NotesPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import GoalHealthPage from './pages/GoalHealthPage';
 import RecommendationsPage from './pages/RecommendationsPage';
+import SettingsPage from './pages/SettingsPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -68,6 +69,8 @@ export function App() {
               <Route path="/reflect/goal-health" element={<Navigate to="/goal-health" replace />} />
               <Route path="/recommendations" element={<RecommendationsPage />} />
               <Route path="/reflect/recommendations" element={<Navigate to="/recommendations" replace />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/reflect/settings" element={<Navigate to="/settings" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/plan/*" element={<ModulePlaceholderPage />} />
