@@ -9,6 +9,7 @@ export const Button = ({
   variant = 'primary', // 'primary' | 'secondary' | 'subtle' | 'outline' | 'ghost' | 'danger'
   size = 'md',        // 'xs' | 'sm' | 'md' | 'lg'
   isLoading = false,
+  loading = false,
   disabled = false,
   leftIcon = null,
   rightIcon = null,
@@ -18,22 +19,24 @@ export const Button = ({
   type = 'button',
   ...props
 }) => {
+  const isButtonLoading = Boolean(isLoading || loading);
+
   return (
     <button
       type={type}
       className={`lifeos-btn lifeos-btn--${variant} lifeos-btn--${size} ${
-        isLoading ? 'lifeos-btn--loading' : ''
+        isButtonLoading ? 'lifeos-btn--loading' : ''
       } ${iconOnly ? 'lifeos-btn--icon-only' : ''} ${className}`}
-      disabled={disabled || isLoading}
+      disabled={disabled || isButtonLoading}
       {...props}
     >
-      {isLoading ? (
+      {isButtonLoading ? (
         <span className="lifeos-btn__spinner" aria-hidden="true" />
       ) : (
         leftIcon && <span className="lifeos-btn__icon lifeos-btn__icon--left">{leftIcon}</span>
       )}
       {!iconOnly && children && <span className="lifeos-btn__label">{children}</span>}
-      {!isLoading && rightIcon && (
+      {!isButtonLoading && rightIcon && (
         <span className="lifeos-btn__icon lifeos-btn__icon--right">{rightIcon}</span>
       )}
     </button>

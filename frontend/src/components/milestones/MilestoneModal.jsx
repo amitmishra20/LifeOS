@@ -108,7 +108,7 @@ export const MilestoneModal = ({
           <Button variant="ghost" size="md" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>
-          <Button variant="primary" size="md" onClick={handleSubmit} loading={isSubmitting}>
+          <Button variant="primary" size="md" onClick={handleSubmit} isLoading={isSubmitting}>
             {isEdit ? 'Save Changes' : 'Create Milestone'}
           </Button>
         </div>

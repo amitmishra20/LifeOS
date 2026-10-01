@@ -365,7 +365,7 @@ export const GoalDetailPage = () => {
               variant="danger"
               size="md"
               onClick={handleDeleteGoal}
-              loading={isSubmittingGoal}
+              isLoading={isSubmittingGoal}
             >
               Delete Goal
             </Button>
@@ -409,7 +409,7 @@ export const GoalDetailPage = () => {
               variant="danger"
               size="md"
               onClick={handleDeleteMilestone}
-              loading={isSubmittingMilestone}
+              isLoading={isSubmittingMilestone}
             >
               Delete Milestone
             </Button>

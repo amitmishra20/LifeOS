@@ -24,4 +24,6 @@ public interface LearningSessionRepository extends JpaRepository<LearningSession
 
     @Query("SELECT COALESCE(SUM(s.durationMinutes), 0) FROM LearningSession s WHERE s.user.id = :userId")
     Integer sumDurationMinutesByUserId(@Param("userId") Long userId);
+
+    List<LearningSession> findByUserIdAndSessionDateBetweenOrderBySessionDateAsc(Long userId, java.time.LocalDate start, java.time.LocalDate end);
 }

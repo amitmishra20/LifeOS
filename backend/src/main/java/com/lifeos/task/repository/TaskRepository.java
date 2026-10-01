@@ -24,4 +24,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByMilestoneIdAndUserId(Long milestoneId, Long userId);
 
     long countByUserIdAndStatus(Long userId, TaskStatus status);
+
+    List<Task> findByUserIdAndDueDateBetweenOrderByDueDateAsc(Long userId, java.time.LocalDate start, java.time.LocalDate end);
 }
