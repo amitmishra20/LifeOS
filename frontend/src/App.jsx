@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import DesignPreviewAuthProvider from './context/DesignPreviewAuthProvider';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PublicRoute from './components/auth/PublicRoute';
 import LoginPage from './pages/LoginPage';
@@ -21,9 +22,16 @@ import RecommendationsPage from './pages/RecommendationsPage';
 import SettingsPage from './pages/SettingsPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
+const isDesignPreview = import.meta.env.DEV && (
+  import.meta.env.VITE_LIFEOS_DESIGN_PREVIEW === 'true'
+  || new URLSearchParams(window.location.search).get('designPreview') === 'true'
+);
+
 export function App() {
+  const AuthBoundary = isDesignPreview ? DesignPreviewAuthProvider : AuthProvider;
+
   return (
-    <AuthProvider>
+    <AuthBoundary>
       <BrowserRouter>
         <Routes>
           {/* Public Authentication Routes */}
@@ -84,7 +92,7 @@ export function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </AuthBoundary>
   );
 }
 
