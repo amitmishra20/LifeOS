@@ -5,7 +5,7 @@ import LearningSessionModal from '../components/learning/LearningSessionModal';
 import LearningSessionsDrawer from '../components/learning/LearningSessionsDrawer';
 import Button from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
-import LoadingState from '../components/ui/LoadingState';
+import LoadingState, { CardSkeleton } from '../components/ui/LoadingState';
 import './LearningPage.css';
 
 const FILTER_TABS = [
@@ -301,7 +301,11 @@ export const LearningPage = () => {
 
       {/* Main Content Area */}
       {isLoading ? (
-        <LoadingState message="Loading learning subjects..." />
+        <div className="lifeos-learning-grid" aria-busy="true">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
       ) : error ? (
         <div className="lifeos-learning-error" role="alert">
           <p>{error}</p>

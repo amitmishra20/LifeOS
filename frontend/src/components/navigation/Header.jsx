@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import { IconMenu, IconSearch, IconCommand } from '../ui/Icons';
 import ThemeToggle from '../ui/ThemeToggle';
-import AccountModal from '../ui/AccountModal';
 import './Header.css';
 
 const ROUTE_TITLES = {
@@ -19,6 +18,7 @@ const ROUTE_TITLES = {
   '/goal-health': 'Goal Health Engine',
   '/recommendations': 'Focus Recommendations',
   '/notes': 'Capture & Notes',
+  '/settings': 'Settings & Account',
 };
 
 export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
@@ -27,7 +27,6 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
   const { user, logout } = useAuth();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [accountModalOpen, setAccountModalOpen] = useState(false);
   const menuRef = useRef(null);
 
   const currentTitle = ROUTE_TITLES[location.pathname] || 'Dashboard';
@@ -163,14 +162,14 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
                   role="menuitem"
                   onClick={() => {
                     setDropdownOpen(false);
-                    setAccountModalOpen(true);
+                    navigate('/settings');
                   }}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
                   </svg>
-                  <span>Account</span>
+                  <span>Settings & Account</span>
                 </button>
 
                 <button
@@ -191,14 +190,6 @@ export const Header = ({ onMenuClick, onQuickCaptureClick }) => {
           </div>
         </div>
       </header>
-
-      {/* Account Details Modal */}
-      <AccountModal
-        isOpen={accountModalOpen}
-        onClose={() => setAccountModalOpen(false)}
-        user={user}
-        onLogout={handleLogout}
-      />
     </>
   );
 };

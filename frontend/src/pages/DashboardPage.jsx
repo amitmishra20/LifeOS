@@ -5,9 +5,15 @@ import { useDashboardViewModel } from '../viewmodels/useDashboardViewModel';
 import heroDayImage from '../assets/hero_mountain_day.png';
 import heroNightImage from '../assets/hero_atmosphere.jpg';
 import HabitRhythmRow from '../components/composites/HabitRhythmRow';
+import Button from '../components/ui/Button';
 import './DashboardPage.css';
 
-const EmptyAction = ({ children, onClick }) => <button className="lifeos-primary-action" type="button" onClick={onClick}><span>{children}</span><span aria-hidden="true">↗</span></button>;
+const EmptyAction = ({ children, onClick }) => (
+  <Button variant="primary" size="md" onClick={onClick} className="lifeos-primary-action">
+    <span>{children}</span>
+    <span aria-hidden="true">↗</span>
+  </Button>
+);
 
 export const DashboardPage = () => {
   const navigate = useNavigate();
