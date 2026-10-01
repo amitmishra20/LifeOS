@@ -173,8 +173,8 @@ export const GoalsPage = () => {
         </div>
       ) : (
         <div className="lifeos-goals-grid">
-          {filteredGoals.map((goal) => (
-            <GoalCard key={goal.id} goal={goal} onClick={(id) => navigate(`/goals/${id}`)} />
+          {filteredGoals.map((goal, index) => (
+            <GoalCard key={goal.id} goal={goal} featured={goal.status === 'ACTIVE' && index === 0} onClick={(id) => navigate(`/goals/${id}`)} />
           ))}
         </div>
       )}

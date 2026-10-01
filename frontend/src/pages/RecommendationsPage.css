@@ -1,5 +1,6 @@
 .lifeos-recommendations-page {
   padding: 32px;
+  background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--color-accent-subtle) 32%, transparent), transparent 34%);
   max-width: 1200px;
   margin: 0 auto;
   min-height: 100%;
@@ -70,6 +71,7 @@
 
 .lifeos-rec-section {
   display: flex;
+  animation: lifeos-recommendation-enter var(--motion-panel) var(--motion-enter) both;
   flex-direction: column;
   gap: 16px;
 }
@@ -140,7 +142,8 @@
 }
 
 .lifeos-rec-card {
-  background: var(--color-surface, #111827);
+  background: color-mix(in srgb, var(--color-surface, #111827) 92%, transparent);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--color-border, #1f2937);
   border-radius: 10px;
   padding: 20px;
@@ -158,6 +161,9 @@
 .lifeos-rec-card--strategic {
   border-left: 3px solid #f87171;
 }
+.lifeos-rec-section:first-child .lifeos-rec-card:first-child { padding: 28px; min-height: 190px; border-color: color-mix(in srgb, #f87171 48%, var(--color-border)); background: linear-gradient(135deg, color-mix(in srgb, #f87171 9%, var(--color-surface)), var(--color-surface)); }
+.lifeos-rec-section:first-child .lifeos-rec-card:first-child .lifeos-rec-card__title { font-size: 1.35rem; max-width: 26ch; }
+.lifeos-rec-card__explanation { background: color-mix(in srgb, var(--color-surface-hover) 72%, transparent); }
 
 .lifeos-rec-card--focus {
   border-left: 3px solid #6366f1;
@@ -230,6 +236,9 @@
   flex-direction: column;
   gap: 4px;
 }
+
+@keyframes lifeos-recommendation-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.lifeos-rec-section:nth-child(2) { animation-delay: 70ms; }.lifeos-rec-section:nth-child(3) { animation-delay: 140ms; }.lifeos-rec-section:nth-child(4) { animation-delay: 210ms; }
 
 @media (max-width: 768px) {
   .lifeos-recommendations-page {

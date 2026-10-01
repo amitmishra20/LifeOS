@@ -6,6 +6,7 @@
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   gap: var(--space-6);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 92%, var(--color-accent-subtle)), var(--color-surface));
 }
 
 .lifeos-lifemap__header {
@@ -75,6 +76,7 @@
   gap: var(--space-5);
   overflow-x: auto;
   padding: var(--space-2) 0;
+  scrollbar-width: thin;
 }
 
 .lifeos-lifemap__track {
@@ -90,7 +92,7 @@
   min-width: 48px;
   height: 2px;
   background: var(--color-border);
-  transition: background 0.3s ease;
+  transition: background var(--motion-standard) var(--ease-smooth), transform var(--motion-standard) var(--ease-spring);
 }
 
 .lifeos-lifemap__spine--completed {

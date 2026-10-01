@@ -18,6 +18,16 @@
   box-shadow: var(--shadow-sm);
 }
 
+.lifeos-goal-card--featured {
+  grid-row: span 2;
+  min-height: 360px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--color-surface) 88%, var(--color-accent-subtle)), var(--color-surface));
+  border-color: var(--color-border-accent);
+}
+
+.lifeos-goal-card--featured .lifeos-goal-card__title { font-size: var(--font-size-2xl); max-width: 18ch; }
+.lifeos-goal-card--featured .lifeos-goal-card__body { display: flex; flex-direction: column; justify-content: center; }
+
 .lifeos-goal-card:focus-visible {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 2px var(--color-accent-subtle);

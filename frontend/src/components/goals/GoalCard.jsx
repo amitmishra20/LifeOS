@@ -35,7 +35,7 @@ const HEALTH_BADGES = {
   COMPLETED: { label: 'Completed', variant: 'accent' },
 };
 
-export const GoalCard = ({ goal, onClick }) => {
+export const GoalCard = ({ goal, onClick, featured = false }) => {
   if (!goal) return null;
 
   const {
@@ -64,7 +64,7 @@ export const GoalCard = ({ goal, onClick }) => {
     <div
       role="button"
       tabIndex={0}
-      className={`lifeos-goal-card lifeos-goal-card--${status.toLowerCase()}`}
+      className={`lifeos-goal-card lifeos-goal-card--${status.toLowerCase()} ${featured ? 'lifeos-goal-card--featured' : ''}`}
       onClick={() => onClick && onClick(id)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
