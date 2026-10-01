@@ -1,262 +1,265 @@
+/* ==========================================================================
+   LifeOS — Spatial Life Map (Cartographic Progression Journey)
+   ========================================================================== */
+
 .lifeos-lifemap {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  gap: var(--space-6);
+  background: linear-gradient(180deg, rgba(16, 20, 25, 0.9) 0%, rgba(9, 12, 15, 0.98) 100%);
+  border: 1px solid var(--color-border-default);
+  border-top-color: var(--color-border-light-top);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-8);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
 }
 
+/* Header */
 .lifeos-lifemap__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   flex-wrap: wrap;
   gap: var(--space-3);
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-5);
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .lifeos-lifemap__eyebrow {
   display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-tertiary);
+  color: var(--color-accent-primary);
   margin-bottom: var(--space-1);
 }
 
 .lifeos-lifemap__heading {
   margin: 0;
-  font-size: var(--font-size-xl);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
   font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
   color: var(--color-text-primary);
-  letter-spacing: var(--tracking-tight);
 }
 
 .lifeos-lifemap__legend {
   display: flex;
   align-items: center;
   gap: var(--space-4);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
 }
 
 .lifeos-lifemap__legend-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
 }
 
 .lifeos-lifemap__legend-dot {
   width: 8px;
   height: 8px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
 }
 
 .lifeos-lifemap__legend-item--completed .lifeos-lifemap__legend-dot {
-  background: var(--color-emerald);
+  background-color: var(--color-success-base);
+  box-shadow: 0 0 6px var(--color-success-base);
 }
 
 .lifeos-lifemap__legend-item--active .lifeos-lifemap__legend-dot {
-  background: var(--color-accent);
+  background-color: var(--color-accent-primary);
+  box-shadow: 0 0 8px var(--color-accent-primary);
 }
 
 .lifeos-lifemap__legend-item--pending .lifeos-lifemap__legend-dot {
-  background: var(--color-border);
+  background-color: var(--color-text-muted);
 }
 
-/* Spatial Viewport & Track */
-.lifeos-lifemap__spatial-viewport {
+/* Empty Track */
+.lifeos-lifemap__empty-track {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  overflow-x: auto;
-  padding: var(--space-2) 0;
+  align-items: center;
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+  color: var(--color-text-secondary);
+  gap: var(--space-3);
+}
+
+.lifeos-lifemap__empty-text {
+  max-width: 440px;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+/* Spatial Viewport */
+.lifeos-lifemap__spatial-viewport {
+  position: relative;
+  padding: var(--space-8) 0 var(--space-4);
 }
 
 .lifeos-lifemap__track {
   display: flex;
-  align-items: center;
-  min-width: min-content;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
   padding: var(--space-4) var(--space-2);
 }
 
-/* Spine Connector */
+/* Connecting Spine */
 .lifeos-lifemap__spine {
   flex: 1;
-  min-width: 48px;
   height: 2px;
-  background: var(--color-border);
-  transition: background 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 20px;
+  min-width: 36px;
+  position: relative;
+  transition: background-color var(--motion-small) var(--ease-smooth);
 }
 
 .lifeos-lifemap__spine--completed {
-  background: var(--color-emerald);
+  background: linear-gradient(90deg, var(--color-success-base), var(--color-accent-primary));
 }
 
-/* Waypoint Nodes */
+/* Waypoint Node */
 .lifeos-lifemap__node {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  outline: none;
-  min-width: 110px;
-  max-width: 140px;
-  padding: var(--space-2);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.lifeos-lifemap__node:hover {
-  background: var(--color-surface-hover);
-}
-
-.lifeos-lifemap__node--selected {
-  background: var(--color-surface-hover);
-}
-
-.lifeos-lifemap__node-marker {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--space-3);
-  z-index: 1;
-}
-
-/* Node styles */
-.lifeos-lifemap__origin-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  border: 2px solid var(--color-text-tertiary);
-}
-
-.lifeos-lifemap__waypoint-dot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  border: 2px solid var(--color-border);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  transition: all 0.2s ease;
-}
-
-.lifeos-lifemap__node--completed .lifeos-lifemap__waypoint-dot {
-  background: var(--color-emerald);
-  border-color: var(--color-emerald);
-  color: #ffffff;
-}
-
-.lifeos-lifemap__node--active .lifeos-lifemap__waypoint-dot {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  font-weight: var(--font-weight-bold);
-  box-shadow: 0 0 0 3px var(--color-accent-subtle);
-}
-
-.lifeos-lifemap__pulse {
-  position: absolute;
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-full);
-  background: var(--color-accent-subtle);
-  animation: lifeos-calm-pulse 3s infinite ease-in-out;
-  pointer-events: none;
-}
-
-@keyframes lifeos-calm-pulse {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 0.2;
-  }
-  100% {
-    transform: scale(0.9);
-    opacity: 0.6;
-  }
-}
-
-.lifeos-lifemap__summit-flag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
-}
-
-.lifeos-lifemap__node-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 2px;
-  width: 100%;
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+  cursor: pointer;
+  outline: none;
 }
 
+.lifeos-lifemap__node-marker {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  position: relative;
+  z-index: 2;
+  transition: all var(--motion-small) var(--ease-spring);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lifeos-lifemap__node:hover .lifeos-lifemap__node-marker {
+  border-color: var(--color-accent-primary);
+  transform: scale(1.08);
+}
+
+/* Active Node */
+.lifeos-lifemap__node--active .lifeos-lifemap__node-marker {
+  border-color: var(--color-accent-primary);
+  background: rgba(216, 177, 122, 0.15);
+  color: var(--color-accent-primary);
+  box-shadow: 0 0 16px rgba(216, 177, 122, 0.35);
+}
+
+.lifeos-lifemap__pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-accent-primary);
+  animation: lifeosWaypointPulse 2.4s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes lifeosWaypointPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* Completed Node */
+.lifeos-lifemap__node--completed .lifeos-lifemap__node-marker {
+  background: var(--color-success-base);
+  border-color: var(--color-success-base);
+  color: #ffffff;
+}
+
+/* Summit Node */
+.lifeos-lifemap__node--summit .lifeos-lifemap__node-marker {
+  background: linear-gradient(135deg, var(--color-accent-hover), var(--color-accent-primary));
+  border-color: var(--color-accent-primary);
+  color: #0b0e11;
+  box-shadow: 0 0 20px rgba(216, 177, 122, 0.4);
+}
+
+/* Node Content */
+.lifeos-lifemap__node-content {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 130px;
+}
+
+.lifeos-lifemap__node-phase,
 .lifeos-lifemap__node-tag {
   font-size: 10px;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-tertiary);
-}
-
-.lifeos-lifemap__node-phase {
-  font-size: 10px;
-  font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-tertiary);
+  color: var(--color-accent-primary);
 }
 
 .lifeos-lifemap__node-title {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
-  line-height: var(--leading-snug);
+  line-height: 1.35;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 120px;
 }
 
 .lifeos-lifemap__node-date {
   font-size: 10px;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-muted);
 }
 
-/* Context Panel */
+/* Interactive Context Panel */
 .lifeos-lifemap__context-panel {
-  background: var(--color-surface-hover);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  animation: lifeos-fade-in 0.2s ease;
+  margin-top: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  background: rgba(22, 27, 33, 0.8);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  animation: lifeosContextIn var(--motion-small) var(--ease-spring);
 }
 
-@keyframes lifeos-fade-in {
+@keyframes lifeosContextIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -268,21 +271,37 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .lifeos-lifemap__context-kicker {
   font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-tertiary);
+  color: var(--color-accent-primary);
 }
 
 .lifeos-lifemap__context-title {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
+  margin: 2px 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
   color: var(--color-text-primary);
+}
+
+.lifeos-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.lifeos-icon-btn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface-elevated);
 }
 
 .lifeos-lifemap__context-body {
@@ -296,87 +315,50 @@
   align-items: center;
   gap: var(--space-3);
   font-size: var(--font-size-xs);
-}
-
-.lifeos-lifemap__context-date {
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
 }
 
 .lifeos-lifemap__context-desc {
   margin: 0;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  line-height: var(--leading-normal);
+  line-height: 1.5;
 }
 
-.lifeos-lifemap__empty-track {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--space-6);
-  gap: var(--space-3);
-}
-
-.lifeos-lifemap__empty-stem {
-  width: 120px;
-  height: 2px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--color-border),
-    var(--color-border) 6px,
-    transparent 6px,
-    transparent 12px
-  );
-}
-
-.lifeos-lifemap__empty-text {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-}
-
-/* Mobile & Tablet Vertical Layout */
+/* Responsive Mobile Transformation: Vertical Journey */
 @media (max-width: 768px) {
-  .lifeos-lifemap__spatial-viewport {
-    overflow-x: visible;
+  .lifeos-lifemap {
+    padding: var(--space-5) var(--space-4);
   }
 
   .lifeos-lifemap__track {
     flex-direction: column;
     align-items: stretch;
-    min-width: 100%;
     padding: var(--space-2) 0;
-  }
-
-  .lifeos-lifemap__spine {
-    width: 2px;
-    height: 32px;
-    min-width: 2px;
-    margin-left: 17px;
+    gap: 0;
   }
 
   .lifeos-lifemap__node {
+    width: 100%;
     flex-direction: row;
     align-items: center;
-    min-width: 100%;
-    max-width: 100%;
+    text-align: left;
     gap: var(--space-4);
     padding: var(--space-2) 0;
   }
 
-  .lifeos-lifemap__node-marker {
-    margin-bottom: 0;
-    width: 36px;
-    justify-content: center;
-  }
-
   .lifeos-lifemap__node-content {
-    align-items: flex-start;
-    text-align: left;
+    margin-top: 0;
+    max-width: none;
+    flex: 1;
   }
 
-  .lifeos-lifemap__node-title {
-    max-width: 100%;
-    white-space: normal;
+  .lifeos-lifemap__spine {
+    width: 2px;
+    height: 24px;
+    margin-left: 20px;
+    margin-top: 0;
+    min-width: 0;
+    flex: none;
   }
 }

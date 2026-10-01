@@ -1,25 +1,28 @@
+/* ==========================================================================
+   LIFEOS GOAL HEALTH ITEM CARD — Diagnostic Evaluation Horizon
+   ========================================================================== */
+
 .lifeos-gh-card {
-  background: var(--surface-primary, #ffffff);
-  border: 1px solid var(--border-subtle, #e2e8f0);
-  border-radius: var(--radius-lg, 12px);
+  background: var(--color-surface, #0d151a);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 8px);
   padding: var(--space-5, 20px);
   display: flex;
   flex-direction: column;
   gap: var(--space-4, 16px);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
   text-align: left;
   outline: none;
 }
 
 .lifeos-gh-card:hover {
   transform: translateY(-2px);
-  border-color: var(--border-medium, #cbd5e1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(216, 177, 122, 0.35);
 }
 
 .lifeos-gh-card:focus-visible {
-  box-shadow: 0 0 0 2px var(--brand-500, #3b82f6);
+  border-color: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-gh-card__header {
@@ -37,33 +40,35 @@
 }
 
 .lifeos-gh-card__delta-tag {
-  font-size: var(--text-xs, 12px);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
   font-weight: 600;
 }
 
 .lifeos-gh-card__delta-val {
-  color: var(--success-600, #059669);
-  background: var(--success-50, #ecfdf5);
-  padding: 2px 8px;
-  border-radius: var(--radius-sm, 4px);
+  color: #54c5b1;
+  background: rgba(84, 197, 177, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .lifeos-gh-card__delta-val--neg {
-  color: var(--danger-600, #dc2626);
-  background: var(--danger-50, #fef2f2);
+  color: #e57373;
+  background: rgba(229, 115, 115, 0.1);
 }
 
 .lifeos-gh-card__title {
-  font-size: var(--text-base, 16px);
-  font-weight: 600;
-  color: var(--text-primary, #0f172a);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: var(--text-lg, 18px);
+  font-weight: 500;
+  color: var(--color-text-primary, #f2eee3);
   margin: 0 0 var(--space-2, 8px) 0;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .lifeos-gh-card__reason {
-  background: var(--surface-secondary, #f8fafc);
-  border-left: 3px solid var(--brand-500, #3b82f6);
+  background: rgba(5, 8, 10, 0.6);
+  border-left: 2px solid var(--color-accent-primary, #d8b17a);
   padding: var(--space-2, 8px) var(--space-3, 12px);
   border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
   display: flex;
@@ -72,27 +77,27 @@
 }
 
 .lifeos-gh-card--behind .lifeos-gh-card__reason {
-  border-left-color: var(--danger-500, #ef4444);
+  border-left-color: #e57373;
 }
 
 .lifeos-gh-card--at-risk .lifeos-gh-card__reason {
-  border-left-color: var(--warning-500, #f59e0b);
+  border-left-color: #e5a93c;
 }
 
 .lifeos-gh-card--on-track .lifeos-gh-card__reason {
-  border-left-color: var(--success-500, #10b981);
+  border-left-color: #54c5b1;
 }
 
 .lifeos-gh-card__reason-icon {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.4;
 }
 
 .lifeos-gh-card__reason-text {
-  font-size: var(--text-xs, 12px);
-  color: var(--text-secondary, #475569);
+  font-size: 12px;
+  color: var(--color-text-secondary, #95a6a0);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .lifeos-gh-card__progress-section {
@@ -104,89 +109,59 @@
 .lifeos-gh-card__progress-bars {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 12px);
+  gap: 6px;
 }
 
-.lifeos-gh-card__bar-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.lifeos-gh-card__bar-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--text-xs, 12px);
-  color: var(--text-secondary, #64748b);
-}
-
-.lifeos-gh-card__bar-name {
-  font-weight: 500;
-}
-
-.lifeos-gh-card__bar-val {
-  font-weight: 600;
-  color: var(--text-primary, #0f172a);
-}
-
-.lifeos-gh-card__track {
-  height: 6px;
-  background: var(--surface-tertiary, #e2e8f0);
-  border-radius: var(--radius-full, 9999px);
-  overflow: hidden;
-  position: relative;
-}
-
-.lifeos-gh-card__fill {
-  height: 100%;
-  border-radius: var(--radius-full, 9999px);
-  transition: width 0.3s ease;
-}
-
-.lifeos-gh-card__fill--actual {
-  background: var(--brand-500, #3b82f6);
-}
-
-.lifeos-gh-card--on-track .lifeos-gh-card__fill--actual {
-  background: #10b981;
-}
-
-.lifeos-gh-card--at-risk .lifeos-gh-card__fill--actual {
-  background: #f59e0b;
-}
-
-.lifeos-gh-card--behind .lifeos-gh-card__fill--actual {
-  background: #ef4444;
-}
-
-.lifeos-gh-card__fill--expected {
-  background: #94a3b8;
-  opacity: 0.7;
-}
-
-.lifeos-gh-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: var(--space-3, 12px);
-  border-top: 1px solid var(--border-subtle, #f1f5f9);
-}
-
-.lifeos-gh-card__timeline-stat {
+.lifeos-gh-card__bar-wrap {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.lifeos-gh-card__timeline-label {
+.lifeos-gh-card__bar-label {
+  display: flex;
+  justify-content: space-between;
   font-size: 11px;
-  color: var(--text-tertiary, #94a3b8);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #71837f);
 }
 
-.lifeos-gh-card__timeline-value {
-  font-size: var(--text-xs, 12px);
-  font-weight: 600;
-  color: var(--text-secondary, #475569);
+.lifeos-gh-card__bar-label span:last-child {
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text-primary, #f2eee3);
+}
+
+.lifeos-gh-card__bar-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lifeos-gh-card__bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width var(--motion-small, 220ms) ease;
+}
+
+.lifeos-gh-card__bar-fill--actual {
+  background: #54c5b1;
+}
+
+.lifeos-gh-card__bar-fill--expected {
+  background: var(--color-accent-primary, #d8b17a);
+}
+
+.lifeos-gh-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 11px;
+  color: var(--color-text-muted, #71837f);
+}
+
+.lifeos-gh-card__footer strong {
+  font-family: var(--font-mono, monospace);
+  color: var(--color-text-secondary, #95a6a0);
 }

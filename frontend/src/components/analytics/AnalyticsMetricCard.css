@@ -1,17 +1,21 @@
+/* ==========================================================================
+   LIFEOS ANALYTICS METRIC CARD — Domain Telemetry Vessel
+   ========================================================================== */
+
 .lifeos-metric-card {
-  background: var(--color-surface, #131418);
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-lg, 16px);
-  padding: var(--spacing-lg, 24px);
+  background: var(--color-surface, #0d151a);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-5, 20px) var(--space-6, 24px);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md, 16px);
-  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.15));
-  transition: transform var(--transition-fast, 0.15s ease), border-color var(--transition-fast, 0.15s ease);
+  gap: var(--space-4, 16px);
+  transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-metric-card:hover {
-  border-color: var(--color-border-hover, rgba(255, 255, 255, 0.15));
+  border-color: rgba(216, 177, 122, 0.35);
+  transform: translateY(-2px);
 }
 
 .lifeos-metric-card__header {
@@ -30,32 +34,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-md, 8px);
-  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-  color: var(--color-text-secondary, #9ba1a6);
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm, 6px);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-metric-card__title {
-  font-size: var(--font-size-base, 1rem);
-  font-weight: 600;
-  color: var(--color-text-primary, #f5f5f7);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: var(--text-lg, 18px);
+  font-weight: 500;
+  color: var(--color-text-primary, #f2eee3);
   margin: 0;
 }
 
 .lifeos-metric-card__badge {
-  font-size: var(--font-size-xs, 0.75rem);
+  font-size: 11px;
   font-weight: 500;
   padding: 2px 8px;
-  border-radius: var(--radius-full, 9999px);
-  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-  color: var(--color-text-tertiary, #6c737f);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-metric-card__badge--active {
-  color: var(--color-success, #10b981);
-  background: rgba(16, 185, 129, 0.1);
+  color: #54c5b1;
+  background: rgba(84, 197, 177, 0.12);
+  border: 1px solid rgba(84, 197, 177, 0.25);
 }
 
 .lifeos-metric-card__main-stat {
@@ -65,45 +71,45 @@
 }
 
 .lifeos-metric-card__value {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: var(--color-text-primary, #f5f5f7);
-  font-feature-settings: 'tnum';
+  font-family: var(--font-mono, monospace);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #f2eee3);
   line-height: 1;
 }
 
 .lifeos-metric-card__unit {
   font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--color-text-tertiary, #6c737f);
+  font-weight: 400;
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-metric-card__label {
-  font-size: var(--font-size-xs, 0.75rem);
-  color: var(--color-text-secondary, #9ba1a6);
+  font-size: 12px;
+  color: var(--color-text-secondary, #95a6a0);
   margin-top: 2px;
 }
 
 .lifeos-metric-card__progress-bar {
-  height: 6px;
-  background: var(--color-surface-sunken, rgba(255, 255, 255, 0.08));
-  border-radius: 3px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .lifeos-metric-card__progress-fill {
   height: 100%;
-  background: var(--color-accent, #3b82f6);
-  border-radius: 3px;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #54c5b1, #d8b17a);
+  border-radius: 2px;
+  transition: width var(--motion-small, 220ms) ease;
 }
 
-.lifeos-metric-card__stats-list {
+.lifeos-metric-card__stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-sm, 12px);
-  padding-top: var(--spacing-sm, 12px);
-  border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.06));
+  gap: var(--space-3, 12px);
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .lifeos-metric-card__stat-item {
@@ -112,13 +118,16 @@
   gap: 2px;
 }
 
-.lifeos-metric-card__stat-num {
-  font-size: var(--font-size-base, 1rem);
-  font-weight: 600;
-  color: var(--color-text-primary, #f5f5f7);
+.lifeos-metric-card__stat-label {
+  font-size: 11px;
+  color: var(--color-text-muted, #71837f);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.lifeos-metric-card__stat-desc {
-  font-size: var(--font-size-xs, 0.75rem);
-  color: var(--color-text-tertiary, #6c737f);
+.lifeos-metric-card__stat-value {
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #f2eee3);
 }

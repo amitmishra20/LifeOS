@@ -1,60 +1,75 @@
+/* ==========================================================================
+   LifeOS — Strategic Goals Gallery (Horizon Destination View)
+   ========================================================================== */
+
 .lifeos-goals-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-8);
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-4) 0 var(--space-12) 0;
+  padding: var(--space-4) 0 var(--space-16) 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
 }
 
+/* Page Header */
 .lifeos-goals-page__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   flex-wrap: wrap;
   gap: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .lifeos-goals-page__eyebrow {
-  display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-accent);
-  margin-bottom: var(--space-1);
+  color: var(--color-accent-primary);
+  margin-bottom: var(--space-2);
 }
 
 .lifeos-goals-page__title {
-  margin: 0 0 var(--space-1) 0;
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-2) 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.03em;
   color: var(--color-text-primary);
-  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
 }
 
 .lifeos-goals-page__subline {
   margin: 0;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
+  max-width: 580px;
+  line-height: 1.5;
 }
 
+/* Toolbar */
 .lifeos-goals-page__toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
 }
 
 .lifeos-goals-page__status-tabs {
   display: flex;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 3px;
+  background: var(--color-bg-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 4px;
   gap: 2px;
   overflow-x: auto;
 }
@@ -62,14 +77,14 @@
 .lifeos-status-tab {
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
-  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: all var(--motion-micro) var(--ease-smooth);
 }
 
 .lifeos-status-tab:hover {
@@ -77,22 +92,24 @@
 }
 
 .lifeos-status-tab--active {
-  background: var(--color-surface-hover);
-  color: var(--color-text-primary);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
   font-weight: var(--font-weight-semibold);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-accent);
 }
 
 .lifeos-goals-page__category-select {
-  width: 180px;
+  width: 200px;
 }
 
+/* Grid */
 .lifeos-goals-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-6);
 }
 
+/* Empty State */
 .lifeos-goals-page__empty {
   padding: var(--space-12) 0;
 }
@@ -103,11 +120,12 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-12) var(--space-4);
-  background: var(--color-surface);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface-card);
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-xl);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  text-align: center;
 }
 
 .lifeos-goals-page__error {
@@ -116,19 +134,19 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-8);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-danger-subtle);
+  border: 1px solid var(--color-danger-border);
   border-radius: var(--radius-lg);
   text-align: center;
 }
 
 .lifeos-goals-page__error-msg {
   margin: 0;
-  color: var(--color-crimson);
+  color: var(--color-danger-text);
   font-size: var(--font-size-sm);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .lifeos-goals-grid {
     grid-template-columns: 1fr;
   }

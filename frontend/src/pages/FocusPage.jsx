@@ -115,19 +115,22 @@ export const FocusPage = () => {
         </div>
       )}
 
-      {/* Header */}
+      {/* Editorial Header */}
       <header className="lifeos-focus-page__header">
         <div className="lifeos-focus-page__header-main">
-          <span className="lifeos-focus-page__date">{dateHeading}</span>
+          <div className="lifeos-focus-date-badge">
+            <span className="lifeos-focus-date-dot" />
+            <span className="lifeos-focus-date-text">{dateHeading}</span>
+          </div>
           <h1 className="lifeos-focus-page__title">Today&apos;s Focus</h1>
           <p className="lifeos-focus-page__subline">
-            What you should focus on right now, with calm clarity on why it matters.
+            A quiet decision surface. One dominant move to advance your horizon.
           </p>
         </div>
 
         <div className="lifeos-focus-page__header-actions">
           <Button variant="ghost" onClick={() => navigate('/tasks')}>
-            View All Tasks →
+            <span>All Tasks</span> <span aria-hidden="true">→</span>
           </Button>
           <Button variant="primary" onClick={() => setIsTaskModalOpen(true)}>
             + New Task
@@ -167,31 +170,88 @@ export const FocusPage = () => {
         />
       )}
 
-      {/* Active Data: Signature Primary Focus + Supporting Focus */}
+      {/* Active Data: Dominant Focal Anchor + Supporting Queue */}
       {!error && primaryItem && (
-        <div className="lifeos-focus-grid">
+        <div className="lifeos-focus-layout">
           {/* Dominant Primary Focus Anchor */}
-          <section className="lifeos-focus-primary-section" aria-labelledby="primary-focus-heading">
-            <span className="lifeos-kicker">HIGHEST LEVERAGE MOVE</span>
-            <PrimaryFocusCard
-              focusData={focusDataForCard}
-              onToggleComplete={(taskId) => handleToggleComplete(taskId)}
-              onStartAction={(taskId) => {
-                showToast('Focus session started.');
-              }}
-            />
-          </section>
+          <section className="lifeos-focal-anchor" aria-labelledby="primary-focus-heading">
+            <div className="lifeos-focal-anchor__kicker">
+              <span className="lifeos-section-num">01</span>
+              <span className="lifeos-focal-anchor__rule" />
+              <span>HIGHEST LEVERAGE MOVE</span>
+            </div>
 
-          {/* Supporting Actions (Items 2-5) */}
-          {supportingItems.length > 0 && (
-            <section className="lifeos-focus-supporting-section" aria-label="Supporting Focus">
-              <div className="lifeos-section-header">
-                <span className="lifeos-kicker">SUPPORTING PRIORITIES</span>
-                <span className="lifeos-supporting-count">{supportingItems.length} more today</span>
+            <div className="lifeos-focal-card">
+              <div className="lifeos-focal-card__lineage">
+                {primaryItem.task.goalTitle && (
+                  <span className="lifeos-lineage-node lifeos-lineage-goal">
+                    <span className="lifeos-lineage-icon">🎯</span>
+                    <span>{primaryItem.task.goalTitle}</span>
+                  </span>
+                )}
+                {primaryItem.task.milestoneTitle && (
+                  <>
+                    <span className="lifeos-lineage-sep">›</span>
+                    <span className="lifeos-lineage-node lifeos-lineage-milestone">
+                      <span>{primaryItem.task.milestoneTitle}</span>
+                    </span>
+                  </>
+                )}
               </div>
 
-              <div className="lifeos-supporting-list" role="list">
-                {supportingItems.map((item) => {
+              <h2 id="primary-focus-heading" className="lifeos-focal-card__title">
+                {primaryItem.task.title}
+              </h2>
+
+              <div className="lifeos-focal-card__why-box">
+                <span className="lifeos-why-label">Why Now</span>
+                <p className="lifeos-why-text">{primaryItem.primaryReason}</p>
+              </div>
+
+              <div className="lifeos-focal-card__footer">
+                <div className="lifeos-focal-card__meta">
+                  {primaryItem.task.estimatedMinutes && (
+                    <span className="lifeos-meta-tag">⏱ {primaryItem.task.estimatedMinutes} min</span>
+                  )}
+                  {primaryItem.task.dueDate && (
+                    <span className={`lifeos-meta-tag ${primaryItem.task.status === 'OVERDUE' ? 'is-overdue' : ''}`}>
+                      📅 Due {primaryItem.task.dueDate}
+                    </span>
+                  )}
+                  {primaryItem.totalScore && (
+                    <span className="lifeos-meta-tag lifeos-score-tag">Score {primaryItem.totalScore}</span>
+                  )}
+                </div>
+
+                <div className="lifeos-focal-card__actions">
+                  <Button
+                    variant={primaryItem.task.status === 'COMPLETED' ? 'secondary' : 'primary'}
+                    size="md"
+                    onClick={() => handleToggleComplete(primaryItem.task.id)}
+                    className="lifeos-focal-complete-btn"
+                  >
+                    <span>{primaryItem.task.status === 'COMPLETED' ? 'Reopen Action' : 'Complete Action'}</span>
+                    <span aria-hidden="true">✓</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Supporting Priorities Queue */}
+          {supportingItems.length > 0 && (
+            <section className="lifeos-supporting-section" aria-label="Supporting Priorities">
+              <div className="lifeos-supporting-section__header">
+                <div className="lifeos-focal-anchor__kicker">
+                  <span className="lifeos-section-num">02</span>
+                  <span className="lifeos-focal-anchor__rule" />
+                  <span>SUPPORTING PRIORITIES</span>
+                </div>
+                <span className="lifeos-supporting-count">{supportingItems.length} in queue</span>
+              </div>
+
+              <div className="lifeos-supporting-stream" role="list">
+                {supportingItems.map((item, idx) => {
                   const task = item.task;
                   const isCompleted = task.status === 'COMPLETED';
                   const isOverdue = task.status === 'OVERDUE';
@@ -200,50 +260,42 @@ export const FocusPage = () => {
                     <div
                       key={task.id}
                       role="listitem"
-                      className={`lifeos-supporting-item ${
-                        isCompleted ? 'lifeos-supporting-item--completed' : ''
-                      } ${isOverdue ? 'lifeos-supporting-item--overdue' : ''}`}
+                      className={`lifeos-queue-row ${
+                        isCompleted ? 'lifeos-queue-row--completed' : ''
+                      } ${isOverdue ? 'lifeos-queue-row--overdue' : ''}`}
                     >
                       <button
                         type="button"
-                        className={`lifeos-supporting-item__checkbox ${
-                          isCompleted ? 'lifeos-supporting-item__checkbox--checked' : ''
+                        className={`lifeos-queue-check ${
+                          isCompleted ? 'is-checked' : ''
                         }`}
                         onClick={() => handleToggleComplete(task.id)}
-                        aria-label={`Complete task: ${task.title}`}
+                        aria-label={`Mark task ${task.title} as ${isCompleted ? 'incomplete' : 'complete'}`}
                       >
                         {isCompleted && (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
                         )}
                       </button>
 
-                      <div className="lifeos-supporting-item__body">
-                        <div className="lifeos-supporting-item__top">
-                          <span className="lifeos-supporting-item__title">{task.title}</span>
-                          <span className="lifeos-supporting-item__score-pill">
-                            Score {item.totalScore}
-                          </span>
-                        </div>
-
-                        <div className="lifeos-supporting-item__why">
-                          <span className="lifeos-why-indicator">Why:</span> {item.primaryReason}
-                        </div>
-
-                        <div className="lifeos-supporting-item__meta">
-                          {task.dueDate && (
-                            <span className={isOverdue ? 'lifeos-overdue-tag' : ''}>
-                              📅 {task.dueDate}
-                            </span>
-                          )}
-                          {task.estimatedMinutes && <span>⏱ {task.estimatedMinutes}m</span>}
+                      <div className="lifeos-queue-body">
+                        <div className="lifeos-queue-headline">
+                          <span className="lifeos-queue-index">0{idx + 2}</span>
+                          <span className="lifeos-queue-title">{task.title}</span>
                           {task.goalTitle && (
-                            <span className="lifeos-lineage-link">
-                              🎯 {task.goalTitle}
-                            </span>
+                            <span className="lifeos-queue-goal-tag">🎯 {task.goalTitle}</span>
                           )}
                         </div>
+
+                        <p className="lifeos-queue-why">
+                          <span className="lifeos-queue-why-tag">Why:</span> {item.primaryReason}
+                        </p>
+                      </div>
+
+                      <div className="lifeos-queue-meta">
+                        {task.estimatedMinutes && <span className="lifeos-queue-time">{task.estimatedMinutes}m</span>}
+                        {task.dueDate && <span className={`lifeos-queue-date ${isOverdue ? 'is-overdue' : ''}`}>{task.dueDate}</span>}
                       </div>
                     </div>
                   );
@@ -253,6 +305,7 @@ export const FocusPage = () => {
           )}
         </div>
       )}
+
 
       {/* Task Creation Modal */}
       <TaskModal

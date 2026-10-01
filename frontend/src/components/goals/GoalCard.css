@@ -1,173 +1,226 @@
-.lifeos-goal-card {
+/* ==========================================================================
+   LifeOS — Horizon Card Component (Destination-Focused Goal Surface)
+   ========================================================================== */
+
+.lifeos-horizon-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
+  background: linear-gradient(135deg, rgba(20, 24, 29, 0.85) 0%, rgba(12, 15, 18, 0.95) 100%);
+  border: 1px solid var(--color-border-default);
+  border-top-color: var(--color-border-light-top);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-7);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: all var(--motion-small) var(--ease-spring);
+  gap: var(--space-4);
 }
 
-.lifeos-goal-card:hover {
-  border-color: var(--color-border-hover);
-  background: var(--color-surface-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+.lifeos-horizon-card:hover {
+  border-color: var(--color-border-accent);
+  border-top-color: var(--color-accent-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(216, 177, 122, 0.08);
 }
 
-.lifeos-goal-card:focus-visible {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px var(--color-accent-subtle);
+.lifeos-horizon-card:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
 }
 
-.lifeos-goal-card__header {
+/* Header */
+.lifeos-horizon-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-3);
-}
-
-.lifeos-goal-card__tags {
-  display: flex;
   gap: var(--space-2);
 }
 
-.lifeos-goal-card__status-dot {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--tracking-wider);
+.lifeos-horizon-card__category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-tertiary);
+  color: var(--color-accent-primary);
+}
+
+.lifeos-horizon-card__cat-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent-primary);
+}
+
+.lifeos-horizon-card__status-wrap {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--space-2);
 }
 
-.lifeos-goal-card__status-dot::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background: var(--color-text-tertiary);
-}
-
-.lifeos-goal-card__status-dot--active {
-  color: var(--color-emerald);
-}
-.lifeos-goal-card__status-dot--active::before {
-  background: var(--color-emerald);
-}
-
-.lifeos-goal-card__status-dot--paused {
-  color: var(--color-warm);
-}
-.lifeos-goal-card__status-dot--paused::before {
-  background: var(--color-warm);
-}
-
-.lifeos-goal-card__status-dot--completed {
-  color: var(--color-emerald);
-}
-.lifeos-goal-card__status-dot--completed::before {
-  background: var(--color-emerald);
-}
-
-.lifeos-goal-card__status-dot--archived {
-  color: var(--color-text-tertiary);
-}
-.lifeos-goal-card__status-dot--archived::before {
-  background: var(--color-text-tertiary);
-}
-
-.lifeos-goal-card__body {
-  flex: 1;
-  margin-bottom: var(--space-4);
-}
-
-.lifeos-goal-card__title {
-  margin: 0 0 var(--space-2) 0;
-  font-size: var(--font-size-lg);
+.lifeos-health-pill {
+  font-size: 10px;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-tight);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.lifeos-goal-card__desc {
+.lifeos-health-pill--emerald {
+  background: var(--color-success-subtle);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-border);
+}
+
+.lifeos-health-pill--warm {
+  background: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+  border: 1px solid var(--color-warning-border);
+}
+
+.lifeos-health-pill--crimson {
+  background: var(--color-danger-subtle);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger-border);
+}
+
+.lifeos-health-pill--accent {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
+  border: 1px solid var(--color-border-accent);
+}
+
+.lifeos-status-pill {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.lifeos-status-pill--active {
+  color: var(--color-success-text);
+}
+
+.lifeos-status-pill--completed {
+  color: var(--color-accent-primary);
+}
+
+/* Body */
+.lifeos-horizon-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lifeos-horizon-card__title {
   margin: 0;
-  font-size: var(--font-size-sm);
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.lifeos-horizon-card__desc {
+  margin: 0;
+  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-  line-height: var(--leading-normal);
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.lifeos-goal-card__footer {
+/* Horizon Trajectory */
+.lifeos-horizon-trajectory {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border-subtle);
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
 }
 
-.lifeos-goal-card__progress-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+.lifeos-horizon-trajectory__bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  position: relative;
 }
 
-.lifeos-goal-card__progress-info {
+.lifeos-horizon-trajectory__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-hover), var(--color-accent-primary));
+  border-radius: var(--radius-pill);
+  transition: width var(--motion-major) var(--ease-smooth);
+}
+
+.lifeos-horizon-trajectory__stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: var(--font-size-xs);
 }
 
-.lifeos-goal-card__milestones-count {
+.lifeos-horizon-milestones {
+  color: var(--color-text-muted);
+}
+
+.lifeos-horizon-pct {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-primary);
+}
+
+/* Footer */
+.lifeos-horizon-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.lifeos-horizon-summit-date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   color: var(--color-text-secondary);
 }
 
-.lifeos-goal-card__progress-percent {
-  font-weight: var(--font-weight-semibold);
+.lifeos-summit-icon {
+  font-size: 12px;
+}
+
+.lifeos-summit-label {
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+}
+
+.lifeos-summit-value {
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
-.lifeos-goal-card__date {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.lifeos-horizon-arrow {
+  color: var(--color-accent-primary);
   font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  opacity: 0.8;
+  transition: transform var(--motion-micro) var(--ease-spring), opacity var(--motion-micro) var(--ease-smooth);
 }
 
-.lifeos-goal-card__date-label {
-  color: var(--color-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-}
-
-.lifeos-goal-card__date-value {
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-}
-
-.lifeos-goal-card__chevron {
-  position: absolute;
-  right: var(--space-4);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: var(--font-size-xl);
-  color: var(--color-text-tertiary);
-  opacity: 0;
-  transition: all 0.15s ease;
-  pointer-events: none;
-}
-
-.lifeos-goal-card:hover .lifeos-goal-card__chevron {
+.lifeos-horizon-card:hover .lifeos-horizon-arrow {
   opacity: 1;
-  transform: translateY(-50%) translateX(2px);
+  transform: translateX(3px);
 }

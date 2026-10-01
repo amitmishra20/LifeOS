@@ -1,25 +1,28 @@
+/* ==========================================================================
+   LIFEOS NOTE CARD — Editorial Manuscript & Knowledge Fragment
+   ========================================================================== */
+
 .note-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface, #0d0d12);
+  background: var(--color-surface, #0d151a);
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-lg, 12px);
-  padding: var(--space-4, 18px);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-5, 20px);
   cursor: pointer;
-  transition: transform var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
-  min-height: 140px;
+  transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
+  min-height: 160px;
   position: relative;
   overflow: hidden;
 }
 
 .note-card:hover {
   transform: translateY(-2px);
-  border-color: var(--color-border-strong, rgba(255, 255, 255, 0.2));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(216, 177, 122, 0.35);
 }
 
 .note-card:focus-visible {
-  outline: 2px solid var(--color-primary, #6366f1);
+  outline: 2px solid var(--color-accent-primary, #d8b17a);
   outline-offset: 2px;
 }
 
@@ -27,20 +30,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-2, 10px);
+  margin-bottom: var(--space-3, 12px);
   gap: var(--space-2, 8px);
 }
 
 .note-card__category {
-  font-size: var(--font-size-xs, 11px);
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   padding: 3px 8px;
-  border-radius: var(--radius-full, 9999px);
-  background: rgba(99, 102, 241, 0.12);
-  color: #818cf8;
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 4px;
+  background: rgba(216, 177, 122, 0.1);
+  color: var(--color-accent-primary, #d8b17a);
+  border: 1px solid rgba(216, 177, 122, 0.2);
   max-width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,23 +51,26 @@
 }
 
 .note-card__category--neutral {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-tertiary, #71717a);
-  border-color: var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-muted, #71837f);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 .note-card__date {
-  font-size: var(--font-size-xs, 12px);
-  color: var(--color-text-tertiary, #71717a);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--color-text-muted, #71837f);
   white-space: nowrap;
 }
 
 .note-card__title {
-  font-size: var(--font-size-md, 16px);
-  font-weight: 600;
-  color: var(--color-text-primary, #ffffff);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: var(--text-lg, 18px);
+  font-weight: 500;
+  color: var(--color-text-primary, #f2eee3);
   margin: 0 0 var(--space-2, 8px) 0;
-  line-height: 1.4;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -73,19 +79,19 @@
 }
 
 .note-card__snippet {
-  font-size: var(--font-size-sm, 13px);
-  color: var(--color-text-secondary, #a1a1aa);
-  line-height: 1.5;
+  font-size: var(--text-sm, 13px);
+  color: var(--color-text-secondary, #95a6a0);
+  line-height: 1.6;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   white-space: pre-wrap;
 }
 
 .note-card__snippet--empty {
   font-style: italic;
-  color: var(--color-text-tertiary, #52525b);
+  color: var(--color-text-muted, #71837f);
 }

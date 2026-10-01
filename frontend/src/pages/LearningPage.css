@@ -1,40 +1,50 @@
+/* ==========================================================================
+   LIFEOS LEARNING TRACKER — Spatial & Editorial Mastery Environment
+   ========================================================================== */
+
 .lifeos-learning-page {
   display: flex;
   flex-direction: column;
   gap: var(--space-6, 24px);
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: var(--space-6, 24px) var(--space-4, 16px);
+  padding: var(--space-6, 24px) var(--space-8, 32px) 72px;
   width: 100%;
+  color: var(--color-text-primary, #f2eee3);
+  font-family: var(--font-sans, system-ui, sans-serif);
 }
 
 /* Header Section */
 .lifeos-learning-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: var(--space-4, 16px);
+  padding-bottom: var(--space-6, 24px);
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
 }
 
 .lifeos-learning-header__titles {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1, 4px);
+  gap: var(--space-2, 8px);
 }
 
 .lifeos-learning-header__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-3xl, 30px);
-  font-weight: 600;
-  color: var(--color-text-primary, #ffffff);
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--color-text-primary, #f2eee3);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   margin: 0;
 }
 
 .lifeos-learning-header__subtitle {
   font-size: var(--text-sm, 14px);
-  color: var(--color-text-muted, #71717a);
+  color: var(--color-text-secondary, #95a6a0);
   margin: 0;
+  line-height: 1.5;
 }
 
 .lifeos-learning-header__actions {
@@ -51,34 +61,54 @@
 }
 
 .lifeos-learning-summary-card {
-  background: var(--color-surface, #121215);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
-  border-radius: var(--radius-lg, 12px);
+  background: var(--color-surface, #0d151a);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 8px);
   padding: var(--space-4, 16px) var(--space-5, 20px);
   display: flex;
   flex-direction: column;
   gap: var(--space-2, 8px);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--motion-micro, 150ms) ease;
+}
+
+.lifeos-learning-summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-primary, #d8b17a), transparent);
+  opacity: 0.4;
+}
+
+.lifeos-learning-summary-card:hover {
+  border-color: rgba(216, 177, 122, 0.3);
 }
 
 .lifeos-learning-summary-card__label {
-  font-size: var(--text-xs, 12px);
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   font-weight: 600;
-  color: var(--color-text-muted, #71717a);
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-learning-summary-card__value {
   font-family: var(--font-mono, monospace);
-  font-size: var(--text-2xl, 24px);
-  font-weight: 700;
-  color: var(--color-text-primary, #ffffff);
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #f2eee3);
+  letter-spacing: -0.02em;
 }
 
 /* Filter Navigation */
 .lifeos-learning-nav {
   display: flex;
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  margin-top: var(--space-2, 8px);
 }
 
 .lifeos-learning-tabs {
@@ -100,119 +130,135 @@
   background: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  color: var(--color-text-muted, #71717a);
-  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #95a6a0);
+  font-size: var(--text-sm, 13px);
   font-weight: 500;
   cursor: pointer;
+  transition: all var(--motion-micro, 150ms) ease;
   white-space: nowrap;
-  min-height: 44px;
-  transition: color var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease);
 }
 
 .lifeos-learning-tab:hover {
-  color: var(--color-text-secondary, #a1a1aa);
+  color: var(--color-text-primary, #f2eee3);
 }
 
 .lifeos-learning-tab--active {
-  color: var(--color-text-primary, #ffffff);
-  border-bottom-color: var(--color-accent, #ffffff);
+  color: var(--color-accent-primary, #d8b17a);
+  border-bottom-color: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-learning-tab__badge {
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text-muted, #71717a);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-learning-tab--active .lifeos-learning-tab__badge {
-  background: rgba(255, 255, 255, 0.16);
-  color: var(--color-text-primary, #ffffff);
+  background: rgba(216, 177, 122, 0.15);
+  color: var(--color-accent-primary, #d8b17a);
 }
 
-/* Learning Cards Grid */
+/* Learning Grid */
 .lifeos-learning-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: var(--space-4, 16px);
+  gap: var(--space-5, 20px);
 }
 
+/* Learning Card */
 .lifeos-learning-card {
-  background: var(--color-surface, #121215);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
-  border-radius: var(--radius-lg, 12px);
+  background: var(--color-surface, #0d151a);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 10px);
   padding: var(--space-5, 20px);
   display: flex;
   flex-direction: column;
   gap: var(--space-4, 16px);
-  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+  transition: border-color var(--motion-micro, 150ms) ease, transform var(--motion-small, 220ms) ease;
+  position: relative;
 }
 
 .lifeos-learning-card:hover {
-  border-color: var(--color-border, rgba(255, 255, 255, 0.14));
+  border-color: rgba(216, 177, 122, 0.35);
+  transform: translateY(-2px);
 }
 
 .lifeos-learning-card__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: var(--space-3, 12px);
 }
 
 .lifeos-learning-card__identity {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-2, 8px);
+  width: 100%;
 }
 
 .lifeos-learning-card__meta-tags {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-2, 8px);
 }
 
 .lifeos-learning-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 11px;
-  font-weight: 500;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-muted, #71717a);
+  color: var(--color-text-secondary, #95a6a0);
+  letter-spacing: 0.02em;
 }
 
 .lifeos-learning-card__tag--goal {
-  color: var(--color-text-secondary, #a1a1aa);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(84, 197, 177, 0.1);
+  color: #54c5b1;
+  border: 1px solid rgba(84, 197, 177, 0.2);
 }
 
 .lifeos-learning-card__tag--status-paused {
-  background: rgba(234, 179, 8, 0.12);
-  color: #facc15;
+  background: rgba(216, 177, 122, 0.1);
+  color: var(--color-accent-primary, #d8b17a);
+  border: 1px solid rgba(216, 177, 122, 0.2);
 }
 
 .lifeos-learning-card__tag--status-completed {
-  background: rgba(34, 197, 94, 0.12);
-  color: #4ade80;
+  background: rgba(84, 197, 177, 0.15);
+  color: #54c5b1;
+  border: 1px solid rgba(84, 197, 177, 0.3);
 }
 
 .lifeos-learning-card__tag--status-archived {
-  background: rgba(255, 255, 255, 0.06);
-  color: #71717a;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-learning-card__title {
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: var(--text-lg, 18px);
-  font-weight: 600;
-  color: var(--color-text-primary, #ffffff);
-  line-height: 1.3;
+  font-weight: 500;
+  color: var(--color-text-primary, #f2eee3);
   margin: 0;
+  line-height: 1.3;
 }
 
 .lifeos-learning-card__desc {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #a1a1aa);
+  font-size: var(--text-sm, 13px);
+  color: var(--color-text-secondary, #95a6a0);
   line-height: 1.5;
   margin: 0;
   display: -webkit-box;
@@ -221,84 +267,101 @@
   overflow: hidden;
 }
 
-/* Progress Section */
+/* Progress Control */
 .lifeos-learning-card__progress-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-2, 8px);
-  background: var(--color-surface-subtle, rgba(255, 255, 255, 0.02));
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.04));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-3, 12px) var(--space-4, 16px);
+  padding: var(--space-3, 12px);
+  background: rgba(5, 8, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm, 6px);
 }
 
 .lifeos-learning-card__progress-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: var(--text-xs, 12px);
+  font-size: 11px;
 }
 
 .lifeos-learning-card__progress-label {
-  color: var(--color-text-muted, #71717a);
+  color: var(--color-text-muted, #71837f);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   font-weight: 600;
 }
 
 .lifeos-learning-card__progress-values {
   font-family: var(--font-mono, monospace);
+  color: var(--color-accent-primary, #d8b17a);
   font-weight: 600;
-  color: var(--color-text-primary, #ffffff);
 }
 
 .lifeos-learning-card__progress-bar-container {
-  height: 6px;
+  height: 4px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
+  border-radius: 2px;
   overflow: hidden;
-  position: relative;
 }
 
 .lifeos-learning-card__progress-bar-fill {
   height: 100%;
-  background: var(--color-accent, #ffffff);
-  border-radius: 9999px;
-  transition: width 250ms ease;
+  background: linear-gradient(90deg, #54c5b1, #d8b17a);
+  border-radius: 2px;
+  transition: width var(--motion-small, 220ms) ease;
 }
 
 .lifeos-learning-card__progress-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-2, 8px);
   margin-top: 4px;
 }
 
 .lifeos-learning-card__progress-btn {
-  background: transparent;
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-sm, 4px);
-  color: var(--color-text-secondary, #a1a1aa);
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 8px;
-  min-height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: var(--color-text-secondary, #95a6a0);
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  padding: 3px 6px;
   cursor: pointer;
-  transition: all var(--transition-fast, 150ms ease);
+  transition: all var(--motion-micro, 150ms) ease;
 }
 
-.lifeos-learning-card__progress-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-primary, #ffffff);
-  border-color: rgba(255, 255, 255, 0.16);
+.lifeos-learning-card__progress-btn:hover:not(:disabled) {
+  background: rgba(216, 177, 122, 0.2);
+  color: var(--color-text-primary, #f2eee3);
+  border-color: var(--color-accent-primary, #d8b17a);
+}
+
+.lifeos-learning-card__progress-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .lifeos-learning-card__slider {
   flex: 1;
-  accent-color: var(--color-text-primary, #ffffff);
-  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
   height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.lifeos-learning-card__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent-primary, #d8b17a);
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(216, 177, 122, 0.4);
 }
 
 /* Stats Row */
@@ -306,68 +369,101 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: var(--text-xs, 12px);
-  color: var(--color-text-muted, #71717a);
-  padding: 0 4px;
+  padding: 0 var(--space-1, 4px);
+  font-size: 11px;
+  color: var(--color-text-muted, #71837f);
 }
 
 .lifeos-learning-card__stat-item strong {
-  color: var(--color-text-primary, #ffffff);
   font-family: var(--font-mono, monospace);
+  color: var(--color-text-secondary, #95a6a0);
+  font-weight: 600;
 }
 
-/* Card Actions */
+/* Card Footer Actions */
 .lifeos-learning-card__footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: var(--space-2, 8px);
-  margin-top: auto;
-  padding-top: var(--space-3, 12px);
-  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
-}
-
-.lifeos-learning-card__actions-left {
-  display: flex;
   align-items: center;
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: auto;
   gap: var(--space-2, 8px);
 }
 
+.lifeos-learning-card__actions-left,
 .lifeos-learning-card__actions-right {
   display: flex;
   align-items: center;
-  gap: var(--space-1, 4px);
+  gap: var(--space-2, 8px);
+  flex-wrap: wrap;
 }
 
 .lifeos-learning-card__action-btn {
   background: transparent;
-  border: none;
-  font-size: var(--text-xs, 12px);
-  font-weight: 500;
-  color: var(--color-text-muted, #71717a);
-  padding: 6px 10px;
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm, 4px);
+  border: 1px solid transparent;
+  color: var(--color-text-muted, #71837f);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all var(--transition-fast, 150ms ease);
+  transition: all var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-learning-card__action-btn:hover {
-  color: var(--color-text-primary, #ffffff);
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary, #f2eee3);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .lifeos-learning-card__action-btn--delete:hover {
-  color: var(--color-danger, #ef4444);
-  background: rgba(239, 68, 68, 0.08);
+  color: var(--color-danger, #e57373);
+  background: rgba(229, 115, 115, 0.1);
+  border-color: rgba(229, 115, 115, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Error Surface */
+.lifeos-learning-error {
+  padding: var(--space-8, 32px);
+  text-align: center;
+  background: rgba(229, 115, 115, 0.05);
+  border: 1px solid rgba(229, 115, 115, 0.2);
+  border-radius: var(--radius-md, 8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4, 16px);
+}
+
+/* Toast */
+.lifeos-feedback-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background: var(--color-surface-elevated, #17242c);
+  border: 1px solid var(--color-accent-primary, #d8b17a);
+  color: var(--color-text-primary, #f2eee3);
+  border-radius: var(--radius-md, 8px);
+  font-size: 13px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  animation: lifeos-toast-in var(--motion-small, 220ms) ease both;
+}
+
+@keyframes lifeos-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Rules */
+@media (max-width: 900px) {
   .lifeos-learning-summary-strip {
     grid-template-columns: 1fr;
   }
@@ -375,9 +471,26 @@
   .lifeos-learning-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 640px) {
+  .lifeos-learning-page {
+    padding: var(--space-4, 16px) var(--space-4, 16px) 48px;
+    gap: var(--space-4, 16px);
+  }
 
   .lifeos-learning-header {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lifeos-learning-card__footer {
+    flex-direction: column;
     align-items: stretch;
+  }
+
+  .lifeos-learning-card__actions-left,
+  .lifeos-learning-card__actions-right {
+    justify-content: space-between;
   }
 }

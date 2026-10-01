@@ -58,13 +58,13 @@ export const GoalCard = ({ goal, onClick }) => {
         day: 'numeric',
         year: 'numeric',
       })
-    : null;
+    : 'No horizon set';
 
   return (
     <div
       role="button"
       tabIndex={0}
-      className={`lifeos-goal-card lifeos-goal-card--${status.toLowerCase()}`}
+      className={`lifeos-horizon-card lifeos-horizon-card--${status.toLowerCase()}`}
       onClick={() => onClick && onClick(id)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -74,58 +74,61 @@ export const GoalCard = ({ goal, onClick }) => {
       }}
       aria-label={`Goal: ${title}`}
     >
-      <div className="lifeos-goal-card__header">
-        <div className="lifeos-goal-card__tags">
-          <Badge variant={CATEGORY_BADGES[category] || 'default'} size="sm">
-            <span>{CATEGORY_LABELS[category] || category}</span>
-          </Badge>
-          {priority && (
-            <Badge variant={PRIORITY_BADGES[priority] || 'default'} size="sm">
-              <span>{priority}</span>
-            </Badge>
-          )}
-          {health && HEALTH_BADGES[health] && (
-            <Badge variant={HEALTH_BADGES[health].variant} size="sm">
-              <span>{HEALTH_BADGES[health].label}</span>
-            </Badge>
-          )}
+      <div className="lifeos-horizon-card__header">
+        <div className="lifeos-horizon-card__category-badge">
+          <span className="lifeos-horizon-card__cat-dot" />
+          <span>{CATEGORY_LABELS[category] || category}</span>
         </div>
-        <span className={`lifeos-goal-card__status-dot lifeos-goal-card__status-dot--${status.toLowerCase()}`} title={status}>
-          {status}
+
+        <div className="lifeos-horizon-card__status-wrap">
+          {health && HEALTH_BADGES[health] && (
+            <span className={`lifeos-health-pill lifeos-health-pill--${HEALTH_BADGES[health].variant}`}>
+              {HEALTH_BADGES[health].label}
+            </span>
+          )}
+          <span className={`lifeos-status-pill lifeos-status-pill--${status.toLowerCase()}`}>
+            {status}
+          </span>
+        </div>
+      </div>
+
+      <div className="lifeos-horizon-card__body">
+        <h3 className="lifeos-horizon-card__title">{title}</h3>
+        {description && <p className="lifeos-horizon-card__desc">{description}</p>}
+      </div>
+
+      {/* Visual Horizon Trajectory */}
+      <div className="lifeos-horizon-trajectory">
+        <div className="lifeos-horizon-trajectory__bar">
+          <div
+            className="lifeos-horizon-trajectory__fill"
+            style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+          />
+        </div>
+        <div className="lifeos-horizon-trajectory__stats">
+          <span className="lifeos-horizon-milestones">
+            {milestoneCount === 0
+              ? 'No waypoints mapped'
+              : `${completedMilestoneCount} of ${milestoneCount} waypoints completed`}
+          </span>
+          <span className="lifeos-horizon-pct">{progress}%</span>
+        </div>
+      </div>
+
+      <div className="lifeos-horizon-card__footer">
+        <div className="lifeos-horizon-summit-date">
+          <span className="lifeos-summit-icon">⛰</span>
+          <span className="lifeos-summit-label">Arrival:</span>
+          <span className="lifeos-summit-value">{formattedTargetDate}</span>
+        </div>
+
+        <span className="lifeos-horizon-arrow" aria-hidden="true">
+          Explore Journey →
         </span>
       </div>
-
-      <div className="lifeos-goal-card__body">
-        <h3 className="lifeos-goal-card__title">{title}</h3>
-        {description && <p className="lifeos-goal-card__desc">{description}</p>}
-      </div>
-
-      <div className="lifeos-goal-card__footer">
-        <div className="lifeos-goal-card__progress-wrap">
-          <div className="lifeos-goal-card__progress-info">
-            <span className="lifeos-goal-card__milestones-count">
-              {milestoneCount === 0
-                ? 'No milestones'
-                : `${completedMilestoneCount} of ${milestoneCount} milestones`}
-            </span>
-            <span className="lifeos-goal-card__progress-percent">{progress}%</span>
-          </div>
-          <ProgressBar value={progress} size="sm" variant={progress === 100 ? 'emerald' : 'accent'} />
-        </div>
-
-        {formattedTargetDate && (
-          <div className="lifeos-goal-card__date">
-            <span className="lifeos-goal-card__date-label">Target</span>
-            <span className="lifeos-goal-card__date-value">{formattedTargetDate}</span>
-          </div>
-        )}
-      </div>
-
-      <span className="lifeos-goal-card__chevron" aria-hidden="true">
-        ›
-      </span>
     </div>
   );
 };
+
 
 export default GoalCard;
