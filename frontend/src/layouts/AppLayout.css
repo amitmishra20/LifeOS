@@ -1,5 +1,6 @@
 .lifeos-app {
   display: flex;
+  isolation: isolate;
   min-height: 100vh;
   background-color: var(--color-bg-base);
   position: relative;
@@ -17,6 +18,7 @@
 
 .lifeos-content {
   flex: 1;
+  position: relative;
   animation: lifeos-page-enter var(--motion-major) var(--motion-enter) both;
   width: 100%;
   max-width: 1440px;

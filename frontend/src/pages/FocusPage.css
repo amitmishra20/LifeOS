@@ -260,7 +260,89 @@
   color: var(--color-accent);
 }
 
+/* Round 1 visual language: a quiet command center, not a task grid. */
+.lifeos-focus-page {
+  max-width: 1180px;
+  padding: 34px 0 78px;
+  gap: 42px;
+}
+
+.lifeos-focus-page__header {
+  align-items: flex-start;
+  padding: 18px 0 28px;
+  border-bottom-color: var(--color-border-subtle);
+}
+
+.lifeos-focus-page__date,
+.lifeos-focus-page .lifeos-kicker {
+  color: var(--color-accent-primary);
+  font-size: 10px;
+  letter-spacing: .17em;
+}
+
+.lifeos-focus-page__title {
+  margin-top: 14px;
+  font: clamp(46px, 7vw, 82px)/.94 var(--font-serif);
+  letter-spacing: -.06em;
+  font-weight: 400;
+}
+
+.lifeos-focus-page__subline {
+  max-width: 390px;
+  margin-top: 18px;
+  line-height: 1.7;
+}
+
+.lifeos-focus-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: 52px;
+  align-items: start;
+}
+
+.lifeos-focus-primary-section {
+  min-width: 0;
+}
+
+.lifeos-focus-supporting-section {
+  padding-top: 8px;
+}
+
+.lifeos-supporting-item {
+  padding: 16px 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+}
+
+.lifeos-supporting-item:hover {
+  background: transparent;
+  border-color: var(--color-border-default);
+}
+
+.lifeos-supporting-item__score-pill {
+  color: var(--color-accent-primary);
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.lifeos-focus-completed-banner,
+.lifeos-focus-error {
+  border-radius: 0;
+  background: var(--color-bg-surface);
+  border-color: var(--color-border-subtle);
+}
+
+@media (max-width: 840px) {
+  .lifeos-focus-grid { grid-template-columns: 1fr; gap: 34px; }
+  .lifeos-focus-supporting-section { padding-top: 0; }
+}
+
 @media (max-width: 640px) {
+  .lifeos-focus-page { padding-top: 18px; gap: 30px; }
+  .lifeos-focus-page__title { font-size: 52px; }
   .lifeos-focus-page__header-actions {
     width: 100%;
     justify-content: space-between;
