@@ -99,6 +99,36 @@ button, a, input, textarea, select {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 
+/* Shared LifeOS editorial frame: pages read as composed scenes, not widget grids. */
+.lifeos-tasks-page, .lifeos-habits-page, .lifeos-focus-page, .lifeos-goals-page, .lifeos-gh-page, .lifeos-learning-page, .calendar-page, .notes-page, .analytics-page, .lifeos-settings-page, .lifeos-recommendations-page, .lifeos-goal-detail {
+  position: relative;
+  isolation: isolate;
+}
+.lifeos-tasks-page::before, .lifeos-habits-page::before, .lifeos-focus-page::before, .lifeos-goals-page::before, .lifeos-gh-page::before, .lifeos-learning-page::before, .calendar-page::before, .notes-page::before, .analytics-page::before, .lifeos-settings-page::before, .lifeos-recommendations-page::before, .lifeos-goal-detail::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -32px -20vw auto;
+  height: 300px;
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-accent-primary) 8%, transparent), transparent 68%);
+  pointer-events: none;
+}
+.lifeos-tasks-page__header, .lifeos-habits-header, .lifeos-focus-page__header, .lifeos-goals-page__header, .lifeos-gh-page__header, .lifeos-learning-header, .calendar-page__header, .notes-page__header, .analytics-page__header, .lifeos-settings-header {
+  position: relative;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.lifeos-tasks-page__title, .lifeos-habits-header__title, .lifeos-focus-page__title, .lifeos-goals-page__title, .lifeos-gh-page__title, .lifeos-learning-header__title, .calendar-page__title, .notes-page__title, .analytics-page__title, .lifeos-settings-header h1 {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tightest);
+}
+.lifeos-tasks-page__eyebrow, .lifeos-habits-header .lifeos-kicker, .lifeos-focus-page__date, .lifeos-goals-page__eyebrow, .lifeos-learning-header .lifeos-kicker, .calendar-page__kicker, .notes-page__kicker, .analytics-page__kicker {
+  color: var(--color-accent-primary);
+}
+@media (max-width: 640px) {
+  .lifeos-tasks-page__header, .lifeos-habits-header, .lifeos-focus-page__header, .lifeos-goals-page__header, .lifeos-learning-header, .calendar-page__header, .notes-page__header, .analytics-page__header { padding-bottom: var(--space-4); }
+}
+
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,

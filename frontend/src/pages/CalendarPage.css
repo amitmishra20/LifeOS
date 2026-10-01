@@ -47,6 +47,7 @@
 /* Controls Strip */
 .calendar-controls {
   display: flex;
+  box-shadow: var(--shadow-sm);
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;

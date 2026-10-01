@@ -70,12 +70,15 @@
 /* Metrics bar */
 .lifeos-tasks-metrics {
   display: flex;
+  position: relative;
+  overflow: hidden;
   gap: var(--space-6);
   padding: var(--space-3) var(--space-4);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
+.lifeos-tasks-metrics::after { content: ''; position: absolute; inset: auto 0 0; height: 2px; background: linear-gradient(90deg, var(--color-accent-primary), transparent 76%); opacity: .7; }
 
 .lifeos-tasks-metric {
   display: flex;

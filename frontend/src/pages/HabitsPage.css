@@ -45,6 +45,7 @@
    ========================================================================= */
 .lifeos-habits-summary-strip {
   display: grid;
+  position: relative;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
 }
