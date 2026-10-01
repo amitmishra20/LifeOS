@@ -24,15 +24,18 @@ public class GoalServiceImpl implements GoalService {
     private final GoalRepository goalRepository;
     private final MilestoneRepository milestoneRepository;
     private final UserRepository userRepository;
+    private final GoalHealthService goalHealthService;
 
     public GoalServiceImpl(
             GoalRepository goalRepository,
             MilestoneRepository milestoneRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            GoalHealthService goalHealthService
     ) {
         this.goalRepository = goalRepository;
         this.milestoneRepository = milestoneRepository;
         this.userRepository = userRepository;
+        this.goalHealthService = goalHealthService;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class GoalServiceImpl implements GoalService {
         goal.setTargetDate(request.getTargetDate());
 
         Goal savedGoal = goalRepository.save(goal);
-        return GoalResponse.fromEntity(savedGoal);
+        return GoalResponse.fromEntity(savedGoal, goalHealthService.evaluate(savedGoal));
     }
 
     @Override
@@ -62,7 +65,9 @@ public class GoalServiceImpl implements GoalService {
                 ? goalRepository.findByUserIdAndStatus(userId, status)
                 : goalRepository.findByUserIdOrderByCreatedAtDesc(userId);
 
-        return goals.stream().map(GoalResponse::fromEntity).toList();
+        return goals.stream()
+                .map(g -> GoalResponse.fromEntity(g, goalHealthService.evaluate(g)))
+                .toList();
     }
 
     @Override
@@ -77,7 +82,7 @@ public class GoalServiceImpl implements GoalService {
                 .map(MilestoneResponse::fromEntity)
                 .toList();
 
-        return GoalDetailResponse.fromEntityWithMilestones(goal, milestoneResponses);
+        return GoalDetailResponse.fromEntityWithMilestones(goal, milestoneResponses, goalHealthService.evaluate(goal));
     }
 
     @Override
@@ -95,7 +100,7 @@ public class GoalServiceImpl implements GoalService {
         goal.setTargetDate(request.getTargetDate());
 
         Goal updatedGoal = goalRepository.save(goal);
-        return GoalResponse.fromEntity(updatedGoal);
+        return GoalResponse.fromEntity(updatedGoal, goalHealthService.evaluate(updatedGoal));
     }
 
     @Override

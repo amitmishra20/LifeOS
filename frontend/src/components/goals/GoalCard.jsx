@@ -28,6 +28,13 @@ const PRIORITY_BADGES = {
   CRITICAL: 'crimson',
 };
 
+const HEALTH_BADGES = {
+  ON_TRACK: { label: 'On Track', variant: 'emerald' },
+  AT_RISK: { label: 'At Risk', variant: 'warm' },
+  BEHIND: { label: 'Behind', variant: 'crimson' },
+  COMPLETED: { label: 'Completed', variant: 'accent' },
+};
+
 export const GoalCard = ({ goal, onClick }) => {
   if (!goal) return null;
 
@@ -38,6 +45,7 @@ export const GoalCard = ({ goal, onClick }) => {
     category,
     priority,
     status,
+    health,
     progress = 0,
     targetDate,
     milestoneCount = 0,
@@ -74,6 +82,11 @@ export const GoalCard = ({ goal, onClick }) => {
           {priority && (
             <Badge variant={PRIORITY_BADGES[priority] || 'default'} size="sm">
               <span>{priority}</span>
+            </Badge>
+          )}
+          {health && HEALTH_BADGES[health] && (
+            <Badge variant={HEALTH_BADGES[health].variant} size="sm">
+              <span>{HEALTH_BADGES[health].label}</span>
             </Badge>
           )}
         </div>

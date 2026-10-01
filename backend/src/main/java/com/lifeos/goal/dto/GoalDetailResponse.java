@@ -1,11 +1,11 @@
 package com.lifeos.goal.dto;
 
 import com.lifeos.goal.entity.Goal;
+import com.lifeos.goal.entity.GoalHealth;
 import com.lifeos.milestone.dto.MilestoneResponse;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GoalDetailResponse extends GoalResponse {
 
@@ -15,6 +15,10 @@ public class GoalDetailResponse extends GoalResponse {
     }
 
     public static GoalDetailResponse fromEntityWithMilestones(Goal goal, List<MilestoneResponse> milestones) {
+        return fromEntityWithMilestones(goal, milestones, null);
+    }
+
+    public static GoalDetailResponse fromEntityWithMilestones(Goal goal, List<MilestoneResponse> milestones, GoalHealth health) {
         GoalDetailResponse response = new GoalDetailResponse();
         response.setId(goal.getId());
         response.setTitle(goal.getTitle());
@@ -22,6 +26,7 @@ public class GoalDetailResponse extends GoalResponse {
         response.setCategory(goal.getCategory());
         response.setPriority(goal.getPriority());
         response.setStatus(goal.getStatus());
+        response.setHealth(health);
         response.setProgress(goal.getProgress());
         response.setStartDate(goal.getStartDate());
         response.setTargetDate(goal.getTargetDate());

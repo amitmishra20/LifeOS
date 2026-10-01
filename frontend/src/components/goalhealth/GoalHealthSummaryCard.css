@@ -1,0 +1,93 @@
+.lifeos-gh-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4, 16px);
+  margin-bottom: var(--space-6, 24px);
+}
+
+.lifeos-gh-summary-card {
+  background: var(--surface-primary, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-4, 16px);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  position: relative;
+  outline: none;
+}
+
+.lifeos-gh-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-medium, #cbd5e1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.lifeos-gh-summary-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--brand-500, #3b82f6);
+}
+
+.lifeos-gh-summary-card--selected {
+  border-color: var(--brand-500, #3b82f6);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  background: var(--surface-secondary, #f8fafc);
+}
+
+.lifeos-gh-summary-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lifeos-gh-summary-card__label {
+  font-size: var(--text-xs, 12px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #64748b);
+}
+
+.lifeos-gh-summary-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-tertiary, #94a3b8);
+}
+
+.lifeos-gh-summary-card--on-track .lifeos-gh-summary-card__dot {
+  background: #10b981;
+}
+
+.lifeos-gh-summary-card--at-risk .lifeos-gh-summary-card__dot {
+  background: #f59e0b;
+}
+
+.lifeos-gh-summary-card--behind .lifeos-gh-summary-card__dot {
+  background: #ef4444;
+}
+
+.lifeos-gh-summary-card--completed .lifeos-gh-summary-card__dot {
+  background: #3b82f6;
+}
+
+.lifeos-gh-summary-card__count {
+  font-size: var(--text-2xl, 24px);
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  line-height: 1.2;
+}
+
+.lifeos-gh-summary-card__pct {
+  font-size: var(--text-xs, 12px);
+  color: var(--text-tertiary, #94a3b8);
+}
+
+@media (max-width: 640px) {
+  .lifeos-gh-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3, 12px);
+  }
+}

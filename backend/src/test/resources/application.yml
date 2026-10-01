@@ -37,3 +37,6 @@ app:
       habit-consistency: 0.25
       goal-progress: 0.25
       learning-activity: 0.20
+  goal-health:
+    at-risk-threshold: -5.0
+    behind-threshold: -25.0

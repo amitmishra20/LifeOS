@@ -1,7 +1,7 @@
 package com.lifeos.recommendation.service;
 
 import com.lifeos.goal.entity.Goal;
-import com.lifeos.goal.entity.GoalStatus;
+import com.lifeos.goal.service.GoalHealthService;
 import com.lifeos.recommendation.config.FocusScoringProperties;
 import com.lifeos.recommendation.dto.DailyFocusResponse;
 import com.lifeos.recommendation.dto.FocusItemResponse;
@@ -26,13 +26,16 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     private final TaskRepository taskRepository;
     private final FocusScoringProperties scoringProperties;
+    private final GoalHealthService goalHealthService;
 
     public RecommendationServiceImpl(
             TaskRepository taskRepository,
-            FocusScoringProperties scoringProperties
+            FocusScoringProperties scoringProperties,
+            GoalHealthService goalHealthService
     ) {
         this.taskRepository = taskRepository;
         this.scoringProperties = scoringProperties;
+        this.goalHealthService = goalHealthService;
     }
 
     public enum GoalHealth {
@@ -167,90 +170,34 @@ public class RecommendationServiceImpl implements RecommendationService {
             return new GoalHealthAssessment(GoalHealth.NONE, 0, null);
         }
 
-        if (goal.getStatus() == GoalStatus.COMPLETED || (goal.getProgress() != null && goal.getProgress() >= 100)) {
-            return new GoalHealthAssessment(GoalHealth.COMPLETED, 0, null);
-        }
-
-        LocalDate startDate = goal.getStartDate();
-        if (startDate == null) {
-            if (goal.getCreatedAt() != null) {
-                startDate = goal.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate();
-            } else {
-                startDate = today;
+        com.lifeos.goal.entity.GoalHealth health = goalHealthService.evaluate(goal, today);
+        switch (health) {
+            case COMPLETED -> {
+                return new GoalHealthAssessment(GoalHealth.COMPLETED, 0, null);
             }
-        }
-
-        LocalDate targetDate = goal.getTargetDate();
-        if (targetDate == null) {
-            return new GoalHealthAssessment(GoalHealth.ON_TRACK, scoringProperties.getGoalOnTrack(), null);
-        }
-
-        if (targetDate.isBefore(startDate)) {
-            return new GoalHealthAssessment(GoalHealth.ON_TRACK, scoringProperties.getGoalOnTrack(), null);
-        }
-
-        if (targetDate.isBefore(today)) {
-            return new GoalHealthAssessment(
-                    GoalHealth.BEHIND,
-                    scoringProperties.getGoalBehind(),
-                    "Advances goal past target date"
-            );
-        }
-
-        int currentProgress = goal.getProgress() != null ? goal.getProgress() : 0;
-
-        if (startDate.isEqual(targetDate)) {
-            if (today.isBefore(targetDate)) {
+            case ON_TRACK -> {
                 return new GoalHealthAssessment(GoalHealth.ON_TRACK, scoringProperties.getGoalOnTrack(), null);
-            } else if (today.isEqual(targetDate)) {
-                if (currentProgress >= 95) {
-                    return new GoalHealthAssessment(GoalHealth.ON_TRACK, scoringProperties.getGoalOnTrack(), null);
-                } else if (currentProgress >= 50) {
-                    return new GoalHealthAssessment(
-                            GoalHealth.AT_RISK,
-                            scoringProperties.getGoalAtRisk(),
-                            "Supports goal due today"
-                    );
-                } else {
-                    return new GoalHealthAssessment(
-                            GoalHealth.BEHIND,
-                            scoringProperties.getGoalBehind(),
-                            "Advances critical goal due today"
-                    );
-                }
-            } else {
-                return new GoalHealthAssessment(
-                        GoalHealth.BEHIND,
-                        scoringProperties.getGoalBehind(),
-                        "Advances goal past target date"
-                );
             }
-        }
-
-        long totalDays = ChronoUnit.DAYS.between(startDate, targetDate);
-        if (totalDays <= 0) totalDays = 1;
-
-        long elapsedDays = ChronoUnit.DAYS.between(startDate, today);
-        if (elapsedDays < 0) elapsedDays = 0;
-        if (elapsedDays > totalDays) elapsedDays = totalDays;
-
-        double expectedProgress = ((double) elapsedDays / (double) totalDays) * 100.0;
-        double delta = (double) currentProgress - expectedProgress;
-
-        if (delta >= -5.0) {
-            return new GoalHealthAssessment(GoalHealth.ON_TRACK, scoringProperties.getGoalOnTrack(), null);
-        } else if (delta >= -25.0) {
-            return new GoalHealthAssessment(
-                    GoalHealth.AT_RISK,
-                    scoringProperties.getGoalAtRisk(),
-                    "Supports goal falling behind schedule"
-            );
-        } else {
-            return new GoalHealthAssessment(
-                    GoalHealth.BEHIND,
-                    scoringProperties.getGoalBehind(),
-                    "Advances critical goal behind schedule"
-            );
+            case AT_RISK -> {
+                String reason = (goal.getTargetDate() != null && goal.getTargetDate().isEqual(today))
+                        ? "Supports goal due today"
+                        : "Supports goal falling behind schedule";
+                return new GoalHealthAssessment(GoalHealth.AT_RISK, scoringProperties.getGoalAtRisk(), reason);
+            }
+            case BEHIND -> {
+                String reason;
+                if (goal.getTargetDate() != null && goal.getTargetDate().isBefore(today)) {
+                    reason = "Advances goal past target date";
+                } else if (goal.getTargetDate() != null && goal.getTargetDate().isEqual(today)) {
+                    reason = "Advances critical goal due today";
+                } else {
+                    reason = "Advances critical goal behind schedule";
+                }
+                return new GoalHealthAssessment(GoalHealth.BEHIND, scoringProperties.getGoalBehind(), reason);
+            }
+            default -> {
+                return new GoalHealthAssessment(GoalHealth.NONE, 0, null);
+            }
         }
     }
 
@@ -274,47 +221,62 @@ public class RecommendationServiceImpl implements RecommendationService {
             return "High priority task";
         }
         if (healthAssessment.health == GoalHealth.AT_RISK) {
-            return "Supports goal falling behind schedule";
+            return healthAssessment.reason != null ? healthAssessment.reason : "Supports goal falling behind schedule";
+        }
+        if (task.getDueDate() != null && task.getDueDate().isEqual(today.plusDays(2))) {
+            return "Due in 2 days";
+        }
+        if (task.getPriority() == TaskPriority.MEDIUM) {
+            return "Medium priority task";
         }
         if (task.getDueDate() != null) {
             long days = ChronoUnit.DAYS.between(today, task.getDueDate());
-            if (days <= 7) {
-                return "Due in " + days + " days";
-            }
+            return "Due in " + days + " days";
         }
-        return "Recommended for steady progress";
+        return "Active task";
     }
 
     private Comparator<FocusItemResponse> getTaskComparator(LocalDate today) {
-        return (a, b) -> {
-            // 1. Total score DESC
-            int scoreCmp = Integer.compare(b.getTotalScore(), a.getTotalScore());
-            if (scoreCmp != 0) return scoreCmp;
+        return (item1, item2) -> {
+            // 1. Total score descending
+            int scoreCompare = Integer.compare(item2.getTotalScore(), item1.getTotalScore());
+            if (scoreCompare != 0) return scoreCompare;
 
-            // 2. Due date ASC, nulls last
-            LocalDate dateA = a.getTask().getDueDate();
-            LocalDate dateB = b.getTask().getDueDate();
-            if (dateA != null && dateB != null) {
-                int dateCmp = dateA.compareTo(dateB);
-                if (dateCmp != 0) return dateCmp;
-            } else if (dateA != null) {
+            // 2. Overdue status (true first)
+            boolean overdue1 = item1.getTask().getStatus() == TaskStatus.OVERDUE ||
+                    (item1.getTask().getDueDate() != null && item1.getTask().getDueDate().isBefore(today));
+            boolean overdue2 = item2.getTask().getStatus() == TaskStatus.OVERDUE ||
+                    (item2.getTask().getDueDate() != null && item2.getTask().getDueDate().isBefore(today));
+            if (overdue1 && !overdue2) return -1;
+            if (!overdue1 && overdue2) return 1;
+
+            // 3. Priority enum ordinal ascending (CRITICAL=0, HIGH=1, MEDIUM=2, LOW=3)
+            int p1 = item1.getTask().getPriority() != null ? item1.getTask().getPriority().ordinal() : 2;
+            int p2 = item2.getTask().getPriority() != null ? item2.getTask().getPriority().ordinal() : 2;
+            int priorityCompare = Integer.compare(p1, p2);
+            if (priorityCompare != 0) return priorityCompare;
+
+            // 4. Due date ascending (nulls last)
+            LocalDate d1 = item1.getTask().getDueDate();
+            LocalDate d2 = item2.getTask().getDueDate();
+            if (d1 != null && d2 != null) {
+                int dateCompare = d1.compareTo(d2);
+                if (dateCompare != 0) return dateCompare;
+            } else if (d1 != null) {
                 return -1;
-            } else if (dateB != null) {
+            } else if (d2 != null) {
                 return 1;
             }
 
-            // 3. Priority DESC (CRITICAL > HIGH > MEDIUM > LOW)
-            int priorityA = a.getTask().getPriority() != null ? a.getTask().getPriority().ordinal() : 0;
-            int priorityB = b.getTask().getPriority() != null ? b.getTask().getPriority().ordinal() : 0;
-            int priorityCmp = Integer.compare(priorityB, priorityA);
-            if (priorityCmp != 0) return priorityCmp;
-
-            // 4. CreatedAt ASC
-            if (a.getTask().getCreatedAt() != null && b.getTask().getCreatedAt() != null) {
-                return a.getTask().getCreatedAt().compareTo(b.getTask().getCreatedAt());
+            // 5. Creation date ascending (FIFO)
+            if (item1.getTask().getCreatedAt() != null && item2.getTask().getCreatedAt() != null) {
+                return item1.getTask().getCreatedAt().compareTo(item2.getTask().getCreatedAt());
             }
 
-            return 0;
+            // 6. ID ascending
+            Long id1 = item1.getTask().getId() != null ? item1.getTask().getId() : 0L;
+            Long id2 = item2.getTask().getId() != null ? item2.getTask().getId() : 0L;
+            return Long.compare(id1, id2);
         };
     }
 }

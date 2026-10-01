@@ -16,6 +16,7 @@ import LearningPage from './pages/LearningPage';
 import CalendarPage from './pages/CalendarPage';
 import NotesPage from './pages/NotesPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import GoalHealthPage from './pages/GoalHealthPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -62,6 +63,8 @@ export function App() {
               {/* Reflection & Analytics Domain */}
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/reflect/analytics" element={<Navigate to="/analytics" replace />} />
+              <Route path="/goal-health" element={<GoalHealthPage />} />
+              <Route path="/reflect/goal-health" element={<Navigate to="/goal-health" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/plan/*" element={<ModulePlaceholderPage />} />

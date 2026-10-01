@@ -1,0 +1,192 @@
+.lifeos-gh-card {
+  background: var(--surface-primary, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  outline: none;
+}
+
+.lifeos-gh-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-medium, #cbd5e1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.lifeos-gh-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--brand-500, #3b82f6);
+}
+
+.lifeos-gh-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2, 8px);
+}
+
+.lifeos-gh-card__tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex-wrap: wrap;
+}
+
+.lifeos-gh-card__delta-tag {
+  font-size: var(--text-xs, 12px);
+  font-weight: 600;
+}
+
+.lifeos-gh-card__delta-val {
+  color: var(--success-600, #059669);
+  background: var(--success-50, #ecfdf5);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.lifeos-gh-card__delta-val--neg {
+  color: var(--danger-600, #dc2626);
+  background: var(--danger-50, #fef2f2);
+}
+
+.lifeos-gh-card__title {
+  font-size: var(--text-base, 16px);
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+  margin: 0 0 var(--space-2, 8px) 0;
+  line-height: 1.4;
+}
+
+.lifeos-gh-card__reason {
+  background: var(--surface-secondary, #f8fafc);
+  border-left: 3px solid var(--brand-500, #3b82f6);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+}
+
+.lifeos-gh-card--behind .lifeos-gh-card__reason {
+  border-left-color: var(--danger-500, #ef4444);
+}
+
+.lifeos-gh-card--at-risk .lifeos-gh-card__reason {
+  border-left-color: var(--warning-500, #f59e0b);
+}
+
+.lifeos-gh-card--on-track .lifeos-gh-card__reason {
+  border-left-color: var(--success-500, #10b981);
+}
+
+.lifeos-gh-card__reason-icon {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.lifeos-gh-card__reason-text {
+  font-size: var(--text-xs, 12px);
+  color: var(--text-secondary, #475569);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.lifeos-gh-card__progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.lifeos-gh-card__progress-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.lifeos-gh-card__bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lifeos-gh-card__bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs, 12px);
+  color: var(--text-secondary, #64748b);
+}
+
+.lifeos-gh-card__bar-name {
+  font-weight: 500;
+}
+
+.lifeos-gh-card__bar-val {
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+}
+
+.lifeos-gh-card__track {
+  height: 6px;
+  background: var(--surface-tertiary, #e2e8f0);
+  border-radius: var(--radius-full, 9999px);
+  overflow: hidden;
+  position: relative;
+}
+
+.lifeos-gh-card__fill {
+  height: 100%;
+  border-radius: var(--radius-full, 9999px);
+  transition: width 0.3s ease;
+}
+
+.lifeos-gh-card__fill--actual {
+  background: var(--brand-500, #3b82f6);
+}
+
+.lifeos-gh-card--on-track .lifeos-gh-card__fill--actual {
+  background: #10b981;
+}
+
+.lifeos-gh-card--at-risk .lifeos-gh-card__fill--actual {
+  background: #f59e0b;
+}
+
+.lifeos-gh-card--behind .lifeos-gh-card__fill--actual {
+  background: #ef4444;
+}
+
+.lifeos-gh-card__fill--expected {
+  background: #94a3b8;
+  opacity: 0.7;
+}
+
+.lifeos-gh-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+.lifeos-gh-card__timeline-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lifeos-gh-card__timeline-label {
+  font-size: 11px;
+  color: var(--text-tertiary, #94a3b8);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lifeos-gh-card__timeline-value {
+  font-size: var(--text-xs, 12px);
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+}

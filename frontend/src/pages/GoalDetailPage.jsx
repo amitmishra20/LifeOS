@@ -39,6 +39,13 @@ const PRIORITY_BADGES = {
   CRITICAL: 'crimson',
 };
 
+const HEALTH_BADGES = {
+  ON_TRACK: { label: 'On Track', variant: 'emerald' },
+  AT_RISK: { label: 'At Risk', variant: 'warm' },
+  BEHIND: { label: 'Behind Schedule', variant: 'crimson' },
+  COMPLETED: { label: 'Completed', variant: 'accent' },
+};
+
 const STATUS_OPTIONS = [
   { value: 'ACTIVE', label: 'Active' },
   { value: 'PAUSED', label: 'Paused' },
@@ -236,6 +243,11 @@ export const GoalDetailPage = () => {
             <Badge variant={PRIORITY_BADGES[goal.priority] || 'default'} size="md">
               <span>{goal.priority} Priority</span>
             </Badge>
+            {goal.health && HEALTH_BADGES[goal.health] && (
+              <Badge variant={HEALTH_BADGES[goal.health].variant} size="md">
+                <span>{HEALTH_BADGES[goal.health].label}</span>
+              </Badge>
+            )}
           </div>
 
           <div className="lifeos-goal-detail__status-control">

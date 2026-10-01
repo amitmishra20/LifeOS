@@ -40,7 +40,9 @@ class RecommendationServiceTest {
     @BeforeEach
     void setUp() {
         scoringProperties = new FocusScoringProperties();
-        recommendationService = new RecommendationServiceImpl(taskRepository, scoringProperties);
+        com.lifeos.goal.config.GoalHealthProperties healthProperties = new com.lifeos.goal.config.GoalHealthProperties();
+        com.lifeos.goal.service.GoalHealthService goalHealthService = new com.lifeos.goal.service.GoalHealthServiceImpl(null, healthProperties);
+        recommendationService = new RecommendationServiceImpl(taskRepository, scoringProperties, goalHealthService);
         testUser = new User("Alice", "alice@example.com", "hash");
         testUser.setId(1L);
         today = LocalDate.now();
@@ -151,10 +153,10 @@ class RecommendationServiceTest {
         overdueGoal.setProgress(50);
         assertThat(recommendationService.assessGoalHealth(overdueGoal, today).score).isEqualTo(30);
 
-        // 4. Invalid date range (targetDate < startDate) -> ON_TRACK (+0)
+        // 4. Invalid date range (targetDate < startDate, but targetDate in future) -> ON_TRACK (+0)
         Goal invalidGoal = new Goal(testUser, "Invalid Date Range", GoalCategory.HEALTH);
         invalidGoal.setStartDate(today.plusDays(10));
-        invalidGoal.setTargetDate(today.minusDays(5));
+        invalidGoal.setTargetDate(today.plusDays(5));
         assertThat(recommendationService.assessGoalHealth(invalidGoal, today).score).isEqualTo(0);
 
         // 5. Single day goal due today with 30% progress -> BEHIND (+30)

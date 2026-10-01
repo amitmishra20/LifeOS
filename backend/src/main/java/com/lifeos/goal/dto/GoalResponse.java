@@ -2,6 +2,7 @@ package com.lifeos.goal.dto;
 
 import com.lifeos.goal.entity.Goal;
 import com.lifeos.goal.entity.GoalCategory;
+import com.lifeos.goal.entity.GoalHealth;
 import com.lifeos.goal.entity.GoalPriority;
 import com.lifeos.goal.entity.GoalStatus;
 
@@ -16,6 +17,7 @@ public class GoalResponse {
     private GoalCategory category;
     private GoalPriority priority;
     private GoalStatus status;
+    private GoalHealth health;
     private Integer progress;
     private LocalDate startDate;
     private LocalDate targetDate;
@@ -28,6 +30,10 @@ public class GoalResponse {
     }
 
     public static GoalResponse fromEntity(Goal goal) {
+        return fromEntity(goal, null);
+    }
+
+    public static GoalResponse fromEntity(Goal goal, GoalHealth health) {
         GoalResponse response = new GoalResponse();
         response.setId(goal.getId());
         response.setTitle(goal.getTitle());
@@ -35,6 +41,7 @@ public class GoalResponse {
         response.setCategory(goal.getCategory());
         response.setPriority(goal.getPriority());
         response.setStatus(goal.getStatus());
+        response.setHealth(health);
         response.setProgress(goal.getProgress());
         response.setStartDate(goal.getStartDate());
         response.setTargetDate(goal.getTargetDate());
@@ -97,6 +104,14 @@ public class GoalResponse {
 
     public void setStatus(GoalStatus status) {
         this.status = status;
+    }
+
+    public GoalHealth getHealth() {
+        return health;
+    }
+
+    public void setHealth(GoalHealth health) {
+        this.health = health;
     }
 
     public Integer getProgress() {
