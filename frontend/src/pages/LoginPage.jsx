@@ -132,7 +132,7 @@ export const LoginPage = () => {
         </form>
 
         <footer className="lifeos-auth-footer">
-          <span>Don&apos;t have an account?</span>
+          <span>Don't have an account?</span>
           <Link to="/register" className="lifeos-auth-link">
             Create account
           </Link>

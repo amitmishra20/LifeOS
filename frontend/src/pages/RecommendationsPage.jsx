@@ -68,7 +68,7 @@ export const RecommendationsPage = () => {
 
         <div className="lifeos-recommendations-header__actions">
           <Button variant="ghost" onClick={() => navigate('/focus')}>
-            Today&apos;s Focus →
+            Today's Focus →
           </Button>
           <Button variant="primary" onClick={fetchRecommendations}>
             Refresh Guidance

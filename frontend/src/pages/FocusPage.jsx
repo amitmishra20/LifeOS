@@ -122,7 +122,7 @@ export const FocusPage = () => {
             <span className="lifeos-focus-date-dot" />
             <span className="lifeos-focus-date-text">{dateHeading}</span>
           </div>
-          <h1 className="lifeos-focus-page__title">Today&apos;s Focus</h1>
+          <h1 className="lifeos-focus-page__title">Today's Focus</h1>
           <p className="lifeos-focus-page__subline">
             A quiet decision surface. One dominant move to advance your horizon.
           </p>

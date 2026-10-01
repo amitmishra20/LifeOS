@@ -1,38 +1,43 @@
+/* ==========================================================================
+   LifeOS Sidebar Navigation — Desktop & Tablet Responsive Navigation
+   ========================================================================== */
+
 .lifeos-sidebar {
-  width: var(--sidebar-width);
+  width: var(--sidebar-width, 220px);
   height: 100vh;
+  height: 100dvh;
   position: sticky;
   top: 0;
   left: 0;
-  background-color: var(--color-bg-surface);
-  border-right: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-surface, #0d151a);
+  border-right: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   z-index: 40;
-  transition: width var(--duration-panel) var(--ease-spring), background-color var(--duration-panel) var(--ease-smooth);
+  transition: width var(--motion-drawer, 300ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
   overflow: hidden;
 }
 
 /* Collapsed Mode (Rail) */
 .lifeos-sidebar--collapsed {
-  width: var(--sidebar-collapsed-width);
+  width: var(--sidebar-collapsed-width, 64px);
 }
 
 /* Brand Header */
 .lifeos-sidebar__brand {
-  height: var(--header-height);
-  padding: 0 var(--space-4);
+  height: var(--header-height, 58px);
+  padding: 0 var(--space-4, 16px);
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
   flex-shrink: 0;
 }
 
 .lifeos-sidebar__logo-link {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-3, 12px);
   text-decoration: none;
   color: inherit;
   width: 100%;
@@ -41,19 +46,18 @@
 .lifeos-sidebar__logo-mark {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent-subtle);
-  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-sm, 6px);
+  background: rgba(216, 177, 122, 0.1);
+  border: 1px solid rgba(216, 177, 122, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--color-accent-primary);
-  box-shadow: var(--shadow-ambient-glow);
+  color: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-sidebar__leaf-svg {
-  stroke: var(--color-accent-primary);
+  stroke: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-sidebar__brand-text {
@@ -62,22 +66,24 @@
 }
 
 .lifeos-sidebar__brand-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--color-text-primary);
+  color: var(--color-text-primary, #f2eee3);
   line-height: 1;
 }
 
 /* Nav Section */
 .lifeos-sidebar__nav {
   flex: 1;
-  padding: var(--space-4) var(--space-3);
+  padding: var(--space-4, 16px) var(--space-2, 8px);
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-3, 12px);
+  scrollbar-width: thin;
 }
 
 .lifeos-sidebar__group {
@@ -87,12 +93,12 @@
 }
 
 .lifeos-sidebar__group-title {
-  font-size: 0.6875rem; /* 11px */
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
-  padding: var(--space-2) var(--space-3) 4px;
+  color: var(--color-text-muted, #71837f);
+  padding: var(--space-2, 8px) var(--space-3, 12px) 4px;
 }
 
 .lifeos-sidebar__group-list {
@@ -108,203 +114,133 @@
   position: relative;
 }
 
-/* Nav Item Link */
 .lifeos-sidebar__link {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: 10px var(--space-3);
-  min-height: 40px;
-  border-radius: var(--radius-md);
-  color: var(--color-text-secondary);
+  gap: var(--space-3, 12px);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm, 6px);
+  color: var(--color-text-secondary, #95a6a0);
   text-decoration: none;
-  font-size: 0.84rem;
-  font-weight: var(--font-weight-medium);
-  transition: all var(--duration-micro) var(--ease-smooth);
-  position: relative;
-  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 38px;
+  transition: all var(--motion-micro, 150ms) ease;
+  white-space: nowrap;
 }
 
 .lifeos-sidebar__link:hover {
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-surface-elevated);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary, #f2eee3);
 }
 
-.lifeos-sidebar__link:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 2px;
-}
-
-/* Active Link Pill - matches the reference amber active pill */
 .lifeos-sidebar__link--active {
-  color: var(--color-accent-primary);
-  background: var(--color-accent-subtle);
-  border: 1px solid var(--color-border-accent);
-  font-weight: var(--font-weight-semibold);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.lifeos-sidebar__link--active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 3px;
-  background-color: var(--color-accent-primary);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 8px rgba(212, 163, 115, 0.4);
+  background: rgba(216, 177, 122, 0.12);
+  color: var(--color-accent-primary, #d8b17a);
+  font-weight: 600;
+  border-left: 2px solid var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-sidebar__link-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  opacity: 0.8;
-  transition: opacity var(--duration-micro) var(--ease-smooth);
-}
-
-.lifeos-sidebar__link:hover .lifeos-sidebar__link-icon,
-.lifeos-sidebar__link--active .lifeos-sidebar__link-icon {
-  opacity: 1;
 }
 
 .lifeos-sidebar__link-label {
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-/* Scenic Inspiration Thumbnail Card (matches reference bottom card) */
-.lifeos-sidebar__scenic-card-wrapper {
-  padding: var(--space-2) var(--space-3);
-  margin-top: auto;
+/* Collapsed specifics */
+.lifeos-sidebar--collapsed .lifeos-sidebar__link {
+  justify-content: center;
+  padding: 8px 0;
 }
 
-.lifeos-sidebar__scenic-card {
-  position: relative;
-  height: 110px;
-  border-radius: var(--radius-lg);
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-md);
-  display: flex;
-  align-items: flex-end;
-  transition: transform var(--duration-micro) var(--ease-smooth), border-color var(--duration-micro) var(--ease-smooth);
-  cursor: pointer;
+.lifeos-sidebar--collapsed .lifeos-sidebar__brand {
+  justify-content: center;
+  padding: 0;
 }
 
-.lifeos-sidebar__scenic-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-.lifeos-sidebar__scenic-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(8, 9, 12, 0.2) 0%, rgba(8, 9, 12, 0.85) 100%);
-  pointer-events: none;
-}
-
-.lifeos-sidebar__scenic-content {
-  position: relative;
-  z-index: 2;
-  padding: var(--space-3);
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.lifeos-sidebar__scenic-text {
-  font-family: var(--font-serif);
-  font-size: 0.8125rem;
-  font-style: italic;
-  line-height: 1.25;
-  color: #FFFFFF;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.lifeos-sidebar__scenic-arrow {
-  color: var(--color-accent-primary);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-bold);
-  transition: transform var(--duration-micro) var(--ease-smooth);
-}
-
-.lifeos-sidebar__scenic-card:hover .lifeos-sidebar__scenic-arrow {
-  transform: translateX(3px);
-}
-
-/* Footer Controls & System Status */
+/* Footer Controls & Status */
 .lifeos-sidebar__footer {
-  padding: var(--space-3);
+  padding: var(--space-3, 12px) var(--space-3, 12px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
   flex-shrink: 0;
 }
 
 .lifeos-sidebar__status-link {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-2, 8px);
   text-decoration: none;
-  color: var(--color-text-muted);
-  font-size: 0.75rem;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  transition: color var(--duration-micro) var(--ease-smooth);
-}
-
-.lifeos-sidebar__status-link:hover {
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted, #71837f);
+  font-size: 11px;
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 4px);
 }
 
 .lifeos-sidebar__status-dot {
   width: 6px;
   height: 6px;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-success-base);
-  box-shadow: 0 0 6px var(--color-success-base);
+  border-radius: 50%;
+  background-color: #54c5b1;
+  box-shadow: 0 0 6px #54c5b1;
 }
 
 .lifeos-sidebar__collapse-btn {
   background: transparent;
   border: none;
-  color: var(--color-text-muted);
-  padding: var(--space-2);
-  border-radius: var(--radius-sm);
+  color: var(--color-text-muted, #71837f);
+  padding: var(--space-2, 8px);
+  border-radius: var(--radius-sm, 4px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: color var(--duration-micro) var(--ease-smooth), background-color var(--duration-micro) var(--ease-smooth);
+  min-width: 32px;
+  min-height: 32px;
+  transition: all var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-sidebar__collapse-btn:hover {
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-surface-elevated);
+  color: var(--color-text-primary, #f2eee3);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* =========================================================================
-   Mobile: Sidebar completely hidden — bottom nav takes over
-   ========================================================================= */
-/* Editorial shell: quiet framing around the workspace */
-.lifeos-sidebar { width: 220px; background: var(--color-bg-surface); border-right-color: var(--color-border-subtle); }
-.lifeos-sidebar__brand { height: 58px; border-bottom-color: var(--color-border-subtle); }
-.lifeos-sidebar__logo-mark { background: var(--color-accent-subtle); border-color: var(--color-border-accent); box-shadow: none; }
-.lifeos-sidebar__nav { padding-top: 24px; }
-.lifeos-sidebar__link { border-radius: 0; padding-left: 14px; }
-.lifeos-sidebar__link--active { background: var(--color-accent-subtle); border-left: 2px solid var(--color-accent-primary); color: var(--color-text-primary); }
+/* Tablet (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .lifeos-sidebar {
+    width: 68px;
+  }
 
+  .lifeos-sidebar__brand-text,
+  .lifeos-sidebar__group-title,
+  .lifeos-sidebar__link-label,
+  .lifeos-sidebar__status-text {
+    display: none;
+  }
+
+  .lifeos-sidebar__link {
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .lifeos-sidebar__brand {
+    justify-content: center;
+    padding: 0;
+  }
+}
+
+/* Mobile: Sidebar hidden; bottom nav & drawer take over */
 @media (max-width: 768px) {
   .lifeos-sidebar {
     display: none;

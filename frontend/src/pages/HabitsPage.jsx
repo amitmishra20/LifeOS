@@ -165,7 +165,7 @@ export const HabitsPage = () => {
           <strong className="lifeos-habits-summary-card__value">{summary.activeCount}</strong>
         </div>
         <div className="lifeos-habits-summary-card">
-          <span className="lifeos-habits-summary-card__label">Today&apos;s Completed</span>
+          <span className="lifeos-habits-summary-card__label">Today's Completed</span>
           <strong className="lifeos-habits-summary-card__value">
             {summary.completedToday} <small>/ {summary.activeCount}</small>
           </strong>

@@ -76,13 +76,13 @@ export const AppLayout = () => {
         position="bottom"
       >
         <div className="lifeos-mobile-drawer">
-          {NAV_GROUPS.map((group) => (
-            <div key={group.title} className="lifeos-mobile-drawer__group">
-              <div className="lifeos-mobile-drawer__group-title">{group.title}</div>
+          {NAV_GROUPS.map((group, idx) => (
+            <div key={group.title || `group-${idx}`} className="lifeos-mobile-drawer__group">
+              {group.title && <div className="lifeos-mobile-drawer__group-title">{group.title}</div>}
               <div className="lifeos-mobile-drawer__group-items">
                 {group.items.map((item) => (
                   <NavLink
-                    key={item.path}
+                    key={`${group.title || 'main'}-${item.label}`}
                     to={item.path}
                     end={item.path === '/'}
                     onClick={() => setMobileDrawerOpen(false)}

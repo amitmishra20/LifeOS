@@ -1,28 +1,34 @@
+/* ==========================================================================
+   LifeOS Modal System — Responsive, Accessible Dialog Container
+   ========================================================================== */
+
 .lifeos-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.72);
+  background-color: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px) saturate(180%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-4);
+  padding: var(--space-4, 16px);
   z-index: 100;
-  animation: lifeos-overlay-fade var(--motion-panel) var(--motion-enter);
+  animation: lifeos-overlay-fade var(--motion-small, 220ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .lifeos-modal {
   width: 100%;
-  background-color: var(--color-bg-surface-card);
-  border: 1px solid var(--color-border-default);
-  border-top-color: rgba(255, 255, 255, 0.22);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-modal);
+  background-color: var(--color-surface, #0d151a);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-top-color: rgba(216, 177, 122, 0.25);
+  border-radius: var(--radius-xl, 12px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
   overflow-y: auto;
-  animation: lifeos-modal-pop var(--motion-panel) var(--motion-enter);
+  overscroll-behavior: contain;
+  animation: lifeos-modal-pop var(--motion-small, 220ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 /* Modal Sizes */
@@ -35,64 +41,71 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-4);
-  padding: var(--space-6) var(--space-6) var(--space-4);
-  border-bottom: 1px solid var(--color-border-subtle);
+  gap: var(--space-4, 16px);
+  padding: var(--space-5, 20px) var(--space-6, 24px) var(--space-4, 16px);
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
 }
 
 .lifeos-modal__title {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--tracking-tight);
-  color: var(--color-text-primary);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: var(--text-xl, 20px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary, #f2eee3);
+  margin: 0;
 }
 
 .lifeos-modal__desc {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  font-size: var(--text-sm, 13px);
+  color: var(--color-text-secondary, #95a6a0);
   margin-top: 4px;
+  line-height: 1.4;
 }
 
 .lifeos-modal__close-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  color: var(--color-text-muted);
-  transition:
-    background-color var(--duration-micro) var(--ease-spring),
-    color var(--duration-micro) var(--ease-spring);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted, #71837f);
+  cursor: pointer;
+  transition: all var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-modal__close-btn:hover {
-  background-color: var(--color-bg-surface-elevated);
-  color: var(--color-text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary, #f2eee3);
 }
 
 .lifeos-modal__body {
-  padding: var(--space-6);
+  padding: var(--space-5, 20px) var(--space-6, 24px);
+  flex: 1;
 }
 
 .lifeos-modal__footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-6);
-  border-top: 1px solid var(--color-border-subtle);
-  background-color: var(--color-bg-surface-subtle);
-  border-bottom-left-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
+  gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px) var(--space-6, 24px);
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  background-color: rgba(5, 8, 10, 0.4);
+  border-bottom-left-radius: var(--radius-xl, 12px);
+  border-bottom-right-radius: var(--radius-xl, 12px);
 }
 
 .lifeos-modal-footer-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-3);
+  gap: var(--space-3, 12px);
+  width: 100%;
 }
 
 @keyframes lifeos-overlay-fade {
@@ -108,5 +121,58 @@
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile Responsiveness (< 640px, 375px, 390px, 412px) */
+@media (max-width: 640px) {
+  .lifeos-modal-overlay {
+    padding: var(--space-2, 8px);
+    align-items: flex-end;
+  }
+
+  .lifeos-modal {
+    max-width: 100% !important;
+    max-height: calc(100dvh - 16px);
+    border-radius: var(--radius-xl, 14px) var(--radius-xl, 14px) 0 0;
+  }
+
+  .lifeos-modal__header {
+    padding: var(--space-4, 16px);
+  }
+
+  .lifeos-modal__close-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .lifeos-modal__body {
+    padding: var(--space-4, 16px);
+  }
+
+  .lifeos-modal__footer {
+    padding: var(--space-3, 12px) var(--space-4, 16px);
+    flex-direction: column-reverse;
+  }
+
+  .lifeos-modal-footer-actions {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: var(--space-2, 8px);
+  }
+
+  .lifeos-modal-footer-actions button,
+  .lifeos-modal-footer-actions .lifeos-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lifeos-modal-overlay,
+  .lifeos-modal {
+    animation: none;
   }
 }
