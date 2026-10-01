@@ -1,5 +1,6 @@
 package com.lifeos.recommendation.controller;
 
+import com.lifeos.recommendation.dto.ConsolidatedRecommendationsResponse;
 import com.lifeos.recommendation.dto.DailyFocusResponse;
 import com.lifeos.recommendation.service.RecommendationService;
 import com.lifeos.security.UserPrincipal;
@@ -24,6 +25,15 @@ public class RecommendationController {
             @AuthenticationPrincipal UserPrincipal principal
     ) {
         DailyFocusResponse response = recommendationService.getDailyFocus(principal.getId());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<com.lifeos.recommendation.dto.ConsolidatedRecommendationsResponse> getRecommendations(
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+        com.lifeos.recommendation.dto.ConsolidatedRecommendationsResponse response =
+                recommendationService.getConsolidatedRecommendations(principal.getId());
         return ResponseEntity.ok(response);
     }
 }

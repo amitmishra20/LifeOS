@@ -12,5 +12,7 @@ public interface HabitPauseIntervalRepository extends JpaRepository<HabitPauseIn
 
     List<HabitPauseInterval> findByHabitIdOrderByPausedAtAsc(Long habitId);
 
+    List<HabitPauseInterval> findByUserIdOrderByPausedAtAsc(Long userId);
+
     Optional<HabitPauseInterval> findFirstByHabitIdAndResumedAtIsNullOrderByPausedAtDesc(Long habitId);
 }

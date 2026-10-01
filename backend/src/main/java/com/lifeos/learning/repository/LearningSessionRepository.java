@@ -26,4 +26,6 @@ public interface LearningSessionRepository extends JpaRepository<LearningSession
     Integer sumDurationMinutesByUserId(@Param("userId") Long userId);
 
     List<LearningSession> findByUserIdAndSessionDateBetweenOrderBySessionDateAsc(Long userId, java.time.LocalDate start, java.time.LocalDate end);
+
+    List<LearningSession> findByUserIdOrderBySessionDateDescCreatedAtDesc(Long userId);
 }

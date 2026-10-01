@@ -17,6 +17,7 @@ import CalendarPage from './pages/CalendarPage';
 import NotesPage from './pages/NotesPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import GoalHealthPage from './pages/GoalHealthPage';
+import RecommendationsPage from './pages/RecommendationsPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 
 export function App() {
@@ -65,6 +66,8 @@ export function App() {
               <Route path="/reflect/analytics" element={<Navigate to="/analytics" replace />} />
               <Route path="/goal-health" element={<GoalHealthPage />} />
               <Route path="/reflect/goal-health" element={<Navigate to="/goal-health" replace />} />
+              <Route path="/recommendations" element={<RecommendationsPage />} />
+              <Route path="/reflect/recommendations" element={<Navigate to="/recommendations" replace />} />
 
               {/* Upcoming Phase Modules */}
               <Route path="/plan/*" element={<ModulePlaceholderPage />} />
