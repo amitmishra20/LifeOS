@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -285,6 +286,69 @@ class AuthControllerTest {
                     .andExpect(jsonPath("$.headerName").value("X-XSRF-TOKEN"))
                     .andExpect(header().exists(HttpHeaders.SET_COOKIE))
                     .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("XSRF-TOKEN=")));
+        }
+    }
+
+    @Nested
+    @DisplayName("CORS Origin Tests")
+    class CorsTests {
+
+        @Test
+        @DisplayName("12. CORS allows http://localhost:5173 origin")
+        void shouldAllowPort5173Origin() throws Exception {
+            User user = new User("John Doe", "john5173@example.com", passwordEncoder.encode("SecretPass123!"));
+            userRepository.save(user);
+
+            LoginRequest request = new LoginRequest("john5173@example.com", "SecretPass123!");
+
+            mockMvc.perform(post("/api/v1/auth/login")
+                            .header(HttpHeaders.ORIGIN, "http://localhost:5173")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:5173"))
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"));
+        }
+
+        @Test
+        @DisplayName("13. CORS allows http://localhost:5174 origin")
+        void shouldAllowPort5174Origin() throws Exception {
+            User user = new User("John Doe", "john5174@example.com", passwordEncoder.encode("SecretPass123!"));
+            userRepository.save(user);
+
+            LoginRequest request = new LoginRequest("john5174@example.com", "SecretPass123!");
+
+            mockMvc.perform(post("/api/v1/auth/login")
+                            .header(HttpHeaders.ORIGIN, "http://localhost:5174")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk())
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:5174"))
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"));
+        }
+
+        @Test
+        @DisplayName("14. CORS preflight OPTIONS request for http://localhost:5174 returns 200 OK")
+        void shouldAllowPreflightForPort5174() throws Exception {
+            mockMvc.perform(options("/api/v1/auth/login")
+                            .header(HttpHeaders.ORIGIN, "http://localhost:5174")
+                            .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+                            .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "Content-Type, X-XSRF-TOKEN"))
+                    .andExpect(status().isOk())
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:5174"))
+                    .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"));
+        }
+
+        @Test
+        @DisplayName("15. CORS rejects unauthorized origin with 403 Forbidden")
+        void shouldRejectUnauthorizedOrigin() throws Exception {
+            LoginRequest request = new LoginRequest("john@example.com", "SecretPass123!");
+
+            mockMvc.perform(post("/api/v1/auth/login")
+                            .header(HttpHeaders.ORIGIN, "http://malicious-site.com")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isForbidden());
         }
     }
 }
