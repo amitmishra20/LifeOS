@@ -37,6 +37,7 @@ export function App() {
             <Route element={<AppLayout />}>
               {/* LifeOS Core Product Surface */}
               <Route path="/" element={<DashboardPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
 
               {/* Execution & Focus Domains */}
               <Route path="/focus" element={<FocusPage />} />

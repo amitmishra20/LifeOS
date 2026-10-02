@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getPreviewAdapter } from '../preview/previewApiAdapter';
 
 /**
  * LifeOS Axios Client
@@ -7,6 +8,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: '/api/v1',
   withCredentials: true,
+  adapter: getPreviewAdapter(),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
