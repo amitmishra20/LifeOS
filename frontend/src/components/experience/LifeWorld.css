@@ -1,0 +1,22 @@
+.lifeos-world-canvas{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity 450ms cubic-bezier(.16,1,.3,1);
+}
+.lifeos-world-canvas canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+[data-theme="dark"] .lifeos-world-canvas{opacity:.92}
+[data-theme="light"] .lifeos-world-canvas{display:none}
+@media (max-width:900px){
+  [data-theme="dark"] .lifeos-world-canvas{opacity:.82}
+}
+@media (hover:none), (prefers-reduced-motion:reduce){
+  [data-theme="dark"] .lifeos-world-canvas{opacity:.74}
+}
