@@ -3,15 +3,16 @@
    ========================================================================== */
 
 .lifeos-productivity-hero {
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-6, 28px) var(--space-8, 32px);
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5, 20px);
+  gap: 20px;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
   transition: border-color var(--motion-micro, 150ms) ease;
 }
 
@@ -22,7 +23,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, #54c5b1, #d8b17a, transparent);
+  background: linear-gradient(90deg, #54c5b1, var(--color-accent-primary, #d8b17a), transparent);
 }
 
 .lifeos-productivity-hero__header {
@@ -30,7 +31,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: var(--space-4, 16px);
+  gap: 16px;
 }
 
 .lifeos-productivity-hero__title-wrap {
@@ -41,16 +42,16 @@
 
 .lifeos-productivity-hero__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-2xl, 24px);
+  font-size: 1.5rem;
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   margin: 0;
   letter-spacing: -0.02em;
 }
 
 .lifeos-productivity-hero__subtitle {
-  font-size: var(--text-sm, 13px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #bab2a4);
   margin: 0;
 }
 
@@ -61,8 +62,8 @@
   padding: 4px 12px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  font-size: 11px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 0.6875rem;
   font-weight: 500;
   color: var(--color-accent-primary, #d8b17a);
 }
@@ -70,7 +71,7 @@
 .lifeos-productivity-hero__content {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: var(--space-8, 32px);
+  gap: 32px;
   align-items: center;
 }
 
@@ -86,10 +87,10 @@
   align-items: center;
   justify-content: center;
   min-width: 160px;
-  padding: var(--space-5, 20px) var(--space-6, 24px);
-  background: rgba(5, 8, 10, 0.6);
+  padding: 20px 24px;
+  background: var(--color-bg-surface-subtle, #181d26);
   border-radius: var(--radius-md, 8px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
 }
 
 .lifeos-productivity-hero__score-value {
@@ -104,54 +105,91 @@
 .lifeos-productivity-hero__score-unit {
   font-size: 1.5rem;
   font-weight: 400;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   margin-left: 2px;
 }
 
 .lifeos-productivity-hero__score-label {
-  font-size: 11px;
+  font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   margin-top: 8px;
 }
 
-.lifeos-productivity-hero__components {
+.lifeos-productivity-hero__components-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .lifeos-productivity-hero__components-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lifeos-productivity-hero__component-item {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 12px);
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--color-bg-surface-subtle, #181d26);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+  border-radius: var(--radius-sm, 6px);
 }
 
-.lifeos-productivity-hero__component-row {
+.lifeos-productivity-hero__comp-item--inactive {
+  opacity: 0.45;
+}
+
+.lifeos-productivity-hero__comp-head {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--space-3, 12px);
-  font-size: 12px;
 }
 
-.lifeos-productivity-hero__component-name {
-  width: 130px;
-  color: var(--color-text-secondary, #95a6a0);
+.lifeos-productivity-hero__comp-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #bab2a4);
 }
 
-.lifeos-productivity-hero__component-bar {
-  flex: 1;
+.lifeos-productivity-hero__comp-weight {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.625rem;
+  color: var(--color-text-muted, #797367);
+}
+
+.lifeos-productivity-hero__comp-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.lifeos-productivity-hero__comp-score {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #f4f0e8);
+}
+
+.lifeos-productivity-hero__comp-contrib {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  color: var(--color-accent-primary, #d8b17a);
+}
+
+.lifeos-productivity-hero__bar-bg {
   height: 4px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
   overflow: hidden;
 }
 
-.lifeos-productivity-hero__component-fill {
+.lifeos-productivity-hero__bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #54c5b1, #d8b17a);
+  background: linear-gradient(90deg, #54c5b1, var(--color-accent-primary, #d8b17a));
   border-radius: 2px;
   transition: width var(--motion-small, 220ms) ease;
-}
-
-.lifeos-productivity-hero__component-value {
-  font-family: var(--font-mono, monospace);
-  color: var(--color-text-primary, #f2eee3);
-  width: 45px;
-  text-align: right;
 }

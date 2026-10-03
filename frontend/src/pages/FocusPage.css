@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LifeOS — Today's Focus (Editorial Decision Surface)
+   LifeOS — Today's Focus (Spatial Point of Attention)
    ========================================================================== */
 
 .lifeos-focus-page {
@@ -9,25 +9,25 @@
   max-width: 1080px;
   margin: 0 auto;
   padding: var(--space-4, 16px) 0 var(--space-16, 64px) 0;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   font-family: var(--font-sans, system-ui, sans-serif);
   box-sizing: border-box;
 }
 
 .lifeos-focus-toast {
   position: fixed;
-  bottom: var(--space-6, 24px);
+  bottom: calc(var(--space-6, 24px) + env(safe-area-inset-bottom, 0px));
   right: var(--space-6, 24px);
-  background: var(--color-surface-elevated, #17242c);
-  border: 1px solid var(--color-accent-primary, #d8b17a);
-  color: var(--color-text-primary, #f2eee3);
+  background: var(--color-bg-surface-elevated, #1e2430);
+  border: 1px solid var(--color-border-accent, rgba(216, 177, 122, 0.38));
+  color: var(--color-text-primary, #f4f0e8);
   padding: var(--space-3, 12px) var(--space-5, 20px);
-  border-radius: var(--radius-sm, 6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--shadow-lg, 0 16px 38px rgba(0, 0, 0, 0.5));
   font-size: var(--font-size-sm, 13px);
   font-weight: 500;
   z-index: 1000;
-  animation: lifeosFocusToastIn var(--motion-small, 220ms) var(--ease-spring, ease);
+  animation: lifeosFocusToastIn var(--motion-drawer, 300ms) var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 @keyframes lifeosFocusToastIn {
@@ -49,7 +49,7 @@
   flex-wrap: wrap;
   gap: var(--space-4, 16px);
   padding-bottom: var(--space-6, 24px);
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
 }
 
 .lifeos-focus-date-badge {
@@ -68,6 +68,7 @@
 }
 
 .lifeos-focus-date-text {
+  font-family: var(--font-mono, monospace);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -82,13 +83,13 @@
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
 }
 
 .lifeos-focus-page__subline {
   margin: 0;
   font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #95a6a0);
+  color: var(--color-text-secondary, #bab2a4);
   max-width: 580px;
   line-height: 1.5;
 }
@@ -111,11 +112,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-3, 12px);
+  font-family: var(--font-mono, monospace);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   margin-bottom: var(--space-3, 12px);
 }
 
@@ -128,18 +130,18 @@
   width: 32px;
   height: 1px;
   background-color: var(--color-accent-primary, #d8b17a);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 /* Dominant Focal Card */
 .lifeos-focal-card {
   position: relative;
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-top-color: var(--color-accent-primary, #d8b17a);
-  border-radius: var(--radius-xl, 12px);
-  padding: var(--space-8, 32px) var(--space-10, 40px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  background: var(--color-bg-surface, #0f1217);
+  border: 1px solid var(--color-border-default, rgba(255, 255, 255, 0.09));
+  border-left: 3px solid var(--color-accent-primary, #d8b17a);
+  border-radius: var(--radius-lg, 14px);
+  padding: var(--space-8, 32px) var(--space-8, 32px);
+  box-shadow: var(--shadow-md, 0 6px 20px rgba(0, 0, 0, 0.4));
   display: flex;
   flex-direction: column;
   gap: var(--space-6, 24px);
@@ -147,7 +149,7 @@
 }
 
 .lifeos-focal-card:hover {
-  border-color: rgba(216, 177, 122, 0.35);
+  border-color: var(--color-border-accent, rgba(216, 177, 122, 0.38));
 }
 
 /* Lineage Tag */
@@ -456,4 +458,44 @@
     padding: 10px 12px;
     align-items: flex-start;
   }
+}
+
+/* Spatial editorial override — Focus is a decision surface, not a dashboard. */
+.lifeos-focus-page{min-height:calc(100dvh - 58px);padding:36px clamp(4px,2vw,28px) 96px;position:relative}.lifeos-focus-page__header{max-width:1180px;margin:0 auto 26px;padding-top:10px}.lifeos-focus-page__title{font:400 clamp(3rem,7vw,6.2rem) var(--font-serif);letter-spacing:-.055em;line-height:.9}.lifeos-focus-page__subline{max-width:540px;margin-top:14px;color:var(--color-text-secondary);font-size:14px}.lifeos-focus-page__header::after{content:'';display:block;width:100%;height:1px;margin-top:28px;background:var(--color-border-subtle)}.lifeos-focal-card{position:relative!important;max-width:1180px!important;margin:0 auto!important;border:1px solid color-mix(in srgb,var(--color-border-default) 72%,transparent)!important;border-radius:var(--radius-xl)!important;background:linear-gradient(90deg,color-mix(in srgb,var(--color-bg-base) 68%,transparent),color-mix(in srgb,var(--color-bg-surface) 25%,transparent))!important;backdrop-filter:blur(14px);box-shadow:0 30px 90px rgba(0,0,0,.16)!important}.lifeos-supporting-section{max-width:1180px;margin:34px auto 0}.lifeos-supporting-stream{border-top:1px solid var(--color-border-subtle)}.lifeos-queue-row{background:transparent!important;border-left:0!important;border-right:0!important;border-radius:0!important;padding:15px 4px!important}.lifeos-queue-row:hover{background:color-mix(in srgb,var(--color-text-primary) 3%,transparent)!important}
+@media(max-width:640px){.lifeos-focus-page{padding:24px 0 88px}.lifeos-focus-page__title{font-size:clamp(2.8rem,15vw,4.5rem)}.lifeos-focal-card{border-radius:14px!important}.lifeos-supporting-section{margin-top:26px}}
+
+/* Video-aligned finishing: open empty state rather than a generic card. */
+.lifeos-focus-empty {
+  min-height: 420px;
+  padding: 72px 20px 92px;
+  margin: 0 auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  gap: 14px;
+  justify-content: center;
+}
+.lifeos-focus-empty h2 {
+  font-size: clamp(1.45rem, 2.1vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+.lifeos-focus-empty p {
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+.lifeos-focus-empty .lifeos-btn {
+  margin-top: 8px;
+  min-height: 40px;
+  border-radius: 9px;
+}
+.lifeos-focus-page__header-actions .lifeos-btn--primary,
+.lifeos-focus-page__header-actions .lifeos-btn--ghost {
+  min-height: 40px;
+}
+.lifeos-focus-page__header-actions .lifeos-btn--primary { padding-inline: 18px; }
+@media (max-width: 640px) {
+  .lifeos-focus-empty { min-height: 360px; padding: 56px 16px 76px; }
 }

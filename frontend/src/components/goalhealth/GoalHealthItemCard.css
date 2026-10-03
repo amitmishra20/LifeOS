@@ -3,22 +3,23 @@
    ========================================================================== */
 
 .lifeos-gh-card {
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-5, 20px);
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4, 16px);
+  gap: 16px;
   cursor: pointer;
   transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
   text-align: left;
   outline: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .lifeos-gh-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(216, 177, 122, 0.35);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.15));
 }
 
 .lifeos-gh-card:focus-visible {
@@ -29,59 +30,59 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2, 8px);
+  gap: 8px;
 }
 
 .lifeos-gh-card__tags {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 8px);
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .lifeos-gh-card__delta-tag {
   font-family: var(--font-mono, monospace);
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
 }
 
 .lifeos-gh-card__delta-val {
-  color: #54c5b1;
-  background: rgba(84, 197, 177, 0.1);
+  color: var(--color-success-text, #a4c7a1);
+  background: var(--color-success-subtle, rgba(126, 156, 123, 0.14));
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .lifeos-gh-card__delta-val--neg {
-  color: #e57373;
-  background: rgba(229, 115, 115, 0.1);
+  color: var(--color-danger-text, #db8b80);
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.14));
 }
 
 .lifeos-gh-card__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-lg, 18px);
+  font-size: 1.125rem;
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  margin: 0 0 var(--space-2, 8px) 0;
+  color: var(--color-text-primary, #f4f0e8);
+  margin: 0 0 8px 0;
   line-height: 1.35;
 }
 
 .lifeos-gh-card__reason {
-  background: rgba(5, 8, 10, 0.6);
+  background: var(--color-bg-surface-subtle, #181d26);
   border-left: 2px solid var(--color-accent-primary, #d8b17a);
-  padding: var(--space-2, 8px) var(--space-3, 12px);
+  padding: 8px 12px;
   border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2, 8px);
+  gap: 8px;
 }
 
 .lifeos-gh-card--behind .lifeos-gh-card__reason {
-  border-left-color: #e57373;
+  border-left-color: var(--color-danger-base, #b36b60);
 }
 
 .lifeos-gh-card--at-risk .lifeos-gh-card__reason {
-  border-left-color: #e5a93c;
+  border-left-color: var(--color-warning-base, #bf915b);
 }
 
 .lifeos-gh-card--on-track .lifeos-gh-card__reason {
@@ -94,8 +95,8 @@
 }
 
 .lifeos-gh-card__reason-text {
-  font-size: 12px;
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #bab2a4);
   margin: 0;
   line-height: 1.5;
 }
@@ -103,7 +104,7 @@
 .lifeos-gh-card__progress-section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2, 8px);
+  gap: 8px;
 }
 
 .lifeos-gh-card__progress-bars {
@@ -121,13 +122,13 @@
 .lifeos-gh-card__bar-label {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-gh-card__bar-label span:last-child {
   font-family: var(--font-mono, monospace);
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
 }
 
 .lifeos-gh-card__bar-track {
@@ -155,13 +156,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: var(--space-3, 12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-gh-card__footer strong {
   font-family: var(--font-mono, monospace);
-  color: var(--color-text-secondary, #95a6a0);
+  color: var(--color-text-secondary, #bab2a4);
 }

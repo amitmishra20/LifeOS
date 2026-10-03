@@ -140,8 +140,22 @@ export const LearningModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title={isEdit ? 'Edit Learning Subject' : 'New Learning Subject'}
+      footer={
+        <>
+          <Button type="button" variant="ghost" onClick={onClose} disabled={isSubmitting}>
+            Cancel
+          </Button>
+          <Button type="submit" form="learning-modal-form" variant="primary" disabled={isSubmitting} id="save-learning-btn">
+            {isSubmitting ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Subject'}
+          </Button>
+        </>
+      }
     >
-      <form onSubmit={handleSubmit} className="lifeos-learning-modal">
+      <form
+        onSubmit={handleSubmit}
+        className="lifeos-learning-modal"
+        id="learning-modal-form"
+      >
         <div className="lifeos-learning-modal__field">
           <Input
             id="learning-title-input"
@@ -222,24 +236,6 @@ export const LearningModal = ({
           />
         </div>
 
-        <div className="lifeos-learning-modal__actions">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={onClose}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={isSubmitting}
-            id="save-learning-btn"
-          >
-            {isSubmitting ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Subject'}
-          </Button>
-        </div>
       </form>
     </Modal>
   );

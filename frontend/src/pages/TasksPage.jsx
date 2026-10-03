@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import taskService from '../services/taskService';
 import TaskModal from '../components/tasks/TaskModal';
 import Button from '../components/ui/Button';
-import EmptyState from '../components/ui/EmptyState';
 import LoadingState from '../components/ui/LoadingState';
 import Select from '../components/ui/Select';
 import './TasksPage.css';
@@ -185,12 +184,6 @@ export const TasksPage = () => {
           <span className="lifeos-tasks-metric__label">TODAY & OVERDUE</span>
           <span className="lifeos-tasks-metric__value lifeos-tasks-metric__value--amber">{metrics.todayCount}</span>
         </div>
-        {metrics.overdueCount > 0 && (
-          <div className="lifeos-tasks-metric">
-            <span className="lifeos-tasks-metric__label">CRITICAL OVERDUE</span>
-            <span className="lifeos-tasks-metric__value lifeos-tasks-metric__value--crimson">{metrics.overdueCount}</span>
-          </div>
-        )}
         <div className="lifeos-tasks-metric">
           <span className="lifeos-tasks-metric__label">COMPLETED</span>
           <span className="lifeos-tasks-metric__value lifeos-tasks-metric__value--emerald">{metrics.completed}</span>
@@ -236,22 +229,23 @@ export const TasksPage = () => {
 
       {/* Content List */}
       {!error && filteredTasks.length === 0 ? (
-        <EmptyState
-          title={
-            activeTab === 'COMPLETED'
+        <section className="lifeos-tasks-empty" aria-labelledby="tasks-empty-title">
+          <h2 id="tasks-empty-title">
+            {activeTab === 'COMPLETED'
               ? 'No completed tasks yet'
               : activeTab === 'TODAY'
               ? 'No tasks due today'
-              : 'Your task backlog is clear'
-          }
-          message={
-            activeTab === 'ALL'
+              : 'Your task backlog is clear'}
+          </h2>
+          <p>
+            {activeTab === 'ALL'
               ? 'Capture your next action and connect it to your strategic goals.'
-              : 'Switch filters or create a new task to continue.'
-          }
-          actionLabel="+ Create Task"
-          onAction={openCreateModal}
-        />
+              : 'Switch filters or create a new task to continue.'}
+          </p>
+          <Button variant="secondary" onClick={openCreateModal}>
+            + Create Task
+          </Button>
+        </section>
       ) : (
         <div className="lifeos-tasks-list" role="list">
           {filteredTasks.map((task) => {

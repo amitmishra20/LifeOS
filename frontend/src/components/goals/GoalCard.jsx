@@ -74,6 +74,8 @@ export const GoalCard = ({ goal, onClick }) => {
       }}
       aria-label={`Goal: ${title}`}
     >
+      <div className="lifeos-horizon-card__backdrop" />
+      <div className="lifeos-horizon-card__content">
       <div className="lifeos-horizon-card__header">
         <div className="lifeos-horizon-card__category-badge">
           <span className="lifeos-horizon-card__cat-dot" />
@@ -125,6 +127,7 @@ export const GoalCard = ({ goal, onClick }) => {
         <span className="lifeos-horizon-arrow" aria-hidden="true">
           Explore Journey →
         </span>
+      </div>
       </div>
     </div>
   );

@@ -1,47 +1,61 @@
+/* ==========================================================================
+   LifeOS — Empty State (Atmospheric, Open, Editorial)
+   Avoids giant dashed gray boxes. Uses calm typography and clear action.
+   ========================================================================== */
+
 .lifeos-empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-12) var(--space-6);
-  border-radius: var(--radius-lg);
-  border: 1px dashed var(--color-border-default);
-  background-color: rgba(18, 25, 43, 0.4);
+  padding: 64px 24px;
+  margin: 24px 0;
+  position: relative;
+  background: transparent;
+  border: none;
 }
 
 .lifeos-empty-state__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-bg-surface-elevated);
-  border: 1px solid var(--color-border-subtle);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.08));
+  border: 1px solid var(--color-border-accent-subtle, rgba(216, 177, 122, 0.18));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-4);
+  color: var(--color-accent-primary, #d8b17a);
+  margin-bottom: 20px;
+}
+
+.lifeos-empty-state__icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 .lifeos-empty-state__title {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--tracking-tight);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-1);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--color-text-primary, #f4f0e8);
+  margin-bottom: 10px;
+  max-width: 520px;
+  line-height: 1.3;
 }
 
 .lifeos-empty-state__desc {
-  max-width: 420px;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-normal);
-  margin-bottom: var(--space-6);
+  max-width: 460px;
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #bab2a4);
+  line-height: 1.6;
+  margin-bottom: 28px;
 }
 
 .lifeos-empty-state__action {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
 }

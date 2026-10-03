@@ -4,7 +4,6 @@ import recommendationService from '../services/recommendationService';
 import taskService from '../services/taskService';
 import PrimaryFocusCard from '../components/composites/PrimaryFocusCard';
 import Button from '../components/ui/Button';
-import EmptyState from '../components/ui/EmptyState';
 import LoadingState from '../components/ui/LoadingState';
 import TaskModal from '../components/tasks/TaskModal';
 import './FocusPage.css';
@@ -162,12 +161,13 @@ export const FocusPage = () => {
 
       {/* Empty state */}
       {!error && !dailyFocus?.allCompleted && !primaryItem && (
-        <EmptyState
-          title="Nothing urgent needs your attention"
-          message="Your focus will sharpen as you schedule tasks, advance milestones, and define deadlines."
-          actionLabel="+ Create a Task"
-          onAction={() => setIsTaskModalOpen(true)}
-        />
+        <section className="lifeos-focus-empty" aria-labelledby="focus-empty-title">
+          <h2 id="focus-empty-title">Nothing urgent needs your attention</h2>
+          <p>Your focus will sharpen as you schedule tasks, advance milestones, and define deadlines.</p>
+          <Button variant="secondary" onClick={() => setIsTaskModalOpen(true)}>
+            + Create a Task
+          </Button>
+        </section>
       )}
 
       {/* Active Data: Dominant Focal Anchor + Supporting Queue */}

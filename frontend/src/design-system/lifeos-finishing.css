@@ -1,0 +1,561 @@
+/* ============================================================================
+   LifeOS — Finishing Pass
+   One environmental world, quieter chrome, stronger hierarchy, theme cohesion.
+   This file is intentionally additive: domain logic and API contracts remain untouched.
+   ============================================================================ */
+
+:root {
+  --lifeos-surface-glass: color-mix(in srgb, var(--color-bg-surface) 34%, transparent);
+  --lifeos-surface-glass-strong: color-mix(in srgb, var(--color-bg-surface) 52%, transparent);
+  --lifeos-surface-quiet: color-mix(in srgb, var(--color-bg-surface) 20%, transparent);
+  --lifeos-line: color-mix(in srgb, var(--color-border-default) 76%, transparent);
+  --lifeos-world-overlay: linear-gradient(180deg, rgba(5, 7, 10, .10) 0%, rgba(5, 7, 10, .26) 42%, rgba(5, 7, 10, .76) 100%);
+  --lifeos-world-side: linear-gradient(90deg, rgba(5, 7, 10, .52) 0%, rgba(5, 7, 10, .08) 38%, rgba(5, 7, 10, .22) 100%);
+}
+
+[data-theme="light"] {
+  --lifeos-surface-glass: rgba(255, 252, 246, .42);
+  --lifeos-surface-glass-strong: rgba(255, 252, 246, .70);
+  --lifeos-surface-quiet: rgba(255, 252, 246, .24);
+  --lifeos-line: rgba(61, 58, 49, .14);
+  --lifeos-world-overlay: linear-gradient(180deg, rgba(255, 251, 243, .04) 0%, rgba(255, 251, 243, .18) 44%, rgba(247, 244, 235, .72) 100%);
+  --lifeos-world-side: linear-gradient(90deg, rgba(247, 244, 235, .56) 0%, rgba(247, 244, 235, .10) 42%, rgba(247, 244, 235, .24) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   The environment: one image, continuous across the whole application.
+   -------------------------------------------------------------------------- */
+.lifeos-app {
+  background: var(--color-bg-base);
+}
+
+.lifeos-app::before {
+  background-image: var(--lifeos-world-overlay), var(--lifeos-world-side), var(--lifeos-world-image);
+  background-size: cover, cover, cover;
+  background-position: center, center, var(--lifeos-world-position);
+  opacity: var(--lifeos-world-opacity);
+  filter: saturate(.90) contrast(1.04);
+  transform: scale(1.035);
+  animation: lifeos-world-drift 24s ease-in-out infinite alternate;
+}
+
+.lifeos-app::after {
+  background:
+    radial-gradient(circle at 68% 20%, color-mix(in srgb, var(--color-accent-primary) 8%, transparent), transparent 27%),
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-bg-base) 8%, transparent) 46%, var(--color-bg-base) 100%);
+}
+
+@keyframes lifeos-world-drift {
+  from { transform: scale(1.035) translate3d(0, 0, 0); }
+  to { transform: scale(1.055) translate3d(-.35%, -.25%, 0); }
+}
+
+/* Keep the content readable without putting opaque slabs over the world. */
+.lifeos-content {
+  position: relative;
+  z-index: 1;
+}
+
+.lifeos-content::before {
+  content: '';
+  position: fixed;
+  inset: 58px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-bg-base) 8%, transparent) 58%, var(--color-bg-base) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Chrome: navigation becomes part of the landscape rather than a dashboard frame.
+   -------------------------------------------------------------------------- */
+.lifeos-sidebar {
+  background: color-mix(in srgb, var(--color-bg-base) 20%, transparent) !important;
+  border-right-color: color-mix(in srgb, var(--color-border-default) 62%, transparent) !important;
+  backdrop-filter: blur(20px) saturate(.85) !important;
+}
+
+.lifeos-sidebar__brand {
+  padding: 18px 18px 14px !important;
+}
+
+.lifeos-sidebar__nav {
+  padding: 20px 12px !important;
+  gap: 18px !important;
+}
+
+.lifeos-sidebar__group-title {
+  color: color-mix(in srgb, var(--color-text-muted) 78%, transparent) !important;
+}
+
+.lifeos-sidebar__link {
+  min-height: 44px !important;
+  border-radius: 9px !important;
+  color: color-mix(in srgb, var(--color-text-secondary) 86%, transparent) !important;
+}
+
+.lifeos-sidebar__link--active {
+  background: color-mix(in srgb, var(--color-accent-primary) 8%, transparent) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.lifeos-sidebar__link--active::before {
+  left: -12px !important;
+  width: 1px !important;
+  top: 9px !important;
+  bottom: 9px !important;
+}
+
+.lifeos-header {
+  background: color-mix(in srgb, var(--color-bg-base) 16%, transparent) !important;
+  border-bottom-color: color-mix(in srgb, var(--color-border-default) 56%, transparent) !important;
+  backdrop-filter: blur(20px) saturate(.88) !important;
+}
+
+.lifeos-header__search-trigger,
+.lifeos-header__user-pill {
+  background: var(--lifeos-surface-quiet) !important;
+  border-color: var(--lifeos-line) !important;
+}
+
+.lifeos-header__search-trigger:hover,
+.lifeos-header__user-pill:hover {
+  background: var(--lifeos-surface-glass) !important;
+  border-color: var(--color-border-strong) !important;
+}
+
+.lifeos-header__breadcrumb-current {
+  letter-spacing: -.015em;
+}
+
+/* --------------------------------------------------------------------------
+   Shared surfaces: fewer hard rectangles, more depth through translucency.
+   -------------------------------------------------------------------------- */
+.lifeos-app .lifeos-card,
+.lifeos-app .card,
+.lifeos-app .lifeos-focal-card,
+.lifeos-app .lifeos-tasks-metric,
+.lifeos-app .lifeos-habits-summary-card,
+.lifeos-app .lifeos-learning-summary-card,
+.lifeos-app .calendar-grid-card,
+.lifeos-app .lifeos-settings-card,
+.lifeos-app .lifeos-settings-stat-card,
+.lifeos-app .lifeos-rec-equilibrium,
+.lifeos-app .lifeos-goal-detail__progress-card,
+.lifeos-app .lifeos-goal-detail__dates-card,
+.lifeos-app .lifeos-goal-detail__header,
+.lifeos-app .analytics-page__empty-banner,
+.lifeos-app .analytics-page__error {
+  background: var(--lifeos-surface-glass) !important;
+  border-color: var(--lifeos-line) !important;
+  box-shadow: 0 14px 42px color-mix(in srgb, var(--color-bg-base) 18%, transparent) !important;
+  backdrop-filter: blur(16px) saturate(.92) !important;
+}
+
+.lifeos-app .lifeos-focal-card {
+  border-left-width: 1px !important;
+}
+
+.lifeos-app .lifeos-focal-card:hover,
+.lifeos-app .lifeos-horizon-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--color-bg-base) 24%, transparent) !important;
+}
+
+/* One environmental world means goal cards don't introduce a second landscape. */
+.lifeos-horizon-card__backdrop,
+.lifeos-goal-detail__environment {
+  display: none !important;
+}
+
+.lifeos-horizon-card {
+  background: var(--lifeos-surface-glass) !important;
+  border-color: var(--lifeos-line) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 42px color-mix(in srgb, var(--color-bg-base) 16%, transparent) !important;
+}
+
+.lifeos-horizon-card__title,
+.lifeos-goals-page__title,
+.lifeos-focus-page__title,
+.lifeos-tasks-page__title,
+.lifeos-habits-header__title,
+.lifeos-learning-header__title,
+.calendar-page__title,
+.notes-page__title,
+.analytics-page__title,
+.lifeos-gh-page__title,
+.lifeos-rec-title,
+.lifeos-settings-title,
+.lifeos-goal-detail__title {
+  font-family: var(--font-serif) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.045em !important;
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard finishing: let the environment carry the first impression.
+   -------------------------------------------------------------------------- */
+.lifeos-world {
+  padding-bottom: 110px !important;
+}
+
+.lifeos-world__intro {
+  min-height: min(50vh, 470px) !important;
+  padding-top: 46px !important;
+}
+
+.lifeos-world__intro h1 {
+  max-width: 780px !important;
+  font-size: clamp(3.25rem, 6.6vw, 6.6rem) !important;
+  text-shadow: 0 10px 40px color-mix(in srgb, var(--color-bg-base) 28%, transparent);
+}
+
+.lifeos-world__lede {
+  max-width: 430px !important;
+  color: color-mix(in srgb, var(--color-text-secondary) 88%, transparent) !important;
+}
+
+.lifeos-world__orientation {
+  min-width: 170px !important;
+  border-left-color: var(--lifeos-line) !important;
+}
+
+.lifeos-focus-scene {
+  min-height: 390px !important;
+  border-color: color-mix(in srgb, var(--color-border-default) 64%, transparent) !important;
+  border-radius: 14px !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-bg-base) 62%, transparent), color-mix(in srgb, var(--color-bg-base) 16%, transparent) 66%, transparent), transparent !important;
+  box-shadow: 0 30px 90px color-mix(in srgb, var(--color-bg-base) 30%, transparent) !important;
+}
+
+[data-theme="light"] .lifeos-focus-scene {
+  background: linear-gradient(90deg, rgba(247,244,235,.56), rgba(247,244,235,.16) 66%, transparent), transparent !important;
+}
+
+.lifeos-focus-scene__content {
+  padding: 56px !important;
+}
+
+.lifeos-focus-scene h2 {
+  max-width: 700px !important;
+  font-size: clamp(2.45rem, 4.6vw, 4.8rem) !important;
+  text-wrap: balance;
+}
+
+.lifeos-focus-scene__reason {
+  max-width: 500px !important;
+}
+
+.lifeos-journey,
+.lifeos-rhythm-band,
+.lifeos-actions-band {
+  border-bottom-color: var(--lifeos-line) !important;
+}
+
+.lifeos-journey {
+  padding-top: 62px !important;
+  padding-bottom: 68px !important;
+}
+
+.lifeos-journey__rail {
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent-primary) 74%, transparent), transparent) !important;
+}
+
+.lifeos-waypoint__marker {
+  background: color-mix(in srgb, var(--color-bg-base) 46%, transparent) !important;
+  border-color: var(--lifeos-line) !important;
+}
+
+.lifeos-open-space {
+  min-height: 130px !important;
+  border-color: var(--lifeos-line) !important;
+  background: var(--lifeos-surface-quiet) !important;
+}
+
+.lifeos-rhythm-band,
+.lifeos-actions-band {
+  padding-top: 50px !important;
+  padding-bottom: 44px !important;
+}
+
+.lifeos-rhythm-line,
+.lifeos-action-row {
+  min-height: 52px;
+  border-bottom-color: var(--lifeos-line) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Pages: consistent rhythm and less "dashboard card" density.
+   -------------------------------------------------------------------------- */
+.lifeos-goals-page,
+.lifeos-focus-page,
+.lifeos-tasks-page,
+.lifeos-habits-page,
+.lifeos-learning-page,
+.calendar-page,
+.notes-page,
+.analytics-page,
+.lifeos-gh-page,
+.lifeos-recommendations-page,
+.lifeos-settings-page,
+.lifeos-goal-detail {
+  padding-top: 36px !important;
+  padding-bottom: 110px !important;
+}
+
+.lifeos-goals-page__header,
+.lifeos-focus-page__header,
+.analytics-page__header {
+  border-bottom-color: var(--lifeos-line) !important;
+}
+
+.lifeos-goals-page__status-tabs {
+  background: var(--lifeos-surface-quiet) !important;
+  border-color: var(--lifeos-line) !important;
+}
+
+.lifeos-status-tab {
+  min-height: 40px !important;
+}
+
+.lifeos-status-tab--active {
+  background: color-mix(in srgb, var(--color-accent-primary) 10%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-accent-primary) 42%, transparent) !important;
+}
+
+.lifeos-goals-empty,
+.lifeos-recommendations-page .lifeos-rec-stream {
+  background: var(--lifeos-surface-quiet) !important;
+  border-color: var(--lifeos-line) !important;
+}
+
+.lifeos-recommendations-page .lifeos-rec-stream {
+  border-top-color: var(--lifeos-line) !important;
+}
+
+/* Keep secondary information visually secondary. */
+.lifeos-recommendations-page .lifeos-rec-row,
+.lifeos-rhythm-line,
+.lifeos-action-row {
+  background: transparent !important;
+}
+
+/* --------------------------------------------------------------------------
+   Controls: a single visual language for buttons, fields and pills.
+   -------------------------------------------------------------------------- */
+.lifeos-app input,
+.lifeos-app textarea,
+.lifeos-app select {
+  border-radius: 9px !important;
+  border-color: var(--lifeos-line) !important;
+  background: var(--lifeos-surface-quiet) !important;
+}
+
+.lifeos-app input:focus,
+.lifeos-app textarea:focus,
+.lifeos-app select:focus {
+  border-color: color-mix(in srgb, var(--color-accent-primary) 56%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 10%, transparent) !important;
+}
+
+.lifeos-app .lifeos-button,
+.lifeos-app button[class*="primary"] {
+  border-radius: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   Empty/loading states: intentional, not giant placeholder slabs.
+   -------------------------------------------------------------------------- */
+.lifeos-app .empty-state,
+.lifeos-app .lifeos-empty-state,
+.lifeos-app [class*="empty"] {
+  backdrop-filter: none;
+}
+
+/* --------------------------------------------------------------------------
+   Theme finishing: daylight is warm and luminous, night is deep and cinematic.
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .lifeos-app::before {
+  filter: saturate(.84) contrast(1.08) brightness(.72);
+}
+
+[data-theme="light"] .lifeos-app::before {
+  filter: saturate(.84) contrast(.98) brightness(1.02);
+}
+
+[data-theme="light"] .lifeos-sidebar,
+[data-theme="light"] .lifeos-header {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .lifeos-header__search-trigger,
+[data-theme="light"] .lifeos-header__user-pill {
+  background: rgba(255, 252, 246, .38) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile finishing.
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .lifeos-world__intro {
+    min-height: 0 !important;
+  }
+
+  .lifeos-focus-scene__content {
+    width: 86% !important;
+    padding: 44px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .lifeos-world {
+    padding-inline: 16px !important;
+  }
+
+  .lifeos-world__intro {
+    padding-top: 34px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .lifeos-world__intro h1 {
+    font-size: clamp(2.9rem, 14vw, 4.3rem) !important;
+  }
+
+  .lifeos-focus-scene {
+    min-height: 430px !important;
+  }
+
+  .lifeos-focus-scene__content {
+    width: 100% !important;
+    padding: 36px 24px 30px !important;
+  }
+
+  .lifeos-focus-scene h2 {
+    font-size: clamp(2.25rem, 12vw, 3.45rem) !important;
+  }
+
+  .lifeos-goals-page,
+  .lifeos-focus-page,
+  .lifeos-tasks-page,
+  .lifeos-habits-page,
+  .lifeos-learning-page,
+  .calendar-page,
+  .notes-page,
+  .analytics-page,
+  .lifeos-gh-page,
+  .lifeos-recommendations-page,
+  .lifeos-settings-page,
+  .lifeos-goal-detail {
+    padding-top: 24px !important;
+    padding-bottom: 96px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lifeos-app::before {
+    animation: none !important;
+    transform: scale(1.035) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Authentication belongs to the same world as the signed-in experience.
+   -------------------------------------------------------------------------- */
+.lifeos-auth-wrapper {
+  isolation: isolate;
+  background: var(--color-bg-base) !important;
+  overflow: hidden;
+}
+
+.lifeos-auth-wrapper::before {
+  content: '';
+  position: fixed;
+  inset: -2%;
+  z-index: -2;
+  background-image: var(--lifeos-world-image);
+  background-size: cover;
+  background-position: center 50%;
+  opacity: var(--lifeos-world-opacity);
+  filter: saturate(.86) contrast(1.04) brightness(.78);
+  transform: scale(1.04);
+}
+
+.lifeos-auth-wrapper::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-bg-base) 14%, transparent), color-mix(in srgb, var(--color-bg-base) 42%, transparent) 55%, var(--color-bg-base) 100%);
+}
+
+[data-theme="light"] .lifeos-auth-wrapper::before {
+  filter: saturate(.82) contrast(.98) brightness(1.02);
+}
+
+.lifeos-auth-card {
+  background: var(--lifeos-surface-glass-strong) !important;
+  border-color: var(--lifeos-line) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 28px 90px color-mix(in srgb, var(--color-bg-base) 32%, transparent) !important;
+  backdrop-filter: blur(22px) saturate(.9) !important;
+}
+
+.lifeos-auth-brand-name {
+  font-family: var(--font-serif) !important;
+  font-weight: 400 !important;
+}
+
+.lifeos-auth-logo {
+  border-radius: 50% !important;
+  background: color-mix(in srgb, var(--color-accent-primary) 9%, transparent) !important;
+  border: 1px solid var(--color-border-accent-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   Header polish: don't imply a notification system that does not exist yet.
+   -------------------------------------------------------------------------- */
+.lifeos-header__bell-dot {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Entrance polish: identity emerging from the same world, not a loading card.
+   -------------------------------------------------------------------------- */
+.lifeos-intro-curtain {
+  background: var(--color-bg-canvas) !important;
+}
+
+.lifeos-intro-env-layer {
+  opacity: .58 !important;
+  filter: blur(1px) saturate(.88) !important;
+}
+
+.lifeos-intro-atmosphere-mask {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 12%, color-mix(in srgb, var(--color-bg-canvas) 14%, transparent) 52%, var(--color-bg-canvas) 100%),
+    linear-gradient(0deg, var(--color-bg-canvas) 0%, transparent 64%);
+}
+
+.lifeos-intro-glyph {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border-color: color-mix(in srgb, var(--color-accent-primary) 55%, transparent) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-primary) 8%, transparent) !important;
+}
+
+.lifeos-intro-title {
+  font-size: clamp(3rem, 8vw, 5rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.055em !important;
+}
+
+.lifeos-intro-label {
+  opacity: .72;
+}
+
+.lifeos-intro-tagline {
+  max-width: 420px;
+  opacity: .72;
+}

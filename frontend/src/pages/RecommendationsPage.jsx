@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import recommendationService from '../services/recommendationService';
 import Button from '../components/ui/Button';
-import EmptyState from '../components/ui/EmptyState';
 import LoadingState from '../components/ui/LoadingState';
 import './RecommendationsPage.css';
 
@@ -43,7 +42,7 @@ export const RecommendationsPage = () => {
       });
 
   if (isLoading && !data) {
-    return <LoadingState message="Synthesizing personalized system recommendations..." />;
+    return <LoadingState message="Synthesizing personalized system observations..." />;
   }
 
   const dailyFocusTasks = data?.dailyFocusTasks || [];
@@ -56,29 +55,32 @@ export const RecommendationsPage = () => {
 
   return (
     <div className="lifeos-recommendations-page">
-      {/* Header */}
-      <header className="lifeos-recommendations-header">
-        <div className="lifeos-recommendations-header__main">
-          <span className="lifeos-recommendations-date">{dateHeading}</span>
-          <h1 className="lifeos-recommendations-title">Recommendations</h1>
-          <p className="lifeos-recommendations-subline">
-            Deterministic, explainable guidance across your goals, habits, learning, and daily focus.
+      {/* Editorial Header */}
+      <header className="lifeos-rec-header">
+        <div className="lifeos-rec-header__main">
+          <div className="lifeos-rec-date-badge">
+            <span className="lifeos-rec-date-dot" />
+            <span className="lifeos-rec-date-text">{dateHeading}</span>
+          </div>
+          <h1 className="lifeos-rec-title">Observations & Synthesis</h1>
+          <p className="lifeos-rec-subline">
+            Deterministic, contextual observations synthesized from your goals, habits, learning, and daily execution.
           </p>
         </div>
 
-        <div className="lifeos-recommendations-header__actions">
+        <div className="lifeos-rec-header__actions">
           <Button variant="ghost" onClick={() => navigate('/focus')}>
             Today's Focus →
           </Button>
-          <Button variant="primary" onClick={fetchRecommendations}>
-            Refresh Guidance
+          <Button variant="secondary" onClick={fetchRecommendations}>
+            Refresh
           </Button>
         </div>
       </header>
 
       {/* Error state */}
       {error && (
-        <div className="lifeos-recommendations-error" role="alert">
+        <div className="lifeos-rec-error" role="alert">
           <p>{error}</p>
           <Button variant="ghost" onClick={fetchRecommendations}>
             Retry
@@ -86,64 +88,82 @@ export const RecommendationsPage = () => {
         </div>
       )}
 
-      {/* Empty State */}
+      {/* Equilibrium State (When 0 recommendations exist) */}
       {!error && isEmpty && (
-        <EmptyState
-          title="All systems are performing on track"
-          message="No critical alerts, stalled learning subjects, or habit deficits detected today. Continue executing with calm focus."
-          actionLabel="View Life Map"
-          onAction={() => navigate('/goals')}
-        />
+        <div className="lifeos-rec-equilibrium">
+          <div className="lifeos-rec-equilibrium__mark" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <span className="lifeos-kicker">SYSTEM EQUILIBRIUM</span>
+          <h2 className="lifeos-rec-equilibrium__title">
+            All systems are <em>in balance.</em>
+          </h2>
+          <p className="lifeos-rec-equilibrium__desc">
+            No critical pace deficits, stalled learning tracks, or habit regressions detected. Your trajectory remains steady and aligned with your destinations.
+          </p>
+          <div className="lifeos-rec-equilibrium__actions">
+            <Button variant="primary" onClick={() => navigate('/focus')}>
+              Continue Daily Focus →
+            </Button>
+            <Button variant="ghost" onClick={() => navigate('/goals')}>
+              View Life Map
+            </Button>
+          </div>
+        </div>
       )}
 
-      {/* Categorized Recommendations Grid */}
+      {/* Categorized Recommendations Stream */}
       {!error && !isEmpty && (
-        <div className="lifeos-recommendations-grid">
+        <div className="lifeos-rec-stream">
           {/* Strategic Risk Alerts */}
           {strategicAlerts.length > 0 && (
-            <section className="lifeos-rec-section" aria-labelledby="strategic-heading">
-              <div className="lifeos-rec-section__header">
-                <div className="lifeos-rec-section__title-wrap">
-                  <span className="lifeos-kicker lifeos-kicker--alert">STRATEGIC RISK</span>
-                  <h2 id="strategic-heading" className="lifeos-rec-section__title">
-                    Goals Needing Realignment
-                  </h2>
+            <section className="lifeos-rec-group" aria-labelledby="strategic-heading">
+              <div className="lifeos-rec-group__header">
+                <div className="lifeos-rec-group__title-wrap">
+                  <span className="lifeos-rec-group__num">01</span>
+                  <span className="lifeos-rec-group__rule" />
+                  <span className="lifeos-rec-group__kicker lifeos-rec-group__kicker--alert">STRATEGIC TRAJECTORY</span>
                 </div>
-                <span className="lifeos-rec-section__badge lifeos-rec-badge--alert">
-                  {strategicAlerts.length} {strategicAlerts.length === 1 ? 'alert' : 'alerts'}
+                <span className="lifeos-rec-count-badge">
+                  {strategicAlerts.length} {strategicAlerts.length === 1 ? 'observation' : 'observations'}
                 </span>
               </div>
 
-              <div className="lifeos-rec-card-list">
+              <div className="lifeos-rec-rows">
                 {strategicAlerts.map((alert) => (
-                  <div key={alert.id} className="lifeos-rec-card lifeos-rec-card--strategic">
-                    <div className="lifeos-rec-card__top">
-                      <div className="lifeos-rec-card__info">
-                        <span className="lifeos-rec-card__type">Goal Risk</span>
-                        <h3 className="lifeos-rec-card__title">{alert.title}</h3>
-                        <span className="lifeos-rec-card__subtitle">{alert.subtitle}</span>
+                  <article key={alert.id} className="lifeos-rec-row lifeos-rec-row--strategic">
+                    <div className="lifeos-rec-row__main">
+                      <div className="lifeos-rec-row__meta">
+                        <span className="lifeos-rec-tag lifeos-rec-tag--alert">Goal Pace Deficit</span>
+                        <span className="lifeos-rec-subtitle">{alert.subtitle}</span>
                       </div>
+                      <h3 className="lifeos-rec-row__title">{alert.title}</h3>
+                      <div className="lifeos-rec-row__why">
+                        <span className="lifeos-rec-why-label">Observation:</span> {alert.primaryReason}
+                      </div>
+
+                      {alert.reasons && alert.reasons.length > 1 && (
+                        <ul className="lifeos-rec-reasons-list">
+                          {alert.reasons.slice(1).map((r, i) => (
+                            <li key={i}>{r}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="lifeos-rec-row__action">
                       <Button
-                        variant="ghost"
-                        size="small"
+                        variant="secondary"
+                        size="sm"
                         onClick={() => navigate(alert.actionUrl)}
                       >
                         Inspect Goal →
                       </Button>
                     </div>
-
-                    <div className="lifeos-rec-card__explanation">
-                      <span className="lifeos-rec-why-tag">Why:</span> {alert.primaryReason}
-                    </div>
-
-                    {alert.reasons && alert.reasons.length > 1 && (
-                      <ul className="lifeos-rec-card__reasons-list">
-                        {alert.reasons.slice(1).map((r, i) => (
-                          <li key={i}>{r}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                  </article>
                 ))}
               </div>
             </section>
@@ -151,44 +171,45 @@ export const RecommendationsPage = () => {
 
           {/* Daily Focus Tasks */}
           {dailyFocusTasks.length > 0 && (
-            <section className="lifeos-rec-section" aria-labelledby="focus-heading">
-              <div className="lifeos-rec-section__header">
-                <div className="lifeos-rec-section__title-wrap">
-                  <span className="lifeos-kicker">DAILY EXECUTION</span>
-                  <h2 id="focus-heading" className="lifeos-rec-section__title">
-                    Top Priority Tasks
-                  </h2>
+            <section className="lifeos-rec-group" aria-labelledby="focus-heading">
+              <div className="lifeos-rec-group__header">
+                <div className="lifeos-rec-group__title-wrap">
+                  <span className="lifeos-rec-group__num">02</span>
+                  <span className="lifeos-rec-group__rule" />
+                  <span className="lifeos-rec-group__kicker">EXECUTION LEVERAGE</span>
                 </div>
-                <span className="lifeos-rec-section__badge">
-                  {dailyFocusTasks.length} {dailyFocusTasks.length === 1 ? 'task' : 'tasks'}
+                <span className="lifeos-rec-count-badge">
+                  {dailyFocusTasks.length} {dailyFocusTasks.length === 1 ? 'action' : 'actions'}
                 </span>
               </div>
 
-              <div className="lifeos-rec-card-list">
+              <div className="lifeos-rec-rows">
                 {dailyFocusTasks.map((item) => (
-                  <div key={item.task.id} className="lifeos-rec-card lifeos-rec-card--focus">
-                    <div className="lifeos-rec-card__top">
-                      <div className="lifeos-rec-card__info">
-                        <span className="lifeos-rec-card__type">Task Focus · Score {item.totalScore}</span>
-                        <h3 className="lifeos-rec-card__title">{item.task.title}</h3>
-                        <span className="lifeos-rec-card__subtitle">
-                          {item.task.goalTitle ? `Goal: ${item.task.goalTitle}` : 'Personal Action'}
+                  <article key={item.task.id} className="lifeos-rec-row lifeos-rec-row--focus">
+                    <div className="lifeos-rec-row__main">
+                      <div className="lifeos-rec-row__meta">
+                        <span className="lifeos-rec-tag">High Leverage</span>
+                        <span className="lifeos-rec-subtitle">
+                          {item.task.goalTitle ? `🎯 ${item.task.goalTitle}` : 'Action'}
                           {item.task.dueDate ? ` · Due ${item.task.dueDate}` : ''}
                         </span>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="small"
-                        onClick={() => navigate('/focus')}
-                      >
-                        Go to Focus →
-                      </Button>
+                      <h3 className="lifeos-rec-row__title">{item.task.title}</h3>
+                      <div className="lifeos-rec-row__why">
+                        <span className="lifeos-rec-why-label">Observation:</span> {item.primaryReason}
+                      </div>
                     </div>
 
-                    <div className="lifeos-rec-card__explanation">
-                      <span className="lifeos-rec-why-tag">Why:</span> {item.primaryReason}
+                    <div className="lifeos-rec-row__action">
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/focus')}
+                      >
+                        Focus Now →
+                      </Button>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
             </section>
@@ -196,49 +217,50 @@ export const RecommendationsPage = () => {
 
           {/* Habit Nudges */}
           {habitNudges.length > 0 && (
-            <section className="lifeos-rec-section" aria-labelledby="habits-heading">
-              <div className="lifeos-rec-section__header">
-                <div className="lifeos-rec-section__title-wrap">
-                  <span className="lifeos-kicker lifeos-kicker--warning">RHYTHM NUDGES</span>
-                  <h2 id="habits-heading" className="lifeos-rec-section__title">
-                    Habits Requiring Consistency
-                  </h2>
+            <section className="lifeos-rec-group" aria-labelledby="habits-heading">
+              <div className="lifeos-rec-group__header">
+                <div className="lifeos-rec-group__title-wrap">
+                  <span className="lifeos-rec-group__num">03</span>
+                  <span className="lifeos-rec-group__rule" />
+                  <span className="lifeos-rec-group__kicker lifeos-rec-group__kicker--warm">RHYTHM OBSERVATION</span>
                 </div>
-                <span className="lifeos-rec-section__badge lifeos-rec-badge--warning">
-                  {habitNudges.length} {habitNudges.length === 1 ? 'nudge' : 'nudges'}
+                <span className="lifeos-rec-count-badge">
+                  {habitNudges.length} {habitNudges.length === 1 ? 'practice' : 'practices'}
                 </span>
               </div>
 
-              <div className="lifeos-rec-card-list">
+              <div className="lifeos-rec-rows">
                 {habitNudges.map((habit) => (
-                  <div key={habit.id} className="lifeos-rec-card lifeos-rec-card--habit">
-                    <div className="lifeos-rec-card__top">
-                      <div className="lifeos-rec-card__info">
-                        <span className="lifeos-rec-card__type">Habit Consistency</span>
-                        <h3 className="lifeos-rec-card__title">{habit.title}</h3>
-                        <span className="lifeos-rec-card__subtitle">{habit.subtitle}</span>
+                  <article key={habit.id} className="lifeos-rec-row lifeos-rec-row--habit">
+                    <div className="lifeos-rec-row__main">
+                      <div className="lifeos-rec-row__meta">
+                        <span className="lifeos-rec-tag lifeos-rec-tag--warm">Rhythm Drift</span>
+                        <span className="lifeos-rec-subtitle">{habit.subtitle}</span>
                       </div>
+                      <h3 className="lifeos-rec-row__title">{habit.title}</h3>
+                      <div className="lifeos-rec-row__why">
+                        <span className="lifeos-rec-why-label">Observation:</span> {habit.primaryReason}
+                      </div>
+
+                      {habit.reasons && habit.reasons.length > 1 && (
+                        <ul className="lifeos-rec-reasons-list">
+                          {habit.reasons.slice(1).map((r, i) => (
+                            <li key={i}>{r}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="lifeos-rec-row__action">
                       <Button
-                        variant="ghost"
-                        size="small"
+                        variant="secondary"
+                        size="sm"
                         onClick={() => navigate(habit.actionUrl)}
                       >
-                        Log Habit →
+                        Log Practice →
                       </Button>
                     </div>
-
-                    <div className="lifeos-rec-card__explanation">
-                      <span className="lifeos-rec-why-tag">Why:</span> {habit.primaryReason}
-                    </div>
-
-                    {habit.reasons && habit.reasons.length > 1 && (
-                      <ul className="lifeos-rec-card__reasons-list">
-                        {habit.reasons.slice(1).map((r, i) => (
-                          <li key={i}>{r}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                  </article>
                 ))}
               </div>
             </section>
@@ -246,49 +268,50 @@ export const RecommendationsPage = () => {
 
           {/* Learning Focus */}
           {learningFocus.length > 0 && (
-            <section className="lifeos-rec-section" aria-labelledby="learning-heading">
-              <div className="lifeos-rec-section__header">
-                <div className="lifeos-rec-section__title-wrap">
-                  <span className="lifeos-kicker">GROWTH & MASTERY</span>
-                  <h2 id="learning-heading" className="lifeos-rec-section__title">
-                    Stalled Learning Subjects
-                  </h2>
+            <section className="lifeos-rec-group" aria-labelledby="learning-heading">
+              <div className="lifeos-rec-group__header">
+                <div className="lifeos-rec-group__title-wrap">
+                  <span className="lifeos-rec-group__num">04</span>
+                  <span className="lifeos-rec-group__rule" />
+                  <span className="lifeos-rec-group__kicker">GROWTH CONTINUITY</span>
                 </div>
-                <span className="lifeos-rec-section__badge">
+                <span className="lifeos-rec-count-badge">
                   {learningFocus.length} {learningFocus.length === 1 ? 'subject' : 'subjects'}
                 </span>
               </div>
 
-              <div className="lifeos-rec-card-list">
+              <div className="lifeos-rec-rows">
                 {learningFocus.map((learn) => (
-                  <div key={learn.id} className="lifeos-rec-card lifeos-rec-card--learning">
-                    <div className="lifeos-rec-card__top">
-                      <div className="lifeos-rec-card__info">
-                        <span className="lifeos-rec-card__type">Learning Focus</span>
-                        <h3 className="lifeos-rec-card__title">{learn.title}</h3>
-                        <span className="lifeos-rec-card__subtitle">{learn.subtitle}</span>
+                  <article key={learn.id} className="lifeos-rec-row lifeos-rec-row--learning">
+                    <div className="lifeos-rec-row__main">
+                      <div className="lifeos-rec-row__meta">
+                        <span className="lifeos-rec-tag">Stalled Subject</span>
+                        <span className="lifeos-rec-subtitle">{learn.subtitle}</span>
                       </div>
+                      <h3 className="lifeos-rec-row__title">{learn.title}</h3>
+                      <div className="lifeos-rec-row__why">
+                        <span className="lifeos-rec-why-label">Observation:</span> {learn.primaryReason}
+                      </div>
+
+                      {learn.reasons && learn.reasons.length > 1 && (
+                        <ul className="lifeos-rec-reasons-list">
+                          {learn.reasons.slice(1).map((r, i) => (
+                            <li key={i}>{r}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="lifeos-rec-row__action">
                       <Button
-                        variant="ghost"
-                        size="small"
+                        variant="secondary"
+                        size="sm"
                         onClick={() => navigate(learn.actionUrl)}
                       >
                         Record Session →
                       </Button>
                     </div>
-
-                    <div className="lifeos-rec-card__explanation">
-                      <span className="lifeos-rec-why-tag">Why:</span> {learn.primaryReason}
-                    </div>
-
-                    {learn.reasons && learn.reasons.length > 1 && (
-                      <ul className="lifeos-rec-card__reasons-list">
-                        {learn.reasons.slice(1).map((r, i) => (
-                          <li key={i}>{r}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                  </article>
                 ))}
               </div>
             </section>

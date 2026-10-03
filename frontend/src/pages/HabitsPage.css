@@ -1,17 +1,19 @@
 /* ==========================================================================
    LifeOS — Habits & Consistency Rhythm Surface
+   Temporal rhythm layer, non-punitive, calm consistency matrix.
    ========================================================================== */
 
 .lifeos-habits-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8, 32px);
+  gap: 32px;
   max-width: 1080px;
   margin: 0 auto;
-  padding: var(--space-4, 16px) 0 var(--space-16, 64px) 0;
-  color: var(--color-text-primary, #f2eee3);
-  font-family: var(--font-sans, system-ui, sans-serif);
+  padding: 32px 0 64px 0;
+  color: var(--color-text-primary, #f4f0e8);
+  font-family: var(--font-sans);
   box-sizing: border-box;
+  animation: lifeos-page-enter var(--motion-major, 450ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 /* Header */
@@ -20,31 +22,31 @@
   justify-content: space-between;
   align-items: flex-end;
   flex-wrap: wrap;
-  gap: var(--space-4, 16px);
-  padding-bottom: var(--space-6, 24px);
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
 }
 
 .lifeos-habits-header__titles {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .lifeos-habits-header__title {
-  margin: 0 0 var(--space-2, 8px) 0;
+  margin: 0 0 8px 0;
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--color-text-primary, #f2eee3);
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary, #f4f0e8);
   line-height: 1.1;
 }
 
 .lifeos-habits-header__subtitle {
   margin: 0;
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #bab2a4);
   max-width: 580px;
   line-height: 1.5;
 }
@@ -52,50 +54,51 @@
 /* Summary KPI Strip */
 .lifeos-habits-summary-strip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-4, 16px);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
 }
 
 .lifeos-habits-summary-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1, 4px);
-  padding: var(--space-4, 16px) var(--space-6, 24px);
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
+  gap: 4px;
+  padding: 16px 24px;
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--shadow-sm);
 }
 
 .lifeos-habits-summary-card__label {
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
 
 .lifeos-habits-summary-card__value {
-  font-size: var(--text-2xl, 24px);
+  font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   font-family: var(--font-mono, monospace);
 }
 
 .lifeos-habits-summary-card__value small {
-  font-size: 12px;
-  color: var(--color-text-muted, #71837f);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #797367);
 }
 
 /* Filter Tabs */
 .lifeos-habits-nav {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
 }
 
 .lifeos-habits-tabs {
   display: flex;
-  gap: var(--space-2, 8px);
+  gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -109,10 +112,10 @@
   background: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  font-size: 13px;
+  padding: 12px 16px;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--color-text-secondary, #95a6a0);
+  color: var(--color-text-secondary, #bab2a4);
   cursor: pointer;
   white-space: nowrap;
   display: flex;
@@ -123,26 +126,27 @@
 }
 
 .lifeos-habits-tab:hover {
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
 }
 
 .lifeos-habits-tab--active {
   color: var(--color-accent-primary, #d8b17a);
   border-bottom-color: var(--color-accent-primary, #d8b17a);
+  font-weight: 600;
 }
 
 .lifeos-habits-tab__badge {
   font-family: var(--font-mono, monospace);
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 600;
   padding: 1px 6px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill, 9999px);
   background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-habits-tab--active .lifeos-habits-tab__badge {
-  background: rgba(216, 177, 122, 0.15);
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.15));
   color: var(--color-accent-primary, #d8b17a);
 }
 
@@ -150,165 +154,77 @@
 .lifeos-habits-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4, 16px);
+  gap: 12px;
 }
 
 .lifeos-habit-card {
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-5, 20px);
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  padding: 18px 22px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4, 16px);
-  transition: border-color var(--motion-micro, 150ms) ease;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--motion-micro, 150ms) ease, transform var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-habit-card:hover {
-  border-color: rgba(216, 177, 122, 0.35);
-}
-
-.lifeos-habit-card__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-3, 12px);
-}
-
-.lifeos-habit-card__identity {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3, 12px);
-  min-width: 0;
-}
-
-.lifeos-habit-card__icon-box {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm, 6px);
-  background: rgba(216, 177, 122, 0.1);
-  border: 1px solid rgba(216, 177, 122, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.lifeos-habit-card__title-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-
-.lifeos-habit-card__title {
-  margin: 0;
-  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-lg, 18px);
-  font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  line-height: 1.3;
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.14));
+  transform: translateY(-1px);
 }
 
 .lifeos-habit-card__desc {
   margin: 0;
-  font-size: var(--text-sm, 13px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #bab2a4);
+  line-height: 1.4;
 }
 
-.lifeos-habit-card__badges {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-2, 8px);
-}
-
-/* History / Consistency Grid */
-.lifeos-habit-card__history {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2, 8px);
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  background: rgba(5, 8, 10, 0.5);
-  border-radius: var(--radius-sm, 6px);
-}
-
-.lifeos-habit-card__history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-}
-
-.lifeos-habit-card__history-label {
-  color: var(--color-text-muted, #71837f);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-}
-
-.lifeos-habit-card__history-stat {
-  font-family: var(--font-mono, monospace);
-  color: var(--color-accent-primary, #d8b17a);
-  font-weight: 600;
-}
-
-.lifeos-habit-card__days-grid {
-  display: flex;
-  justify-content: space-between;
-  gap: 4px;
-}
-
-.lifeos-habit-day-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  min-height: 44px;
-  justify-content: center;
-}
-
-.lifeos-habit-day-col__label {
-  font-family: var(--font-mono, monospace);
-  font-size: 9px;
-  color: var(--color-text-muted, #71837f);
-}
-
-.lifeos-habit-day-col__dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: transparent;
-  transition: all var(--motion-micro, 150ms) ease;
-}
-
-.lifeos-habit-day-col__dot:hover {
-  border-color: var(--color-accent-primary, #d8b17a);
-}
-
-.lifeos-habit-day-col__dot--active {
-  background: #54c5b1;
-  border-color: #54c5b1;
-  color: #05080a;
-}
-
-/* Footer & Actions */
 .lifeos-habit-card__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: var(--space-3, 12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #797367);
+}
+
+.lifeos-habit-card__meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lifeos-habit-card__cadence-tag {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #797367);
+}
+
+.lifeos-habit-card__goal-tag {
+  font-size: 0.6875rem;
+  color: var(--color-accent-primary, #d8b17a);
+  font-weight: 500;
+}
+
+.lifeos-habit-card__status-tag {
+  font-size: 0.6875rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lifeos-habit-card__status-tag--paused {
+  background: var(--color-warning-subtle, rgba(191, 145, 91, 0.14));
+  color: var(--color-warning-text, #e0b47e);
+}
+
+.lifeos-habit-card__status-tag--archived {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-habit-card__actions {
@@ -319,27 +235,28 @@
 }
 
 .lifeos-habit-card__action-btn {
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: var(--color-text-secondary, #95a6a0);
+  color: var(--color-text-secondary, #bab2a4);
   background: transparent;
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
   border-radius: 4px;
   padding: 4px 10px;
-  min-height: 36px;
+  min-height: 32px;
   cursor: pointer;
   transition: all var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-habit-card__action-btn:hover {
-  color: var(--color-text-primary, #f2eee3);
-  border-color: rgba(216, 177, 122, 0.3);
+  color: var(--color-text-primary, #f4f0e8);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.15));
   background-color: rgba(255, 255, 255, 0.05);
 }
 
 .lifeos-habit-card__action-btn--delete:hover {
-  color: #e57373;
-  border-color: rgba(229, 115, 115, 0.3);
+  color: var(--color-danger-text, #db8b80);
+  border-color: var(--color-danger-border, rgba(179, 107, 96, 0.32));
+  background-color: var(--color-danger-subtle, rgba(179, 107, 96, 0.14));
 }
 
 @media (max-width: 768px) {

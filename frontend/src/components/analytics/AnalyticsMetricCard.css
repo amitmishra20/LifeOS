@@ -3,18 +3,19 @@
    ========================================================================== */
 
 .lifeos-metric-card {
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-5, 20px) var(--space-6, 24px);
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4, 16px);
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
   transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-metric-card:hover {
-  border-color: rgba(216, 177, 122, 0.35);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.14));
   transform: translateY(-2px);
 }
 
@@ -37,31 +38,32 @@
   width: 30px;
   height: 30px;
   border-radius: var(--radius-sm, 6px);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.1));
   color: var(--color-accent-primary, #d8b17a);
+  border: 1px solid var(--color-border-accent-subtle, rgba(216, 177, 122, 0.2));
 }
 
 .lifeos-metric-card__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-lg, 18px);
+  font-size: 1.125rem;
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   margin: 0;
 }
 
 .lifeos-metric-card__badge {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 500;
   padding: 2px 8px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill, 9999px);
   background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-metric-card__badge--active {
-  color: #54c5b1;
-  background: rgba(84, 197, 177, 0.12);
-  border: 1px solid rgba(84, 197, 177, 0.25);
+  color: var(--color-success-text, #a4c7a1);
+  background: var(--color-success-subtle, rgba(126, 156, 123, 0.14));
+  border: 1px solid var(--color-success-border, rgba(126, 156, 123, 0.32));
 }
 
 .lifeos-metric-card__main-stat {
@@ -72,21 +74,21 @@
 
 .lifeos-metric-card__value {
   font-family: var(--font-mono, monospace);
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 600;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   line-height: 1;
 }
 
 .lifeos-metric-card__unit {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 400;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-metric-card__label {
-  font-size: 12px;
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #bab2a4);
   margin-top: 2px;
 }
 
@@ -99,7 +101,7 @@
 
 .lifeos-metric-card__progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #54c5b1, #d8b17a);
+  background: linear-gradient(90deg, #54c5b1, var(--color-accent-primary, #d8b17a));
   border-radius: 2px;
   transition: width var(--motion-small, 220ms) ease;
 }
@@ -107,9 +109,9 @@
 .lifeos-metric-card__stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3, 12px);
-  padding-top: var(--space-3, 12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.05));
 }
 
 .lifeos-metric-card__stat-item {
@@ -119,15 +121,15 @@
 }
 
 .lifeos-metric-card__stat-label {
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #797367);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .lifeos-metric-card__stat-value {
   font-family: var(--font-mono, monospace);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
 }

@@ -1,142 +1,33 @@
-/* ==========================================================================
-   LifeOS App Layout — Root Shell & Responsive Spatial Container
-   ========================================================================== */
-
 .lifeos-app {
-  display: flex;
-  min-height: 100vh;
-  min-height: 100dvh;
-  background-color: var(--color-bg-base, #05080a);
-  position: relative;
-  overflow-x: hidden;
-  width: 100%;
+  display: flex; min-height: 100dvh; width: 100%; position: relative; overflow-x: hidden;
+  background: var(--color-bg-base); isolation: isolate;
 }
-
-.lifeos-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  width: 100%;
-  overflow-x: hidden;
+.lifeos-app::before {
+  content: ''; position: fixed; inset: 0; z-index: -5; pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--color-bg-base) 22%, transparent), color-mix(in srgb, var(--color-bg-base) 68%, transparent) 58%, var(--color-bg-base) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-bg-base) 72%, transparent), transparent 32%, transparent 72%, color-mix(in srgb, var(--color-bg-base) 58%, transparent)),
+    var(--lifeos-world-image);
+  background-size: cover; background-position: center, center, var(--lifeos-world-position); background-repeat: no-repeat;
+  opacity: var(--lifeos-world-opacity); filter: saturate(.82) contrast(1.03); transform: scale(1.015);
 }
-
-.lifeos-content {
-  flex: 1;
-  animation: lifeos-page-enter var(--motion-major, 450ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1)) both;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 32px;
-  box-sizing: border-box;
+.lifeos-app::after {
+  content: ''; position: fixed; inset: 0; z-index: -4; pointer-events: none;
+  background: radial-gradient(circle at 72% 20%, color-mix(in srgb, var(--color-accent-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-bg-base) 18%, transparent) 45%, var(--color-bg-base) 100%);
 }
-
-@keyframes lifeos-page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 1024px) {
-  .lifeos-content {
-    padding: 0 var(--space-5, 20px);
-  }
-}
-
-@media (max-width: 768px) {
-  .lifeos-content {
-    padding: 0 var(--space-4, 16px);
-    padding-bottom: calc(var(--mobile-nav-height, 60px) + var(--space-12, 48px) + env(safe-area-inset-bottom, 0px));
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Mobile Full Navigation Sheet Drawer */
-.lifeos-mobile-drawer {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6, 24px);
-  padding-bottom: var(--space-8, 32px);
-}
-
-.lifeos-mobile-drawer__group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2, 8px);
-}
-
-.lifeos-mobile-drawer__group-title {
-  font-family: var(--font-sans, system-ui, sans-serif);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--color-text-muted, #71837f);
-  text-transform: uppercase;
-}
-
-.lifeos-mobile-drawer__group-items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-2, 8px);
-}
-
-@media (max-width: 480px) {
-  .lifeos-mobile-drawer__group-items {
-    grid-template-columns: 1fr;
-  }
-}
-
-.lifeos-mobile-drawer__link {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3, 12px);
-  padding: var(--space-3, 12px);
-  min-height: 48px;
-  background-color: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  color: var(--color-text-secondary, #95a6a0);
-  text-decoration: none;
-  font-size: var(--font-size-sm, 13px);
-  font-weight: 500;
-  transition: all var(--motion-micro, 150ms) ease;
-}
-
-.lifeos-mobile-drawer__link:active {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: var(--color-text-primary, #f2eee3);
-}
-
-.lifeos-mobile-drawer__link--active {
-  background-color: rgba(216, 177, 122, 0.12);
-  border-color: var(--color-accent-primary, #d8b17a);
-  color: var(--color-accent-primary, #d8b17a);
-  font-weight: 600;
-}
-
-.lifeos-mobile-drawer__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.lifeos-mobile-drawer__label {
-  flex: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lifeos-content {
-    animation: none;
-  }
-}
+.lifeos-main { flex: 1; min-width: 0; min-height: 100dvh; display: flex; flex-direction: column; position: relative; }
+.lifeos-content { flex: 1; width: 100%; max-width: var(--content-max-width); margin: 0 auto; padding: 0 30px; box-sizing: border-box; animation: lifeos-page-enter var(--motion-major) var(--motion-enter) both; }
+@keyframes lifeos-page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.lifeos-mobile-drawer { display:flex; flex-direction:column; gap:var(--space-6); padding-bottom:var(--space-8); }
+.lifeos-mobile-drawer__group { display:flex; flex-direction:column; gap:var(--space-2); }
+.lifeos-mobile-drawer__group-title { font:600 10px var(--font-mono); letter-spacing:.12em; color:var(--color-text-muted); text-transform:uppercase; }
+.lifeos-mobile-drawer__group-items { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--space-2); }
+.lifeos-mobile-drawer__link { display:flex; align-items:center; gap:12px; min-height:48px; padding:12px; border:1px solid var(--color-border-subtle); border-radius:10px; background:color-mix(in srgb,var(--color-bg-surface) 52%,transparent); color:var(--color-text-secondary); text-decoration:none; backdrop-filter:blur(16px); }
+.lifeos-mobile-drawer__link--active { color:var(--color-accent-primary); border-color:var(--color-border-accent-subtle); background:color-mix(in srgb,var(--color-accent-primary) 9%,transparent); }
+.lifeos-mobile-drawer__icon { width:24px; height:24px; display:grid; place-items:center; }
+.lifeos-mobile-drawer__label { flex:1; }
+@media(max-width:1024px){.lifeos-content{padding-inline:22px;}}
+@media(max-width:768px){.lifeos-app::before{background-position:center,center,58% 32%;}.lifeos-content{padding-inline:16px;padding-bottom:calc(var(--mobile-nav-height) + 56px + env(safe-area-inset-bottom,0px));}}
+@media(max-width:480px){.lifeos-mobile-drawer__group-items{grid-template-columns:1fr;}}
+@media(prefers-reduced-motion:reduce){.lifeos-content{animation:none}.lifeos-app::before{transform:none}}

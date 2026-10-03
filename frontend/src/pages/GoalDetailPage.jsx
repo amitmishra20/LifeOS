@@ -234,7 +234,9 @@ export const GoalDetailPage = () => {
       </nav>
 
       {/* Goal Header */}
-      <header className="lifeos-goal-detail__header">
+      <header
+        className="lifeos-goal-detail__header"
+      >
         <div className="lifeos-goal-detail__meta-top">
           <div className="lifeos-goal-detail__badges">
             <Badge variant={CATEGORY_BADGES[goal.category] || 'default'} size="md">

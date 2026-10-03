@@ -5,20 +5,21 @@
 .note-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-5, 20px);
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  padding: 20px;
   cursor: pointer;
   transition: transform var(--motion-small, 220ms) ease, border-color var(--motion-micro, 150ms) ease;
   min-height: 160px;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .note-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(216, 177, 122, 0.35);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.15));
 }
 
 .note-card:focus-visible {
@@ -30,20 +31,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-3, 12px);
-  gap: var(--space-2, 8px);
+  margin-bottom: 12px;
+  gap: 8px;
 }
 
 .note-card__category {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(216, 177, 122, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.1));
   color: var(--color-accent-primary, #d8b17a);
-  border: 1px solid rgba(216, 177, 122, 0.2);
+  border: 1px solid var(--color-border-accent-subtle, rgba(216, 177, 122, 0.2));
   max-width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,23 +53,23 @@
 
 .note-card__category--neutral {
   background: rgba(255, 255, 255, 0.04);
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   border-color: rgba(255, 255, 255, 0.06);
 }
 
 .note-card__date {
   font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #797367);
   white-space: nowrap;
 }
 
 .note-card__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: var(--text-lg, 18px);
+  font-size: 1.1875rem;
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  margin: 0 0 var(--space-2, 8px) 0;
+  color: var(--color-text-primary, #f4f0e8);
+  margin: 0 0 8px 0;
   line-height: 1.35;
   letter-spacing: -0.01em;
   overflow: hidden;
@@ -79,8 +80,8 @@
 }
 
 .note-card__snippet {
-  font-size: var(--text-sm, 13px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #bab2a4);
   line-height: 1.6;
   margin: 0;
   overflow: hidden;
@@ -93,5 +94,5 @@
 
 .note-card__snippet--empty {
   font-style: italic;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
 }

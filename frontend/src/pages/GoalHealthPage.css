@@ -5,37 +5,38 @@
 .lifeos-gh-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6, 24px);
+  gap: 32px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: var(--space-6, 24px) var(--space-8, 32px) 72px;
+  padding: 32px 0 64px 0;
   width: 100%;
-  color: var(--color-text-primary, #f2eee3);
-  font-family: var(--font-sans, system-ui, sans-serif);
+  color: var(--color-text-primary, #f4f0e8);
+  font-family: var(--font-sans);
+  animation: lifeos-page-enter var(--motion-major, 450ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 .lifeos-gh-page__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-4, 16px);
-  padding-bottom: var(--space-6, 24px);
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
 }
 
 .lifeos-gh-page__title-group {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-4, 16px);
+  gap: 16px;
 }
 
 .lifeos-gh-page__icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-md, 8px);
-  background: rgba(216, 177, 122, 0.1);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.1));
   color: var(--color-accent-primary, #d8b17a);
-  border: 1px solid rgba(216, 177, 122, 0.2);
+  border: 1px solid var(--color-border-accent-subtle, rgba(216, 177, 122, 0.2));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,15 +48,15 @@
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: clamp(1.8rem, 3vw, 2.3rem);
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  letter-spacing: -0.03em;
+  color: var(--color-text-primary, #f4f0e8);
+  letter-spacing: -0.025em;
   line-height: 1.15;
-  margin: 0 0 var(--space-2, 8px) 0;
+  margin: 0 0 8px 0;
 }
 
 .lifeos-gh-page__subtitle {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #bab2a4);
   margin: 0;
   max-width: 680px;
   line-height: 1.5;
@@ -65,7 +66,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4, 16px);
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -79,11 +80,11 @@
 .lifeos-gh-page__search-input {
   width: 100%;
   padding: 9px 36px 9px 14px;
-  font-size: var(--text-sm, 13px);
+  font-size: 0.8125rem;
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-md, 8px);
-  background: var(--color-surface, #0d151a);
-  color: var(--color-text-primary, #f2eee3);
+  background: var(--color-bg-surface-card, #13171f);
+  color: var(--color-text-primary, #f4f0e8);
   outline: none;
   transition: border-color var(--motion-micro, 150ms) ease;
 }
@@ -99,7 +100,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   font-size: 18px;
   cursor: pointer;
   padding: 0 4px;
@@ -109,33 +110,29 @@
 .lifeos-gh-page__dropdowns {
   display: flex;
   align-items: center;
-  gap: var(--space-3, 12px);
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .lifeos-gh-page__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: var(--space-5, 20px);
+  gap: 20px;
 }
 
 .lifeos-gh-page__error {
-  background: rgba(229, 115, 115, 0.05);
-  border: 1px solid rgba(229, 115, 115, 0.2);
-  border-radius: var(--radius-md, 8px);
-  padding: var(--space-8, 32px);
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.1));
+  border: 1px solid var(--color-danger-border, rgba(179, 107, 96, 0.25));
+  border-radius: var(--radius-md, 10px);
+  padding: 32px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4, 16px);
+  gap: 16px;
 }
 
 @media (max-width: 640px) {
-  .lifeos-gh-page {
-    padding: var(--space-4, 16px) var(--space-4, 16px) 48px;
-  }
-
   .lifeos-gh-page__header {
     flex-direction: column;
   }

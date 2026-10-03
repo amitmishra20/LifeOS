@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { isDesignPreviewActive } from '../preview/previewMode';
+import { handlePreviewRequest } from '../preview/previewApiAdapter';
 
 /**
  * LifeOS Axios Client
@@ -24,6 +26,12 @@ function getCookie(name) {
 // Request interceptor: attach CSRF token if cookie is present
 api.interceptors.request.use(
   async (config) => {
+    // Development-only design preview interception
+    if (import.meta.env.DEV && isDesignPreviewActive()) {
+      config.adapter = handlePreviewRequest;
+      return config;
+    }
+
     const method = config.method ? config.method.toLowerCase() : 'get';
     const isMutation = ['post', 'put', 'patch', 'delete'].includes(method);
     const isAuthExempt = config.url && (

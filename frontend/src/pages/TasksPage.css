@@ -1,33 +1,35 @@
 /* ==========================================================================
    LifeOS — Tasks Execution Stream (Editorial Prioritization)
+   Tactile execution rows, goal/milestone lineage, clear due context.
    ========================================================================== */
 
 .lifeos-tasks-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8, 32px);
+  gap: 32px;
   max-width: 1080px;
   margin: 0 auto;
-  padding: var(--space-4, 16px) 0 var(--space-16, 64px) 0;
-  color: var(--color-text-primary, #f2eee3);
-  font-family: var(--font-sans, system-ui, sans-serif);
+  padding: 32px 0 64px 0;
+  color: var(--color-text-primary, #f4f0e8);
+  font-family: var(--font-sans);
   box-sizing: border-box;
+  animation: lifeos-page-enter var(--motion-major, 450ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 .lifeos-tasks-toast {
   position: fixed;
-  bottom: var(--space-6, 24px);
-  right: var(--space-6, 24px);
-  background: var(--color-surface-elevated, #17242c);
+  bottom: 24px;
+  right: 24px;
+  background: var(--color-bg-surface-elevated, #1e2430);
   border: 1px solid var(--color-accent-primary, #d8b17a);
-  color: var(--color-text-primary, #f2eee3);
-  padding: var(--space-3, 12px) var(--space-5, 20px);
+  color: var(--color-text-primary, #f4f0e8);
+  padding: 12px 20px;
   border-radius: var(--radius-sm, 6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-  font-size: 13px;
+  box-shadow: var(--shadow-lg);
+  font-size: 0.8125rem;
   font-weight: 500;
   z-index: 1000;
-  animation: lifeosToastIn var(--motion-small, 220ms) var(--ease-spring, ease);
+  animation: lifeosToastIn var(--motion-small, 220ms) var(--ease-spring);
 }
 
 @keyframes lifeosToastIn {
@@ -47,37 +49,37 @@
   justify-content: space-between;
   align-items: flex-end;
   flex-wrap: wrap;
-  gap: var(--space-4, 16px);
-  padding-bottom: var(--space-6, 24px);
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
 }
 
 .lifeos-tasks-page__eyebrow {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 8px);
-  font-size: 11px;
-  font-weight: 600;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: var(--color-accent-primary, #d8b17a);
-  margin-bottom: var(--space-2, 8px);
+  margin-bottom: 8px;
 }
 
 .lifeos-tasks-page__title {
-  margin: 0 0 var(--space-2, 8px) 0;
+  margin: 0 0 8px 0;
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--color-text-primary, #f2eee3);
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary, #f4f0e8);
   line-height: 1.1;
 }
 
 .lifeos-tasks-page__subline {
   margin: 0;
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #bab2a4);
   max-width: 580px;
   line-height: 1.5;
 }
@@ -86,11 +88,12 @@
 .lifeos-tasks-metrics {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: var(--space-4, 16px);
-  padding: var(--space-4, 16px) var(--space-6, 24px);
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: var(--radius-md, 8px);
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--color-bg-surface-card, #13171f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--shadow-sm);
 }
 
 .lifeos-tasks-metric {
@@ -100,18 +103,18 @@
 }
 
 .lifeos-tasks-metric__label {
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
 }
 
 .lifeos-tasks-metric__value {
   font-family: var(--font-mono, monospace);
-  font-size: var(--text-xl, 20px);
+  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
 }
 
 .lifeos-tasks-metric__value--amber {
@@ -119,7 +122,11 @@
 }
 
 .lifeos-tasks-metric__value--crimson {
-  color: #e57373;
+  color: var(--color-danger-text, #db8b80);
+}
+
+.lifeos-tasks-metric__value--emerald {
+  color: var(--color-success-text, #a4c7a1);
 }
 
 /* Toolbar */
@@ -128,97 +135,97 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-4, 16px);
+  gap: 16px;
 }
 
 .lifeos-tasks-tabs {
   display: flex;
   flex-wrap: nowrap;
-  background: var(--color-surface, #0d151a);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: 9999px;
+  background: var(--color-bg-surface, #0f1217);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-pill, 9999px);
   padding: 4px;
   gap: 4px;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
-.lifeos-tasks-tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.lifeos-task-tab {
+.lifeos-tasks-tab {
   flex-shrink: 0;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 9999px;
-  padding: 6px 14px;
-  font-size: 12px;
+  border-radius: var(--radius-pill, 9999px);
+  padding: 6px 16px;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--color-text-secondary, #95a6a0);
+  color: var(--color-text-secondary, #bab2a4);
   cursor: pointer;
   white-space: nowrap;
   min-height: 36px;
   transition: all var(--motion-micro, 150ms) ease;
 }
 
-.lifeos-task-tab:hover {
-  color: var(--color-text-primary, #f2eee3);
+.lifeos-tasks-tab:hover {
+  color: var(--color-text-primary, #f4f0e8);
 }
 
-.lifeos-task-tab--active {
-  background: rgba(216, 177, 122, 0.15);
+.lifeos-tasks-tab--active {
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.12));
   color: var(--color-accent-primary, #d8b17a);
   font-weight: 600;
-  border-color: var(--color-accent-primary, #d8b17a);
+  border-color: var(--color-border-accent-subtle, rgba(216, 177, 122, 0.25));
 }
 
-.lifeos-tasks-search {
-  min-width: 240px;
+.lifeos-tasks-filters {
+  min-width: 180px;
 }
 
-/* Task Stream */
-.lifeos-tasks-stream {
+/* Task List */
+.lifeos-tasks-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .lifeos-task-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  min-height: 52px;
-  background: var(--color-surface, #0d151a);
+  padding: 14px 18px;
+  min-height: 56px;
+  background: var(--color-bg-surface-card, #13171f);
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--shadow-sm);
   transition: all var(--motion-micro, 150ms) ease;
-  gap: 12px;
+  gap: 16px;
 }
 
 .lifeos-task-row:hover {
-  border-color: rgba(216, 177, 122, 0.3);
-  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.14));
+  transform: translateY(-1px);
 }
 
-.lifeos-task-row__left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  flex: 1;
+.lifeos-task-row--overdue {
+  border-left: 3px solid var(--color-danger-base, #b36b60);
 }
 
-.lifeos-task-checkbox {
+.lifeos-task-row--completed {
+  opacity: 0.65;
+}
+
+.lifeos-task-row--completed .lifeos-task-row__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted, #797367);
+}
+
+.lifeos-task-row__checkbox {
   width: 20px;
   height: 20px;
   min-width: 20px;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--color-border-strong, rgba(255, 255, 255, 0.2));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,50 +233,95 @@
   background: transparent;
   color: #05080a;
   transition: all var(--motion-micro, 150ms) ease;
+  padding: 0;
 }
 
-.lifeos-task-checkbox:hover {
+.lifeos-task-row__checkbox:hover {
   border-color: var(--color-accent-primary, #d8b17a);
 }
 
-.lifeos-task-checkbox--checked {
+.lifeos-task-row__checkbox--checked {
   background: var(--color-accent-primary, #d8b17a);
   border-color: var(--color-accent-primary, #d8b17a);
 }
 
-.lifeos-task-row__info {
+.lifeos-task-row__content {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  gap: 4px;
+}
+
+.lifeos-task-row__title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .lifeos-task-row__title {
-  font-size: 13px;
+  font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--color-text-primary, #f4f0e8);
 }
 
-.lifeos-task-row--completed .lifeos-task-row__title {
-  text-decoration: line-through;
-  color: var(--color-text-muted, #71837f);
+.lifeos-task-row__description {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #bab2a4);
+  line-height: 1.4;
+  margin: 0;
 }
 
 .lifeos-task-row__meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #797367);
+}
+
+.lifeos-task-row__due--overdue {
+  color: var(--color-danger-text, #db8b80);
+  font-weight: 600;
+}
+
+.lifeos-task-row__lineage {
+  color: var(--color-accent-primary, #d8b17a);
 }
 
 .lifeos-priority-badge {
-  font-size: 10px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary, #bab2a4);
+}
+
+.lifeos-priority-badge--critical {
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.14));
+  color: var(--color-danger-text, #db8b80);
+  border: 1px solid var(--color-danger-border, rgba(179, 107, 96, 0.32));
+}
+
+.lifeos-priority-badge--high {
+  background: var(--color-warning-subtle, rgba(191, 145, 91, 0.14));
+  color: var(--color-warning-text, #e0b47e);
+  border: 1px solid var(--color-warning-border, rgba(191, 145, 91, 0.32));
+}
+
+.lifeos-priority-badge--medium {
+  background: rgba(126, 156, 123, 0.12);
+  color: #a4c7a1;
+  border: 1px solid rgba(126, 156, 123, 0.25);
+}
+
+.lifeos-status-badge {
+  font-size: 0.6875rem;
   font-weight: 600;
   padding: 1px 6px;
   border-radius: 4px;
@@ -277,59 +329,45 @@
   letter-spacing: 0.05em;
 }
 
-.lifeos-priority-badge--urgent {
-  background: rgba(229, 115, 115, 0.15);
-  color: #e57373;
-  border: 1px solid rgba(229, 115, 115, 0.3);
+.lifeos-status-badge--overdue {
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.14));
+  color: var(--color-danger-text, #db8b80);
 }
 
-.lifeos-priority-badge--high {
-  background: rgba(216, 177, 122, 0.15);
+.lifeos-status-badge--today {
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.14));
   color: var(--color-accent-primary, #d8b17a);
-  border: 1px solid rgba(216, 177, 122, 0.3);
 }
 
-.lifeos-priority-badge--medium {
-  background: rgba(84, 197, 177, 0.12);
-  color: #54c5b1;
-  border: 1px solid rgba(84, 197, 177, 0.25);
-}
-
-.lifeos-priority-badge--low {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-muted, #71837f);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Actions */
+/* Row Actions */
 .lifeos-task-row__actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .lifeos-task-row__action-btn {
   background: transparent;
   border: 1px solid transparent;
-  font-size: 11px;
-  color: var(--color-text-muted, #71837f);
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #797367);
   cursor: pointer;
-  padding: 6px 8px;
-  min-height: 36px;
+  padding: 6px 10px;
+  min-height: 32px;
   border-radius: 4px;
   transition: all var(--motion-micro, 150ms) ease;
 }
 
 .lifeos-task-row__action-btn:hover {
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-border-subtle, rgba(255, 255, 255, 0.1));
 }
 
 .lifeos-task-row__action-btn--delete:hover {
-  color: #e57373;
-  background: rgba(229, 115, 115, 0.1);
-  border-color: rgba(229, 115, 115, 0.2);
+  color: var(--color-danger-text, #db8b80);
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.14));
+  border-color: var(--color-danger-border, rgba(179, 107, 96, 0.32));
 }
 
 @media (max-width: 768px) {
@@ -342,12 +380,63 @@
     width: 100%;
   }
 
-  .lifeos-tasks-search {
-    width: 100%;
+  .lifeos-task-row {
+    padding: 12px 14px;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
-  .lifeos-task-row {
-    padding: 10px 12px;
-    align-items: flex-start;
+  .lifeos-task-row__actions {
+    width: 100%;
+    justify-content: flex-end;
   }
+}
+
+/* Video-aligned task management finishing pass. */
+.lifeos-tasks-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 16px 24px;
+  gap: 0;
+}
+.lifeos-tasks-metric {
+  min-height: 50px;
+  justify-content: center;
+  padding: 0 22px;
+  border-right: 1px solid var(--lifeos-line, rgba(255,255,255,.06));
+}
+.lifeos-tasks-metric:last-child { border-right: 0; }
+.lifeos-tasks-metric__value { font-size: 1.15rem; }
+.lifeos-tasks-tabs { background: color-mix(in srgb, var(--color-bg-surface) 74%, transparent); }
+.lifeos-tasks-tab { min-height: 40px; }
+.lifeos-tasks-empty {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 20px 92px;
+  background: transparent;
+  border: 0;
+}
+.lifeos-tasks-empty h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.1vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: -.025em;
+  color: var(--color-text-primary);
+}
+.lifeos-tasks-empty p {
+  max-width: 500px;
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+.lifeos-tasks-empty .lifeos-btn { min-height: 40px; border-radius: 9px; }
+@media (max-width: 700px) {
+  .lifeos-tasks-metrics { grid-template-columns: 1fr; gap: 0; padding: 8px 16px; }
+  .lifeos-tasks-metric { padding: 10px 0; border-right: 0; border-bottom: 1px solid var(--lifeos-line, rgba(255,255,255,.06)); }
+  .lifeos-tasks-metric:last-child { border-bottom: 0; }
 }

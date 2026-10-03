@@ -184,9 +184,24 @@ export const TaskModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title={isEdit ? 'Edit Task' : 'New Task'}
-      subtitle={isEdit ? 'Update details, priority, and horizon' : 'Capture an action with clear intent and placement'}
+      size="md"
+      className="lifeos-task-modal"
+      footer={
+        <>
+          <Button type="button" variant="ghost" onClick={onClose} disabled={isSubmitting}>
+            Cancel
+          </Button>
+          <Button type="submit" form="task-modal-form" variant="primary" isLoading={isSubmitting}>
+            {isEdit ? 'Save Changes' : 'Create Task'}
+          </Button>
+        </>
+      }
     >
-      <form onSubmit={handleSubmit} className="lifeos-task-form">
+      <form
+        onSubmit={handleSubmit}
+        className="lifeos-task-form"
+        id="task-modal-form"
+      >
         <Input
           id="task-title"
           label="Title"
@@ -257,23 +272,6 @@ export const TaskModal = ({
           />
         )}
 
-        <div className="lifeos-modal__actions">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={onClose}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            isLoading={isSubmitting}
-          >
-            {isEdit ? 'Save Changes' : 'Create Task'}
-          </Button>
-        </div>
       </form>
     </Modal>
   );

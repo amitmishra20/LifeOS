@@ -6,12 +6,17 @@ import Header from '../components/navigation/Header';
 import MobileNav from '../components/navigation/MobileNav';
 import Drawer from '../components/ui/Drawer';
 import QuickCaptureModal from '../components/ui/QuickCaptureModal';
+import IntroSequence from '../components/ui/IntroSequence';
 import './AppLayout.css';
 
 export const AppLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [quickCaptureOpen, setQuickCaptureOpen] = useState(false);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !sessionStorage.getItem('lifeos_intro_seen');
+  });
   const navigate = useNavigate();
 
   // Global Keyboard Shortcuts
@@ -44,6 +49,16 @@ export const AppLayout = () => {
 
   return (
     <div className={`lifeos-app ${sidebarCollapsed ? 'lifeos-app--collapsed' : ''}`}>
+      {/* Cinematic Entrance Sequence */}
+      {showIntro && (
+        <IntroSequence
+          onComplete={() => {
+            sessionStorage.setItem('lifeos_intro_seen', 'true');
+            setShowIntro(false);
+          }}
+        />
+      )}
+
       {/* Desktop Sidebar */}
       <Sidebar
         isCollapsed={sidebarCollapsed}

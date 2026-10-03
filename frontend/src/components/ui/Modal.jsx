@@ -39,6 +39,17 @@ export const Modal = ({
 
   if (!isOpen) return null;
 
+  const handleDialogKeyDown = (e) => {
+    if (e.key !== 'Enter' || e.shiftKey) return;
+    if (['TEXTAREA', 'SELECT', 'BUTTON'].includes(e.target.tagName)) return;
+
+    const form = e.target.closest('form');
+    if (!form) return;
+
+    e.preventDefault();
+    form.requestSubmit();
+  };
+
   return (
     <div className="lifeos-modal-overlay" onClick={onClose} role="presentation">
       <div
@@ -49,6 +60,7 @@ export const Modal = ({
         aria-describedby={description ? 'modal-desc' : undefined}
         className={`lifeos-modal lifeos-modal--${size} ${className}`}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleDialogKeyDown}
       >
         <div className="lifeos-modal__header">
           <div>

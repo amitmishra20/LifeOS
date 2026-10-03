@@ -1,17 +1,19 @@
 /* ==========================================================================
    LIFEOS NOTES & INSIGHTS — Editorial Reading & Knowledge Canvas
+   Quiet, distraction-free knowledge capture and organization.
    ========================================================================== */
 
 .notes-page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6, 24px);
+  gap: 32px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: var(--space-6, 24px) var(--space-8, 32px) 72px;
+  padding: 32px 0 64px 0;
   width: 100%;
-  color: var(--color-text-primary, #f2eee3);
-  font-family: var(--font-sans, system-ui, sans-serif);
+  color: var(--color-text-primary, #f4f0e8);
+  font-family: var(--font-sans);
+  animation: lifeos-page-enter var(--motion-major, 450ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
 /* Header Section */
@@ -19,38 +21,39 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: var(--space-4, 16px);
-  padding-bottom: var(--space-6, 24px);
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07));
 }
 
 .notes-page__header-left {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2, 8px);
+  gap: 4px;
 }
 
 .notes-page__kicker {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-accent-primary, #d8b17a);
+  margin-bottom: 8px;
 }
 
 .notes-page__title {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 500;
-  color: var(--color-text-primary, #f2eee3);
-  letter-spacing: -0.03em;
+  color: var(--color-text-primary, #f4f0e8);
+  letter-spacing: -0.025em;
   line-height: 1.1;
   margin: 0;
 }
 
 .notes-page__subtitle {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #95a6a0);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #bab2a4);
   margin: 0;
   max-width: 680px;
   line-height: 1.5;
@@ -59,14 +62,14 @@
 .notes-page__header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-3, 12px);
+  gap: 12px;
 }
 
 /* Controls: Search & Category Filter Pills */
 .notes-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 12px);
+  gap: 12px;
 }
 
 .notes-controls__search-wrapper {
@@ -77,10 +80,10 @@
 
 .notes-search-input {
   width: 100%;
-  background: var(--color-surface, #0d151a);
+  background: var(--color-bg-surface-card, #13171f);
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  color: var(--color-text-primary, #f2eee3);
-  border-radius: var(--radius-md, 8px);
+  color: var(--color-text-primary, #f4f0e8);
+  border-radius: var(--radius-md, 10px);
 }
 
 .notes-search-clear-btn {
@@ -90,7 +93,7 @@
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #71837f);
+  color: var(--color-text-muted, #797367);
   font-size: 18px;
   cursor: pointer;
   width: 32px;
@@ -100,19 +103,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill, 9999px);
   transition: all var(--motion-micro, 150ms) ease;
 }
 
 .notes-search-clear-btn:hover {
-  color: var(--color-text-primary, #f2eee3);
+  color: var(--color-text-primary, #f4f0e8);
   background: rgba(255, 255, 255, 0.08);
 }
 
 .notes-controls__categories {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 8px);
+  gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
   padding: 4px 0;
@@ -126,36 +129,36 @@
   display: inline-flex;
   align-items: center;
   padding: 6px 14px;
-  border-radius: 9999px;
-  background: var(--color-surface, #0d151a);
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--color-bg-surface-card, #13171f);
   border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  color: var(--color-text-secondary, #95a6a0);
-  font-size: 12px;
+  color: var(--color-text-secondary, #bab2a4);
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  min-height: 36px;
+  min-height: 34px;
   transition: all var(--motion-micro, 150ms) ease;
 }
 
 .notes-category-pill:hover {
   background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-primary, #f2eee3);
-  border-color: rgba(216, 177, 122, 0.3);
+  color: var(--color-text-primary, #f4f0e8);
+  border-color: var(--color-border-default, rgba(255, 255, 255, 0.15));
 }
 
 .notes-category-pill.active {
-  background: rgba(216, 177, 122, 0.15);
+  background: var(--color-accent-subtle, rgba(216, 177, 122, 0.15));
   color: var(--color-accent-primary, #d8b17a);
-  border-color: var(--color-accent-primary, #d8b17a);
+  border-color: var(--color-border-accent-subtle, rgba(216, 177, 122, 0.3));
   font-weight: 600;
 }
 
-/* Notes Grid — Masonry-feel Editorial Gallery */
+/* Notes Grid */
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: var(--space-5, 20px);
+  gap: 20px;
 }
 
 /* Error & Empty States */
@@ -163,23 +166,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4, 16px);
-  padding: var(--space-8, 32px);
-  background: rgba(229, 115, 115, 0.05);
-  border: 1px solid rgba(229, 115, 115, 0.2);
-  border-radius: var(--radius-md, 8px);
+  gap: 16px;
+  padding: 32px;
+  background: var(--color-danger-subtle, rgba(179, 107, 96, 0.1));
+  border: 1px solid var(--color-danger-border, rgba(179, 107, 96, 0.25));
+  border-radius: var(--radius-md, 10px);
   text-align: center;
 }
 
 .notes-page__empty {
-  padding: var(--space-8, 32px) 0;
+  padding: 32px 0;
 }
 
 @media (max-width: 640px) {
-  .notes-page {
-    padding: var(--space-4, 16px) var(--space-4, 16px) 48px;
-  }
-
   .notes-page__header {
     flex-direction: column;
     align-items: flex-start;
