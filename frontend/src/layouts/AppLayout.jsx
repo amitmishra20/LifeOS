@@ -7,7 +7,6 @@ import MobileNav from '../components/navigation/MobileNav';
 import Drawer from '../components/ui/Drawer';
 import QuickCaptureModal from '../components/ui/QuickCaptureModal';
 import IntroSequence from '../components/ui/IntroSequence';
-import LifeWorld from '../components/experience/LifeWorld';
 import MotionRouteOutlet from '../components/experience/MotionRouteOutlet';
 import './AppLayout.css';
 
@@ -51,7 +50,6 @@ export const AppLayout = () => {
 
   return (
     <div className={`lifeos-app ${sidebarCollapsed ? 'lifeos-app--collapsed' : ''}`}>
-      <LifeWorld />
       {/* Cinematic Entrance Sequence */}
       {showIntro && (
         <IntroSequence
