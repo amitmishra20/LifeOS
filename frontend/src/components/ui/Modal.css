@@ -5,9 +5,10 @@
 .lifeos-modal-overlay {
   position: fixed;
   inset: 0;
-  background: color-mix(in srgb, var(--lifeos-modal-backdrop, rgba(0, 0, 0, 0.10)) 100%, transparent);
-  backdrop-filter: blur(7px) saturate(108%);
-  -webkit-backdrop-filter: blur(7px) saturate(108%);
+  background: var(--lifeos-modal-backdrop, rgba(0, 0, 0, 0.38));
+  backdrop-filter: blur(4px) saturate(92%);
+  -webkit-backdrop-filter: blur(4px) saturate(92%);
+  overflow-y: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,6 +26,7 @@
   box-shadow: var(--lifeos-modal-shadow, 0 24px 64px rgba(0, 0, 0, 0.38));
   display: flex;
   flex-direction: column;
+  height: min(720px, calc(100dvh - 48px));
   max-height: calc(100vh - 48px);
   max-height: calc(100dvh - 48px);
   overflow: hidden;
@@ -32,7 +34,6 @@
   animation: lifeos-modal-pop var(--motion-small, 220ms) var(--motion-enter, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-/* Modal Sizes */
 .lifeos-modal--sm { max-width: 420px; }
 .lifeos-modal--md { max-width: 560px; }
 .lifeos-modal--lg { max-width: 740px; }
@@ -86,13 +87,15 @@
 
 .lifeos-modal__body {
   padding: var(--space-5, 20px) var(--space-6, 24px);
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .lifeos-modal__footer {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -103,7 +106,6 @@
   border-bottom-left-radius: var(--radius-xl, 12px);
   border-bottom-right-radius: var(--radius-xl, 12px);
 }
-
 
 .lifeos-modal__footer > .lifeos-btn { min-height: 40px; }
 .lifeos-modal__footer > .lifeos-btn--primary { padding-inline: 18px; }
@@ -116,23 +118,13 @@
   width: 100%;
 }
 
-@keyframes lifeos-overlay-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+@keyframes lifeos-overlay-fade { from { opacity: 0; } to { opacity: 1; } }
 
 @keyframes lifeos-modal-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Mobile Responsiveness (< 640px, 375px, 390px, 412px) */
 @media (max-width: 640px) {
   .lifeos-modal-overlay {
     padding: var(--space-2, 8px);
@@ -141,65 +133,28 @@
 
   .lifeos-modal {
     max-width: 100% !important;
+    height: calc(100dvh - 16px);
     max-height: calc(100dvh - 16px);
     border-radius: var(--radius-xl, 14px) var(--radius-xl, 14px) 0 0;
   }
 
-  .lifeos-modal__header {
-    padding: var(--space-4, 16px);
-  }
-
-  .lifeos-modal__close-btn {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  .lifeos-modal__body {
-    padding: var(--space-4, 16px);
-  }
-
-  .lifeos-modal__footer {
-    padding: var(--space-3, 12px) var(--space-4, 16px);
-    flex-direction: row;
-  }
-
-  .lifeos-modal-footer-actions {
-    flex-direction: column-reverse;
-    width: 100%;
-    gap: var(--space-2, 8px);
-  }
-
+  .lifeos-modal__header { padding: var(--space-4, 16px); }
+  .lifeos-modal__close-btn { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+  .lifeos-modal__body { padding: var(--space-4, 16px); }
+  .lifeos-modal__footer { padding: var(--space-3, 12px) var(--space-4, 16px); flex-direction: row; }
+  .lifeos-modal-footer-actions { flex-direction: column-reverse; width: 100%; gap: var(--space-2, 8px); }
   .lifeos-modal-footer-actions button,
-  .lifeos-modal-footer-actions .lifeos-btn {
-    width: 100%;
-    min-height: 44px;
-  }
+  .lifeos-modal-footer-actions .lifeos-btn { width: 100%; min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lifeos-modal-overlay,
-  .lifeos-modal {
-    animation: none;
-  }
+  .lifeos-modal { animation: none; }
 }
-
-/* Keep create/save controls visible while long modal content scrolls. */
-.lifeos-modal__body > form > [class*="__actions"] {
-  position: sticky;
-  bottom: -1px;
-  z-index: 3;
-  margin-bottom: -1px;
-  padding-bottom: 4px;
-  background: color-mix(in srgb, var(--color-surface, #0d151a) 96%, transparent);
-  box-shadow: 0 -14px 24px color-mix(in srgb, var(--color-surface, #0d151a) 74%, transparent);
-}
-
 
 /* Theme-aware modal chrome. The environment stays visible in both themes. */
 :root {
-  --lifeos-modal-backdrop: rgba(0, 0, 0, 0.12);
+  --lifeos-modal-backdrop: rgba(0, 0, 0, 0.38);
   --lifeos-modal-surface: color-mix(in srgb, var(--color-bg-surface) 88%, transparent);
   --lifeos-modal-footer: color-mix(in srgb, var(--color-bg-surface) 92%, transparent);
   --lifeos-modal-field: color-mix(in srgb, var(--color-bg-base) 58%, transparent);
@@ -207,7 +162,7 @@
 }
 
 [data-theme="light"] {
-  --lifeos-modal-backdrop: rgba(255, 249, 238, 0.18);
+  --lifeos-modal-backdrop: rgba(58, 48, 32, 0.22);
   --lifeos-modal-surface: rgba(255, 251, 243, 0.88);
   --lifeos-modal-footer: rgba(255, 251, 243, 0.94);
   --lifeos-modal-field: rgba(255, 255, 255, 0.56);
@@ -221,15 +176,5 @@
 }
 
 [data-theme="light"] .lifeos-modal__header,
-[data-theme="light"] .lifeos-modal__footer {
-  border-color: rgba(92, 78, 55, 0.12);
-}
-
-[data-theme="light"] .lifeos-modal__close-btn:hover {
-  background: rgba(92, 78, 55, 0.06);
-}
-
-[data-theme="light"] .lifeos-modal__body > form > [class*="__actions"] {
-  background: rgba(255, 251, 243, 0.94);
-  box-shadow: 0 -14px 24px rgba(255, 251, 243, 0.78);
-}
+[data-theme="light"] .lifeos-modal__footer { border-color: rgba(92, 78, 55, 0.12); }
+[data-theme="light"] .lifeos-modal__close-btn:hover { background: rgba(92, 78, 55, 0.06); }
