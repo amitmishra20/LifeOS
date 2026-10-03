@@ -20,11 +20,13 @@ import GoalHealthPage from './pages/GoalHealthPage';
 import RecommendationsPage from './pages/RecommendationsPage';
 import SettingsPage from './pages/SettingsPage';
 import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
+import LifeWorld from './components/experience/LifeWorld';
 
 export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <LifeWorld />
         <Routes>
           {/* Public Authentication Routes */}
           <Route element={<PublicRoute />}>
