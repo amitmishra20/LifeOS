@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './Modal.css';
 
 /**
  * Accessible LifeOS Modal Component
- * Supports ESC to close, backdrop click, body scroll locking, and smooth micro-entrance
+ * Supports ESC to close, body scroll locking, and smooth micro-entrance
  */
 export const Modal = ({
   isOpen = false,
@@ -50,7 +51,7 @@ export const Modal = ({
     form.requestSubmit();
   };
 
-  return (
+  const modal = (
     <div className="lifeos-modal-overlay" onClick={onClose} role="presentation">
       <div
         ref={modalRef}
@@ -83,7 +84,7 @@ export const Modal = ({
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+              <line x1="6" y1="18" x2="18" y2="6" />
             </svg>
           </button>
         </div>
@@ -93,6 +94,8 @@ export const Modal = ({
       </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 };
 
 export default Modal;
